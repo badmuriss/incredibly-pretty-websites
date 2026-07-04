@@ -255,6 +255,17 @@ For a **single-offer paid-traffic landing** (not a multi-page institutional site
 
 **Rules:** one CTA repeated between blocks (same action, same destination); every block either contains the CTA or pushes toward it; item counts are ranges (six pains in one, three in another — whatever the case needs); tone follows the brand; each block uses the vibe + layout archetypes above, it does not become a generic gray list. A paid-traffic landing is not an institutional site (the latter has more breathing room and brand sections; the former is lean and conversion-focused).
 
+### Conversion & first-impression craft (behavioral)
+
+A page can be beautiful and still fail to convert. These are behavioral checks that decide whether the design *works*, drawn from established UX research — run them before polishing.
+
+- **The 5-second test.** Show the top of the page to someone for 5 seconds, hide it, then ask: "what does this do, and who is it for?" If they can't answer, the hero failed — no matter how pretty it is. Make the hero pass this before refining anything else.
+- **First impression is credibility.** The first screen (even a login screen) does a landing page's job. In Stanford's web-credibility research, ~46% of people judged a site's trustworthiness primarily on its visual design. The first screen is a trust decision, not decoration.
+- **Design defaults deliberately (the default effect).** The pre-selected, zero-effort option wins overwhelmingly — opt-out organ-donation programs reach ~90% consent versus single digits for opt-in. Anything that takes extra effort happens less; anything outside the user's current view gets ignored. Put the one action you want on the primary path, pre-filled and visible.
+- **One primary action, in view.** Every screen has a single obvious next step. If the user has to hunt or scroll to find it, friction wins (ties to the hero-CTA rules in §13).
+- **Critique the problem, not the surface.** "Make it more colorful" / "make the button pop" is a guess about the surface. Before changing a pixel, name the actual problem (unclear value, wrong hierarchy, high friction). A prettier button on a hero that fails the 5-second test changes nothing.
+- **Beauty is not the lever you think.** Refactoring UI to be prettier rarely moves the number on its own. Reach for visual polish once structure, clarity, and friction are handled — not as a substitute for them.
+
 ### Premium component techniques
 
 **Double-Bezel (nested architecture):**
