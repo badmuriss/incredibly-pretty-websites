@@ -266,6 +266,18 @@ A page can be beautiful and still fail to convert. These are behavioral checks t
 - **Critique the problem, not the surface.** "Make it more colorful" / "make the button pop" is a guess about the surface. Before changing a pixel, name the actual problem (unclear value, wrong hierarchy, high friction). A prettier button on a hero that fails the 5-second test changes nothing.
 - **Beauty is not the lever you think.** Refactoring UI to be prettier rarely moves the number on its own. Reach for visual polish once structure, clarity, and friction are handled — not as a substitute for them.
 
+**Behavioral conversion tactics** (a page is a behavioral instrument, judged by outcomes, not aesthetics — clear-but-plain beats pretty-but-mute):
+
+- **Friction where it qualifies, not where it blocks.** Strip friction from the path to value; add it deliberately only where it commits or filters (a card field on a trial filters for real intent).
+- **Cut fields and choices — each one spends attention.** People scan, they don't read. Removing a single form/checkout field can lift completion; the shortest path to the goal wins.
+- **A conversion page is closed and single-target.** Remove links that lead away, repeat the one CTA, and never give two actions equal visual weight — isolate the target with contrast (the Von Restorff effect).
+- **Label buttons by outcome + add a risk-reducer.** "Start my plan" beats "Submit." Under the button, one line that removes risk (no card, cancel anytime, free).
+- **Frame the numbers — precise beats round.** "526 built" persuades more than "500+"; the framing of a stat ("90% lean" vs "20% fat") shifts the decision. (Still no fake numbers — §13.)
+- **Engineer social proof.** Place it before the CTA; a 4.2–4.5 rating reads more credible than a suspicious perfect 5.0; real customer photos over stock/AI faces.
+- **Direct the eye on purpose.** Order, size and contrast decide what's seen first vs never found. Keep the primary action in the mobile thumb-zone; a human face/gaze/hand can point toward the CTA.
+- **Empty, loading and error states are guidance, not gaps.** A blank first-run screen is where activation dies — use the empty state to push the first valuable action (extends Rule 5).
+- **Polish the boring screens.** Forms, settings and the login screen are where users silently leak; inline validation is not optional. One small moment of personality (even one deliberately odd detail) builds trust and memory.
+
 ### Premium component techniques
 
 **Double-Bezel (nested architecture):**
