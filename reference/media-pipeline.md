@@ -34,7 +34,7 @@ Hero background AND section accent are both valid. The choice comes from the **r
 **HARD GATES:**
 - **PREMIUM_TECH_TIER ≥ 3 only** (Tech/SaaS, Creative, Luxury real estate, Architecture). A video bg on a lawyer/local-shop site = slop + bad LCP.
 - **COST APPROVAL is mandatory before any paid render.** Use `mcp__magnific__simulate_cost` to quote the exact cost first, show the estimate, and wait for an explicit "go" from the human. Autonomous mode never triggers a paid render on its own.
-- **Self-host is mandatory** — a generation service returns a remote URL with undocumented retention. NEVER hotlink it on a production site. Download the MP4 → upload to your storage (R2/S3/any CDN) → serve from there.
+- **Self-host is mandatory** — a generation service returns a remote URL with undocumented retention. NEVER hotlink it on a production site. Download the MP4 → upload to your own object storage / CDN (any provider: S3, R2, Bunny, a plain static host) → serve from there. The skill is CDN-agnostic; no cloud is assumed.
 
 ## Setup
 
