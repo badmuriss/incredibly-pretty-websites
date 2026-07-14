@@ -24,7 +24,7 @@ Default to **Preserve** when unsure. Escalating Preserve to Overhaul is the owne
 
 | Category | Common problem | Fix |
 |---|---|---|
-| **Typography** | Inter/Roboto/system default; one weight; no scale | catalog pair (§12); real type scale; weight for hierarchy |
+| **Typography** | Roboto/Arial/system default; one weight; no scale | catalog pair (§12); real type scale; weight for hierarchy |
 | **Color** | AI-purple, muddy grays, warm/cool drift, low contrast | one palette project-wide (Rule 2); WCAG AA (§15); one accent |
 | **Layout** | every section is title-left / content-right; symmetric card rows | alternate layout families (§13); enforce the section-variety count (§14) |
 | **States** | only default + hover; no focus / empty / loading / error | design all 8 (Rule 5); skeletons matching layout; inline errors |

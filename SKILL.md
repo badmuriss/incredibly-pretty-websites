@@ -17,7 +17,7 @@ The default framework is **React** (Vite / Next / vite-react-ssg). **Vue** and *
 0. **Research first (Section 0).** Study real shipped products for the segment before applying any preset. This is the step most AI output skips, and it is why most AI output looks generic.
 1. Pick a **project-type preset** (Section 1) to set your dials.
 2. Pick a **vibe + layout archetype** (Section 5).
-3. Pick **fonts** from the catalog (Section 12). Never Inter/Roboto/Arial for premium work.
+3. Pick **fonts** from the catalog (Section 12). Never Roboto/Arial for premium work.
 4. Build every section fresh. Pull from the Creative Arsenal (Section 8). No generic templates.
 5. Apply the technical foundations in `reference/*.md` for spacing, motion, states, responsiveness, and a11y.
 6. Self-audit against Section 14 and the AI Tells in Section 13.
@@ -116,10 +116,10 @@ Defines which "expensive-looking" techniques fit each preset. Adding a technique
 
 | Tier | Allowed | Forbidden |
 |---|---|---|
-| **0 — Restraint** (local business, traditional professional) | clean typography, generous spacing, simple scroll fade-in, real photography, subtle hover | liquid-glass, infinite marquee, char-by-char reveal, magnetic hover, animated gradient blobs, italic accent words in the headline, loading screen with counter, sticky stacking cards, dashboard mock UI |
-| **1 — Subtle** (solo professional, e-commerce, health) | tier 0 + staggered fade-rise entrances, a single eyebrow pill, noise overlay ≤5% opacity, a CSS client-logo marquee (once per page, 30s+ slow), one italic accent word (max one in the whole site, sparingly) | liquid-glass except on a card over a photo, char-by-char reveal, magnetic hover, loading screen, sticky stacking, animated gradient blobs |
-| **2 — Moderate** (course, restaurant, fitness) | prior tiers + word pull-up entrance on the H1, scroll char-reveal on one institutional paragraph (one section only), liquid-glass on a card over photo/gradient, sticky scroll-stack cards in a portfolio, static gradient mesh blobs | magnetic hover (a11y-suspect on touch), loading screen counter, video bg (unsourced), dashboard mock UI |
-| **3 — Full premium** (Tech/SaaS, Creative, Luxury real estate, Architecture) | everything: full liquid-glass refraction, scroll-linked bidirectional marquee, magnetic hover on a CTA, animated gradient blobs with `@property`, free italic accent words, coded dashboard mock UI (not a screenshot) for SaaS, sticky stacking project cards, optional loading-screen counter, asymmetric bento grid, **GSAP ScrollTrigger scroll-telling + Lenis smooth-scroll** ([scroll-motion.md](reference/scroll-motion.md)), **video backgrounds** (cost-gated, [media-pipeline.md](reference/media-pipeline.md)) | — |
+| **0: Restraint** (local business, traditional professional) | clean typography, generous spacing, simple scroll fade-in, real photography, subtle hover | liquid-glass, infinite marquee, char-by-char reveal, magnetic hover, animated gradient blobs, loading screen with counter, sticky stacking cards, dashboard mock UI |
+| **1: Subtle** (solo professional, e-commerce, health) | tier 0 + staggered fade-rise entrances, a single eyebrow pill, noise overlay ≤5% opacity, a CSS client-logo marquee (once per page, 30s+ slow), same-family italic/heavier-weight emphasis on one headline word | liquid-glass except on a card over a photo, char-by-char reveal, magnetic hover, loading screen, sticky stacking, animated gradient blobs |
+| **2: Moderate** (course, restaurant, fitness) | prior tiers + word pull-up entrance on the H1, scroll char-reveal on one institutional paragraph (one section only), liquid-glass on a card over photo/gradient, sticky scroll-stack cards in a portfolio, static gradient mesh blobs | magnetic hover (a11y-suspect on touch), loading screen counter, video bg (unsourced), dashboard mock UI |
+| **3: Full premium** (Tech/SaaS, Creative, Luxury real estate, Architecture) | everything: full liquid-glass refraction, scroll-linked bidirectional marquee, magnetic hover on a CTA, animated gradient blobs with `@property`, coded dashboard mock UI (not a screenshot) for SaaS, sticky stacking project cards, optional loading-screen counter, asymmetric bento grid, **GSAP ScrollTrigger scroll-telling + Lenis smooth-scroll** ([scroll-motion.md](reference/scroll-motion.md)), **video backgrounds** (cost-gated, [media-pipeline.md](reference/media-pipeline.md)) | none |
 
 **Rule:** read the preset's `PREMIUM_TECH_TIER` before adding any technique from this list. A lower tier never inherits a higher tier's technique. The user can explicitly override.
 
@@ -197,15 +197,8 @@ This complements the **PREMIUM_TECH_TIER** gating (§1): the tier decides how ex
     - Body: `font-size: clamp(0.95rem, 1.5vw, 1.125rem)`.
   - **Letter-spacing per tier:** h1 `-0.04em`, h2 `-0.02em`, body `0`. An editorial giant hero can go to `-0.07em`.
   - **Line-height tight in hero:** `0.9` to `0.95` (`leading-none` = 1.0 is fine). Body is always `leading-relaxed` (1.625).
-  - **Italic accent words in headlines (Tier ≥ 2 — the source of the "expensive" look):**
-    - Pattern: a grotesque sans heading + one or two key words in **serif italic** (Instrument Serif italic, PP Editorial New italic, Newsreader italic).
-    - Example: `<h1>Beyond silence, we build <span class="italic font-serif text-foreground/60">the eternal</span>.</h1>`
-    - Rule: one italic span per H1, max two in the whole site. The span can be slightly faded (`text-foreground/55` to `/60`) for rhythm.
-    - Allowed families: Instrument Serif italic, PP Editorial New italic, Newsreader italic, Crimson Pro italic.
-    - **Rotate the accent family.** Instrument Serif italic is the signature move here, but it is now common enough to read as a tell on its own. Keep it in the kit and rotate between projects (PP Editorial New italic, Newsreader italic, Crimson Pro italic are equally premium). Don't ship Instrument Serif as the accent on every site.
-    - **Italic descender clearance:** when the italic display word has a descender (y, g, j, p, q), `leading-none` / `leading-[1]` clips the tail. Give that line at least `leading-[1.1]` plus `pb-1`/`mb-1` so the descender has room.
-    - FORBIDDEN in Tier 0–1 — it turns pretentious for a traditional office or local shop.
-  - **ANTI-SLOP:** Inter is BANNED for premium/creative. Use Geist, Outfit, Cabinet Grotesk, Satoshi, Clash Display, PP Editorial New.
+  - **Same-family emphasis in headlines (never mixed-family):** emphasis in a headline comes from the **italic or a heavier weight of the same grotesque/sans family**, never from injecting a different (serif) family. A serif italic word dropped into a sans headline (`<h1>Beyond silence, we build <span class="italic font-serif">the eternal</span>.</h1>`) now reads as amateur and overused: it was the go-to AI "expensive" move and is burned. Keep the whole headline in one family and lean on that family's own italic, a heavier weight, or a color/opacity shift (`text-foreground/60`) for the accent word. A genuine full-serif headline (whole line in a serif) is still fine; the ban is on the mixed serif-in-sans accent.
+  - **ANTI-SLOP:** Inter Display is fine for premium/creative; plain Inter is fine for neutral / Linear-style / utility UI. Only **Roboto, Arial, Open Sans, Helvetica** stay banned for premium/creative. Reach first for Geist, Outfit, Cabinet Grotesk, Satoshi, Clash Display, PP Editorial New.
   - **SERIF RULE:** Serif is BANNED for dashboards/software UI. Use sans-only pairs (Geist+Geist Mono, Satoshi+JetBrains Mono). Serif is welcome for editorial/luxury landing pages.
 - Body: `text-base text-gray-600 leading-relaxed max-w-[65ch]`.
 - **Text-rendering polish (universal — all tiers, zero cost, separates "ok" from "premium"):**
@@ -218,7 +211,7 @@ This complements the **PREMIUM_TECH_TIER** gating (§1): the tier decides how ex
 - Max one accent color. Saturation < 80%.
 - **THE PURPLE BAN:** the "AI purple/blue" aesthetic is BANNED. No purple glows, no neon gradients. Neutral bases (Zinc/Slate) + a single high-contrast accent (Emerald, Electric Blue, Deep Rose).
 - **Color consistency:** one palette project-wide. No warm/cool gray fluctuation.
-- **Palette rotation (avoid the recurring-AI-palette tell):** warm cream + brass/clay/oxblood/ochre + espresso is now one of the most over-used "premium" AI palettes. It is still legitimate (Editorial Luxury owns it, §5), but do NOT default to cream+brass for every premium brief. **Rotate palettes between projects; never ship the same palette on two consecutive projects.** Rotation menu (directions, not prescriptions): cold luxury (charcoal + platinum + ice blue), forest (deep green + bone + copper), black-and-tan, cobalt + cream, terracotta + slate, olive + brick, mono + one pop. Let research (§0) pick, not reflex.
+- **Palette rotation (avoid the recurring-AI-palette tell):** warm cream + brass/clay/oxblood/ochre + espresso is one of the most recurring AI-generated "premium" looks (§13). It remains a legitimate *option*, but do NOT default to it for every premium brief, and note Editorial Luxury (§5) no longer prescribes it. **Rotate palettes between projects; never ship the same palette on two consecutive projects.** Rotation menu (directions, not prescriptions): cold luxury (charcoal + platinum + ice blue), forest (deep green + bone + copper), black-and-tan, cobalt + cream, terracotta + slate, olive + brick, mono + one pop. Let research (§0) pick, not reflex.
 
 **Rule 3: Layout variation**
 - DESIGN_VARIANCE ≤ 6: centered is fine. Split/asymmetric preferred.
@@ -251,7 +244,7 @@ Pick ONE vibe + ONE layout before writing code.
 ### Vibe archetypes
 
 1. **Ethereal Glass** (SaaS/AI/Tech): deep OLED black `#050505`, subtle radial mesh gradients (glowing orbs). Vantablack cards with `backdrop-blur-2xl` + `border-white/10` hairlines. Wide geometric grotesk type.
-2. **Editorial Luxury** (Lifestyle/Real estate/Agency): warm creams `#FDFBF7`, muted sage, deep espresso. Variable serif for large headings. A CSS noise overlay (`opacity-[0.03]` to `[0.07]`) for paper texture. Canonical fractal SVG data URI (cover with `fixed inset-0 z-50 pointer-events-none` OR a `::after` pseudo on the hero):
+2. **Editorial Luxury** (Lifestyle/Real estate/Agency): the vibe is editorial restraint built on serif/large-type contrast, generous whitespace, and paper texture, not a fixed palette. The warm cream `#FDFBF7` + muted sage + deep espresso combination is now overused (§13), so treat it as ONE option and rotate to an alternative (Rule 2) unless research points back to it. Variable serif for large headings. A CSS noise overlay (`opacity-[0.03]` to `[0.07]`) for paper texture. Canonical fractal SVG data URI (cover with `fixed inset-0 z-50 pointer-events-none` OR a `::after` pseudo on the hero):
 
    ```css
    .noise-overlay {
@@ -263,14 +256,12 @@ Pick ONE vibe + ONE layout before writing code.
    ```
 
    FORBIDDEN on a scrolling container (DOM cost). Use only on fixed/pseudo elements. On the hero, `position: absolute; inset: 0;` covering just the hero is fine.
-
-   **Rotation caution:** the cream `#FDFBF7` + sage + espresso family (and its brass/clay/oxblood/ochre cousins) is now a top-recurring AI palette. Editorial Luxury legitimately owns it, but rotate it between projects (see Rule 2, palette rotation): don't make cream+brass your default answer to every premium brief.
 3. **Soft Structuralism** (Consumer/Health/Portfolio): silver-grey/white backgrounds. Bold grotesk type. Floating components with ultra-soft diffused ambient shadows.
 
-**Optional archetypes (below).** Each carries an explicit **scoped-exception** clause wherever it touches a global ban. A scoped exception applies only inside that archetype and never relaxes the global rule elsewhere.
+**Optional archetypes (below).** Reach for these when the brief fits; each has its own type and color language.
 
-4. **Swiss Industrial Print / Brutalist** (editorial, design studio, bold DTC, manifestos): off-white substrate `#F4F4F0`, ink-black text, a single hot red accent `#E61919`, radius `0` everywhere, visible `<hr>` rules and hard grid lines. Type: a heavy monolithic grotesque (**Archivo Black**, **Monument Extended**, or a heavy catalog grotesque like **Cabinet Grotesk 900** / **Clash Display Bold**). **Scoped exception (fonts):** if it wants an ultra-neutral heavy sans, name a non-banned heavy grotesque (above); do NOT reach for Inter/Helvetica here, the Inter ban (§12) still holds inside this archetype too. Do: big flush-left type slabs, thick rules, one red. Don't: rounded corners, soft shadows, gradients, a second accent color.
-5. **Tactical / CRT Telemetry** (dev tools, security, trading, retro-tech): near-black `#0A0A0A` canvas, tabular data density, a faint scanline overlay, phosphor green `#4AF626` on **exactly one** element (a live value or a status glyph). Mono is the dominant type voice. **Scoped exception (mono):** this archetype intentionally makes mono the dominant voice, a scoped exception to the global mono-restraint rule (§12, §13) that applies ONLY inside this archetype: it does not relax the mono rule anywhere else, and even here body prose over ~2 lines still uses a sans. Do: `tabular-nums`, tight 1px dividers, one green. Don't: a second neon, a blinking cursor in the hero (§13), green on more than one element.
+4. **Swiss Industrial Print / Brutalist** (editorial, design studio, bold DTC, manifestos): off-white substrate `#F4F4F0`, ink-black text, a single hot red accent `#E61919`, radius `0` everywhere, visible `<hr>` rules and hard grid lines. Type: a heavy monolithic grotesque, **Archivo Black**, **Monument Extended**, heavy **Inter** (Inter Black / Inter Display heavy), or a heavy catalog grotesque like **Cabinet Grotesk 900** / **Clash Display Bold**, all normal choices here. Do: big flush-left type slabs, thick rules, one red. Don't: rounded corners, soft shadows, gradients, a second accent color.
+5. **Tactical / CRT Telemetry** (dev tools, security, trading, retro-tech): near-black `#0A0A0A` canvas, tabular data density, a faint scanline overlay, phosphor green `#4AF626` on **exactly one** element (a live value or a status glyph). Mono leads here by design (the global mono-restraint still governs other work, and even here body prose over ~2 lines uses a sans). Do: `tabular-nums`, tight 1px dividers, one green. Don't: a second neon, a blinking cursor in the hero (§13), green on more than one element.
 6. **Warm-Monochrome Editorial** (Notion-like docs, productivity, calm SaaS): `#F7F6F3` canvas, ink text, pastel accents each **paired with its own matching text color** (bg `#FDEBEC` with text `#9F2F2D`, bg `#EAF3EC` with text `#2F6F3E`, and so on), cards a hairline `1px solid #EAEAEA`. Do: soft pastel blocks with legible paired text, generous line-height, one accent family per block. Don't: saturate the pastels, float decorative pills, or invert a section's canvas (see Page Theme Lock, §13).
 
 ### Layout archetypes
@@ -515,7 +506,7 @@ Pull from this library for visually striking output. Default to the framework-na
 
 ### Typography
 - Kinetic Marquee (Tier ≥ 1 — Section 6 has the CSS), Text Mask Reveal, Text Scramble.
-- Italic Accent Words in a sans headline (Tier ≥ 2 — Rule 1).
+- Same-Family Italic / Heavier-Weight Emphasis in a headline (Rule 1).
 - Circular Text Path, Gradient Stroke Animation.
 
 ### Micro-interactions
@@ -591,18 +582,20 @@ Full detail: [interaction-design.md](reference/interaction-design.md), [responsi
 | **Clash Display** | Strong, editorial | Display, luxury | Free | 200–700 |
 | **Plus Jakarta Sans** | Friendly, professional | Body, UI | Free (Google) | 200–800 |
 | **DM Sans** | Geometric, grotesque | Modern, clean | Free (Google) | 100–900 |
+| **Inter Display** | Neutral, high-legibility display | Premium/creative display headings | Free (Google) | 100–900 |
+| **Inter** | Neutral workhorse | Neutral / Linear-style / utility UI | Free (Google) | 100–900 |
 
 ### Editorial serif (luxury/creative only)
 
 | Font | Character | Best for | License |
 |---|---|---|---|
 | **PP Editorial New** | High-fashion editorial | Luxury, real estate | Commercial |
-| **Instrument Serif** | Italic accent words in a sans headline | Tier ≥ 2 — luxury, creative, premium SaaS | Free (Google) |
+| **Instrument Serif** | Editorial serif display (overused as an AI default, do not default to it) | Genuine full-serif editorial headers | Free (Google) |
 | **Newsreader** | Modern, screen-optimized serif | Articles, editorial | Free (Google) |
 | **Crimson Pro** | Contemporary classic | Body text, articles | Free (Google) |
 | **EB Garamond** | Elegant, classical | Editorial, literary | Free (Google) |
 
-**Instrument Serif italic** is the secret weapon. Load only the italic (`ital@1`) and apply it to one or two key words inside a grotesque sans H1 (Geist/Satoshi/Cabinet Grotesk). It makes a hero look editorial-cinema premium with zero structural effort. See Rule 1 (Italic accent words).
+**Instrument Serif and Fraunces are overused AI defaults, do not default to them.** Both are legitimate for a genuine full-serif editorial header or body (whole line in the serif), but they have become the reflex serif for AI output, so reach for them deliberately, not by habit. Never inject a serif italic word into a sans headline: that mixed-family accent is burned (see Rule 1). Emphasis inside a sans headline comes from the same family's italic or a heavier weight.
 
 ### Monospace (data/code)
 
@@ -624,7 +617,7 @@ Pixel-font rules:
 - Only in small doses: a logo, labels, stat numbers, one micro-headline. NEVER body or paragraphs (illegible under 14px).
 - Always via a dedicated var (`--font-pixel`) separate from heading/body — it's a third-layer accent, it doesn't replace the main pair.
 - Single `font-weight: 400` — don't attempt bold/light on a pixel font.
-- When a pixel accent carries the whole identity (retro/gaming/internet-native), a neutral body (Inter/Geist) is a feature, not slop. Outside that pattern, the Inter ban still holds.
+- When a pixel accent carries the whole identity (retro/gaming/internet-native), a neutral body (Inter/Geist) is a feature, not slop. Inter is no longer globally banned (§12): plain Inter is fine for neutral/utility UI and Inter Display for premium/creative display; only Roboto/Arial/Open Sans/Helvetica stay banned for premium/creative.
 
 ### Pairing rules
 
@@ -658,10 +651,12 @@ Where to get the free fonts: [Fontshare](https://fontshare.com) (Satoshi, Cabine
 - NO custom mouse cursors. Outdated, kills a11y.
 - NO pulsing/breathing status dot (a green "online" dot with a pulsing `box-shadow`, an eyebrow with a blinking dot). A pulsing green dot is the absolute AI/SaaS-template cliché. A "published/live/online" state = a static checkmark, a flat icon, or text — never a breathing dot.
 - NO terminal/CLI styling in marketing UI: a blinking cursor (`▌`), a prompt caret (`›`/`$`/`>`) before text, a terminal "typing" effect in the hero = generic AI dev-tool look. A product input = a real field with a placeholder, not a terminal line.
+- NO defaulting to the warm cream + brass/clay/oxblood/ochre + espresso palette (cream `#FDFBF7`, brass/clay/oxblood/ochre mids, espresso text): it is one of the most recurring AI-generated "premium" looks. It is a valid *option*, never the reflex answer; rotate to an alternative (Rule 2).
 - NO skeleton/gray-block product mock (gray bars faking text, empty rectangles). A "coded dashboard/product mock" (Tier 3) = real UI: legible text, real micro-components (a button with a label, an input with a placeholder, a chat bubble with a real sentence, a preview with a real headline), brand colors. Gray blocks = an unfinished wireframe, not premium.
 
 ### Typography
-- NO Inter, Roboto, Arial, Open Sans, Helvetica for premium/creative.
+- NO Roboto, Arial, Open Sans, Helvetica for premium/creative. (Inter Display is acceptable for premium/creative; plain Inter for neutral/Linear-style/utility UI.)
+- NO serif accent word injected into a sans headline (mixed-family emphasis). Use the same family's italic or a heavier weight.
 - NO oversized H1s. Hierarchy via weight + color, not just scale.
 - NO serif on dashboards.
 - NO mono as the default UI voice. Monospace only for real code/terminal/CLI. Mono in an eyebrow, label, note, decorative URL, stat number, price, footer header, caption = AI look. If it's not code, it's not mono. (Detail in §12.)

@@ -2,7 +2,7 @@
 
 A [Claude Code](https://claude.com/claude-code) skill that makes AI build websites that look like a real product team shipped them, not like a language model guessed at "modern and clean."
 
-Most AI-generated sites share the same tells: Inter everywhere, a purple gradient glow, three identical card columns, a pulsing green "online" dot, mono font on every label, an oversized H1 that fills the screen. This skill is a system for avoiding all of that on purpose: design dials tuned per segment, vibe and layout archetypes, a motion engine with real easing and duration rules, a curated font catalog, and a hard list of the AI tells to never ship.
+Most AI-generated sites share the same tells: the same handful of default fonts everywhere, a purple gradient glow, three identical card columns, a pulsing green "online" dot, mono font on every label, an oversized H1 that fills the screen. This skill is a system for avoiding all of that on purpose: design dials tuned per segment, vibe and layout archetypes, a motion engine with real easing and duration rules, a curated font catalog, and a hard list of the AI tells to never ship.
 
 **React-first.** Vue and vanilla CSS/JS are first-class too. If nothing is specified, it assumes React.
 
