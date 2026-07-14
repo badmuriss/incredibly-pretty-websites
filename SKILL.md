@@ -31,6 +31,7 @@ Reference files:
 - [component-libs.md](reference/component-libs.md) — **(React-only)** copy-in animated components: Magic UI, React Bits, animated Lucide icons via the shadcn registry
 - [scroll-motion.md](reference/scroll-motion.md) — **(Tier 3)** GSAP ScrollTrigger + Lenis smooth-scroll, with perf/a11y guardrails
 - [media-pipeline.md](reference/media-pipeline.md) — **(Tier 3, cost-gated)** stock photos and image→video via Magnific, self-hosted, with a `<video>` recipe
+- [redesign.md](reference/redesign.md) : **(redesign/audit mode)** Scan, Diagnose, Fix; mode detection (Greenfield / Preserve / Overhaul); what never changes silently (SEO-first)
 
 ---
 
@@ -41,6 +42,8 @@ Reference files:
 **Interview:** triggered when the invocation explicitly asks for it. Before researching or designing, gather the brief in one or two short rounds: segment/product, audience, primary goal, tone, the objection to overcome, references the client likes, constraints (brand, framework, deadline). Confirm, then proceed.
 
 Both modes do the research in Section 0. The only difference is where the brief comes from: autonomous infers it from context, interview asks.
+
+**Redesigning an existing site rather than building fresh?** See [redesign.md](reference/redesign.md) for audit mode (Scan, Diagnose, Fix) and the Preserve-vs-Overhaul rules. Both modes above still apply; a redesign just also protects the live site's URLs and SEO baseline.
 
 ---
 
@@ -161,6 +164,28 @@ Use these as global vars to drive the decisions below.
   - **Grid over flex-math:** NEVER `w-[calc(33%-1rem)]`. ALWAYS CSS Grid.
 - **Icons:** Use **Phosphor Icons** for the framework (`@phosphor-icons/react`, `@phosphor-icons/vue`). Static Lucide is BANNED (it reads as generic AI-SaaS, everyone uses it). **Exception:** a hover/focus-animated icon via **lucide-animated** ([component-libs.md](reference/component-libs.md)) as seasoning in one or two spots (CTA, active nav), never as the general static icon set. Pick one weight (`regular`/`bold`) project-wide. SVG primitives are fine for one-offs. NEVER an icon inside a background box (`bg-primary rounded-lg p-3 <Icon/>`) — use a flat colored icon (`text-primary`/`text-accent`) with no box (exception: a pictogram inside a numbered step-card). **WhatsApp:** always the official inline brand `<svg>` (chat bubble with phone), never a generic `MessageCircle`.
 
+### 3.1 Brief → official design system (enterprise / regulated / platform-consistent)
+
+For a brief that must match a known ecosystem (internal tools, dashboards, government or public services, a product that has to feel native to a platform), install the **official design system** instead of hand-rolling one. It ships accessible components, tokens, and interaction patterns a from-scratch build won't match, and it reads as correct to that audience.
+
+| Brief signal | Official package | Form |
+|---|---|---|
+| Microsoft / Office / Fluent look | **Fluent UI** (`@fluentui/react-components`) | real package |
+| Google / Android / Material | **Material 3** (`@mui/material` or Material Web) | real package |
+| IBM / enterprise data / dense tables | **Carbon** (`@carbon/react`) | real package |
+| Shopify / commerce admin | **Polaris** (`@shopify/polaris`) | real package |
+| Atlassian-style tooling | **Atlaskit** (`@atlaskit/*`) | real package |
+| GitHub-like dev tool | **Primer** (`@primer/react`) | real package |
+| UK gov / public service | **govuk-frontend** | real package |
+| US gov / public service | **uswds** (U.S. Web Design System) | real package |
+| Neutral accessible primitives | **Radix Themes** | real package |
+| Legacy / quick internal / Bootstrap shop | **Bootstrap 5.3** | real package |
+| React default (already governed here) | **shadcn/ui** | copy-in, customized per §3, §13 |
+
+**Honesty rule.** Install the official package and use its real components. Do NOT recreate its CSS by hand, do NOT import its tokens then override 90% of them, do NOT ship a "Fluent-inspired" lookalike that skips the actual accessibility work. **One design system per project** (Carbon buttons next to Material inputs looks broken). There is no official `liquid-glass.css` or any single-file "Apple glass" drop-in: techniques like liquid-glass (§6) are **approximations** we build, so label them as such and never present them as an official system.
+
+This complements the **PREMIUM_TECH_TIER** gating (§1): the tier decides how expensive the motion and effects get; this table decides whether the brief should adopt an official system at all. A creative or luxury brand brief still uses the vibe archetypes (§5), not a corporate design system.
+
 ## 4. DESIGN ENGINEERING DIRECTIVES
 
 **Rule 1: Deterministic typography**
@@ -176,7 +201,9 @@ Use these as global vars to drive the decisions below.
     - Pattern: a grotesque sans heading + one or two key words in **serif italic** (Instrument Serif italic, PP Editorial New italic, Newsreader italic).
     - Example: `<h1>Beyond silence, we build <span class="italic font-serif text-foreground/60">the eternal</span>.</h1>`
     - Rule: one italic span per H1, max two in the whole site. The span can be slightly faded (`text-foreground/55` to `/60`) for rhythm.
-    - Allowed families: Instrument Serif italic (favorite), PP Editorial New italic, Newsreader italic, Crimson Pro italic.
+    - Allowed families: Instrument Serif italic, PP Editorial New italic, Newsreader italic, Crimson Pro italic.
+    - **Rotate the accent family.** Instrument Serif italic is the signature move here, but it is now common enough to read as a tell on its own. Keep it in the kit and rotate between projects (PP Editorial New italic, Newsreader italic, Crimson Pro italic are equally premium). Don't ship Instrument Serif as the accent on every site.
+    - **Italic descender clearance:** when the italic display word has a descender (y, g, j, p, q), `leading-none` / `leading-[1]` clips the tail. Give that line at least `leading-[1.1]` plus `pb-1`/`mb-1` so the descender has room.
     - FORBIDDEN in Tier 0–1 — it turns pretentious for a traditional office or local shop.
   - **ANTI-SLOP:** Inter is BANNED for premium/creative. Use Geist, Outfit, Cabinet Grotesk, Satoshi, Clash Display, PP Editorial New.
   - **SERIF RULE:** Serif is BANNED for dashboards/software UI. Use sans-only pairs (Geist+Geist Mono, Satoshi+JetBrains Mono). Serif is welcome for editorial/luxury landing pages.
@@ -191,6 +218,7 @@ Use these as global vars to drive the decisions below.
 - Max one accent color. Saturation < 80%.
 - **THE PURPLE BAN:** the "AI purple/blue" aesthetic is BANNED. No purple glows, no neon gradients. Neutral bases (Zinc/Slate) + a single high-contrast accent (Emerald, Electric Blue, Deep Rose).
 - **Color consistency:** one palette project-wide. No warm/cool gray fluctuation.
+- **Palette rotation (avoid the recurring-AI-palette tell):** warm cream + brass/clay/oxblood/ochre + espresso is now one of the most over-used "premium" AI palettes. It is still legitimate (Editorial Luxury owns it, §5), but do NOT default to cream+brass for every premium brief. **Rotate palettes between projects; never ship the same palette on two consecutive projects.** Rotation menu (directions, not prescriptions): cold luxury (charcoal + platinum + ice blue), forest (deep green + bone + copper), black-and-tan, cobalt + cream, terracotta + slate, olive + brick, mono + one pop. Let research (§0) pick, not reflex.
 
 **Rule 3: Layout variation**
 - DESIGN_VARIANCE ≤ 6: centered is fine. Split/asymmetric preferred.
@@ -203,6 +231,7 @@ Use these as global vars to drive the decisions below.
 - **Layered shadow > solid border (cheap premium feel):** a 1px solid border is flat and "drawn." Replace it with two or three stacked semi-transparent box-shadows (`0 1px 2px rgba(0,0,0,.04), 0 4px 8px rgba(0,0,0,.04), 0 16px 24px rgba(0,0,0,.06)`) — they adapt to any background and give real depth. Use a thin border only when you genuinely need a crisp 1px separation (a divider).
 - **1px outline to "seat" an image/card on the background:** an image or card on a light background floats without definition. Add `outline: 1px solid rgba(0,0,0,0.08)` (light) or `rgba(255,255,255,0.08)` (dark) — **pure black/white with alpha, never a tinted gray** (tinted gray muddies the edge). `outline` doesn't push layout (unlike `border`).
 - **Concentric radius (the #1 reason UI looks "off"):** a nested container needs `outer_radius = inner_radius + padding`. A card `rounded-[1.5rem] p-2` gets an inner child `rounded-[calc(1.5rem-0.5rem)]`. Mismatched radii create a lopsided "thick shell."
+- **Radius scale lock:** pick ONE corner-radius system and lock it for the whole project. Either one radius scale everywhere, or a documented per-role system (pills for buttons, `16px` cards, `8px` inputs). Mixing `rounded-lg` here, `rounded-3xl` there, and sharp corners elsewhere reads as unfinished. Lock the scale first, then apply the concentric math above wherever you nest.
 
 **Rule 5: Interactive UI states** (full detail: [interaction-design.md](reference/interaction-design.md))
 - Design all 8 states: default, hover, focus, active, disabled, loading, error, success.
@@ -234,7 +263,15 @@ Pick ONE vibe + ONE layout before writing code.
    ```
 
    FORBIDDEN on a scrolling container (DOM cost). Use only on fixed/pseudo elements. On the hero, `position: absolute; inset: 0;` covering just the hero is fine.
+
+   **Rotation caution:** the cream `#FDFBF7` + sage + espresso family (and its brass/clay/oxblood/ochre cousins) is now a top-recurring AI palette. Editorial Luxury legitimately owns it, but rotate it between projects (see Rule 2, palette rotation): don't make cream+brass your default answer to every premium brief.
 3. **Soft Structuralism** (Consumer/Health/Portfolio): silver-grey/white backgrounds. Bold grotesk type. Floating components with ultra-soft diffused ambient shadows.
+
+**Optional archetypes (below).** Each carries an explicit **scoped-exception** clause wherever it touches a global ban. A scoped exception applies only inside that archetype and never relaxes the global rule elsewhere.
+
+4. **Swiss Industrial Print / Brutalist** (editorial, design studio, bold DTC, manifestos): off-white substrate `#F4F4F0`, ink-black text, a single hot red accent `#E61919`, radius `0` everywhere, visible `<hr>` rules and hard grid lines. Type: a heavy monolithic grotesque (**Archivo Black**, **Monument Extended**, or a heavy catalog grotesque like **Cabinet Grotesk 900** / **Clash Display Bold**). **Scoped exception (fonts):** if it wants an ultra-neutral heavy sans, name a non-banned heavy grotesque (above); do NOT reach for Inter/Helvetica here, the Inter ban (§12) still holds inside this archetype too. Do: big flush-left type slabs, thick rules, one red. Don't: rounded corners, soft shadows, gradients, a second accent color.
+5. **Tactical / CRT Telemetry** (dev tools, security, trading, retro-tech): near-black `#0A0A0A` canvas, tabular data density, a faint scanline overlay, phosphor green `#4AF626` on **exactly one** element (a live value or a status glyph). Mono is the dominant type voice. **Scoped exception (mono):** this archetype intentionally makes mono the dominant voice, a scoped exception to the global mono-restraint rule (§12, §13) that applies ONLY inside this archetype: it does not relax the mono rule anywhere else, and even here body prose over ~2 lines still uses a sans. Do: `tabular-nums`, tight 1px dividers, one green. Don't: a second neon, a blinking cursor in the hero (§13), green on more than one element.
+6. **Warm-Monochrome Editorial** (Notion-like docs, productivity, calm SaaS): `#F7F6F3` canvas, ink text, pastel accents each **paired with its own matching text color** (bg `#FDEBEC` with text `#9F2F2D`, bg `#EAF3EC` with text `#2F6F3E`, and so on), cards a hairline `1px solid #EAEAEA`. Do: soft pastel blocks with legible paired text, generous line-height, one accent family per block. Don't: saturate the pastels, float decorative pills, or invert a section's canvas (see Page Theme Lock, §13).
 
 ### Layout archetypes
 
@@ -645,7 +682,9 @@ Where to get the free fonts: [Fontshare](https://fontshare.com) (Satoshi, Cabine
 - NO hero split with the image inside a framed card (`bg-primary` + `border` + separate `border-radius` from the hero bg). When the image fails it becomes an ugly solid rectangle; when it loads it looks like a pasted screenshot. Use a floating PNG cutout, a full-bleed bg image, OR a diagonal-cut split.
 - NO `<img>` pointing at a file that wasn't generated. Always verify the file exists before writing the `<img>`.
 - NO nav bg different from the top of the hero bg (nav navy + white-gradient hero = a "band" at the top). Match the colors.
-- NO repeating the same layout (title left + content right) in every section. Alternate between split LR, split RL, centered, asymmetric/editorial, bento grid, gallery grid, full-bleed dark.
+- NO repeating the same layout (title left + content right) in every section. Alternate between split LR, split RL, centered, asymmetric/editorial, bento grid, gallery grid, full-bleed dark. (Countable version: §14.)
+- PAGE THEME LOCK: one theme per page. No section silently inverts the canvas (a light page with one random dark section, or the reverse, reads as a stitched-together template). Exception: a deliberate, once-per-page "Color Block Story" section that is clearly an intentional feature, not a stray invert.
+- SPLIT-HEADER BAN (default): the "big headline left + small paragraph right" section header is an AI-template default. Stack the header vertically (eyebrow, headline, subhead) UNLESS the right column carries a real visual or interactive element (a live demo, an image, a stat block), not just a paragraph.
 - NO tiny "one logo + one paragraph" footer. A proper footer = brand row + 2–3 columns (Navigation / Contact / Address) + bottom copyright + a segment disclaimer where relevant.
 - NO template/lorem links in the footer (`/privacy`, "Terms on request," "Email on request"). A preview has no such pages; the links 404 and the placeholders are an AI tell. The footer's Contact column has only working channels with real data (omit an entry if empty).
 - NO heading glued to body text. An h2 → adjacent `<p>` MUST have `margin-top: 1rem` (`h2 + p { margin-top: 1rem }`). Without it they read as one block.
@@ -665,6 +704,20 @@ Where to get the free fonts: [Fontshare](https://fontshare.com) (Satoshi, Cabine
 - NO AI copy clichés. "Elevate," "Seamless," "Unleash," "Next-Gen" are banned. Concrete verbs.
 - NO redundant repeated text (the same name/label in the eyebrow + H1 + footer, or "First Last" stacked on two giant lines). Repeating a string in three places "for emphasis" is a classic AI tell. A name appears once strong (hero) + in the `<title>`; the footer uses a different form (© Name) or nothing.
 - MATCH THE OWNER'S REAL VOICE, don't invent hyped copy. If a voice source exists (a GitHub README, a bio, posts, an existing landing), mirror its register (humble lowercase, EN/PT, dry/warm tone). Default premium-personal = low-profile > hype: "building cool things with tech, mostly backend & ai" beats "Founder @ X · GenAI · Full-stack" in pills. Meta pills (`Full-stack` `GenAI` `Founder`) scattered around = AI noise; prefer one honest sentence.
+
+### Production tells (specific, high-signal)
+
+Concrete patterns that keep surfacing in generated pages. Each one alone marks a page as AI-made:
+- **Version labels in the hero** (`V0.6`, `BETA`, `v2.0`) as decoration. A real product doesn't badge its marketing hero with a version.
+- **Numbered section eyebrows** (`00 / INDEX`, `001 · Capabilities`, a bare `05`). Decorative index numbers on sections are a template tell.
+- **Meta-labels** announcing structure (`SECTION 01`, `QUESTION 05`, `CHAPTER 02`). Let the content mark the section, not a label.
+- **Scroll-cue text** ("Scroll to explore", "Scroll down"). If the page invites scrolling, the content does that, not a caption.
+- **Rotated vertical text** (a sideways word running down the edge). Decorative, illegible, a tell.
+- **Crosshair / hairline-grid decoration** (corner crosshairs, a faint blueprint grid, registration marks). Slide-wallpaper.
+- **"Quietly trusted by"** and other coy trust lines. Name who, with real logos (§15), or drop it.
+- **Poetic section labels** ("Field notes", "On our desks", "Ephemera"). Name the section for what it is.
+- **Weather / locale strips** (`LIS 14:23 · 18°C`, a fake local-time clock). Ambient noise pretending at atmosphere.
+- **Fake scarcity counters** ("Reservation 412 of 800", "Only 3 left" with no real inventory). Invented urgency, and a fake number (see Content & data above).
 
 ### Link lists / link-in-bio (linktree-style)
 - Link rows with only text (name + sub) look uniform and aren't scannable. Always lead each row with a recognizable mark: the **official brand logo** for known channels (github/x/linkedin/instagram, as a monochrome SVG via `currentColor` so it survives an invert-hover) + a **monogram/icon** for your own products. The icon is what makes the list scannable, not the text.
@@ -707,6 +760,27 @@ Before/after/why self-audit:
 - [ ] Focus visible only via `:focus-visible`?
 - [ ] All interactive elements ≥ 44px on a coarse pointer?
 
+### Countable pre-flight (turn tells into numbers)
+
+Qualitative tells are easy to rationalize away, so count them. If a count exceeds its cap, it is a fail: fix before returning.
+
+- **Eyebrows:** count eyebrow/kicker pills on the page. Cap = `ceil(sections / 3)` (and still max one per section). Above that = eyebrow spam.
+- **Zigzag cap:** count consecutive image+text split sections. Max 2 in a row; a 3rd consecutive split is a fail (break it with a different layout family).
+- **Section-layout variety:** each layout family (split-LR, split-RL, centered, bento, gallery, full-bleed, editorial-asymmetric) appears at most about once. An 8-section page uses ≥ 4 distinct families. Count the families; below half the section count is too repetitive.
+- **Bento cells:** cell count = number of real content items. Zero empty or filler cells.
+- **Marquee:** max 1 per page. Count them.
+- **CTA intent:** "Get in touch" + "Contact us" + "Let's talk" is ONE intent. Count distinct CTA intents, not labels; duplicate intents collapse to a single label.
+- **CTA label:** ≤ 3 words, fits one line, never wraps. Count the words.
+- **Hero stack:** max 4 text elements (eyebrow, headline, subtext, CTA row). Subtext ≤ 20 words / ≤ 4 lines. Headline ≤ 2 lines. Hero top padding cap about `pt-24`.
+- **Nav:** one line on desktop, height ≤ 80px (default 64–72px). Measure it.
+
+### Count-lock completion gate
+
+Before returning a multi-part deliverable, **lock the count**. Asked for 6 sections? Ship 6 fully built sections, not 3 plus a "continue the pattern" note.
+
+- **Truncation blocklist** (if any appears in the output, it is incomplete): `// ...`, `/* rest omitted */`, "rest follows the same pattern", "and so on", "for brevity", "repeat for the others", a skeleton/stub where full implementation was asked.
+- **Count the deliverables, lock the number, cross-check before returning.** Asked for N cards/sections/pages, count N in the output. A partial build that looks done is worse than an honest "built 3 of 6, here's the rest to add."
+
 ## 15. COPY, CONTRAST & MEDIA HARDENING
 
 Battle-tested rules from real site generation. They apply to any piece.
@@ -747,6 +821,19 @@ Pick the shape that best communicates the business:
 ### Images / avatars
 - **Stock photos:** source real, licensed imagery (Magnific stock — `mcp__magnific__stock_search` — if available, or any licensed stock source). Never hotlink Unsplash or `picsum.photos` in production. Save the real URL in the content.
 - **Testimonial avatars:** NEVER a fake stock photo of a person (it reads as AI). Use a Google-style initial: a color-blocked circle (brand color) + the first letter of the first name, white, bold, ~14–16px. Vary the color between testimonials.
+
+### Quotes / testimonials
+- **Quote body ≤ 3 lines.** A testimonial is a punch, not a paragraph. Trim to the one sentence that sells.
+- **Attribution is always name + role** (Ana Ribeiro, Head of Ops at Lumen), never a bare first name ("Sarah") and never "Individual client" (see §13).
+- **Real typographic quotes (curly), or none.** Never ASCII straight quotes as decoration.
+- **Zero em-dash inside the quote** (a top AI copy tell, above): use a comma or a period.
+- The avatar rules above still apply (initial-in-a-circle, never a fake stock face, no role tag inside the circle).
+
+### Logo walls / brand marks
+- **Real brand logos via Simple Icons.** For a "trusted by" strip, a logo wall, or a link row with known brands, use real SVGs: `https://cdn.simpleicons.org/{slug}/{color}` (e.g. `cdn.simpleicons.org/stripe/635BFF`) or the `simple-icons` npm package for inline SVG. This is the named source behind the "official brand logo" rule in §13.
+- **Invented brand? Generate an inline SVG monogram** (a lettermark in a tinted block). Never fake a downloaded logo.
+- **Logo-only.** No category label under the logo ("Payments", "CRM"): the logo is the label. A caption under each logo is a tell.
+- **Light + dark.** Ensure each mark renders on both canvases (monochrome via `currentColor`, or the correct color per theme). A logo wall that vanishes on the dark section is a bug.
 
 ## License
 

@@ -18,6 +18,7 @@ Most AI-generated sites share the same tells: Inter everywhere, a purple gradien
   - `component-libs.md` — copy-in animated components (Magic UI, React Bits, animated Lucide icons)
   - `scroll-motion.md` — GSAP ScrollTrigger + Lenis smooth-scroll, with perf/a11y guardrails
   - `media-pipeline.md` — stock photos and image→video via Magnific, self-hosted
+  - `redesign.md` : redesign/audit mode (Scan, Diagnose, Fix) with what-never-changes-silently and SEO-safe migration
 
 ## Install
 
