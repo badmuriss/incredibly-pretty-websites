@@ -1,7 +1,7 @@
 ---
 name: incredibly-pretty-websites
 description: |
-  Make Claude build genuinely beautiful, non-AI-slop websites. React-first (Vue
+  Make your coding agent build genuinely beautiful, non-AI-slop websites. React-first (Vue
   and vanilla CSS/JS also supported). Research-driven: study real shipped
   products before writing a line, then apply a system of design dials,
   vibe/layout archetypes, a motion engine, a curated font catalog, and a hard

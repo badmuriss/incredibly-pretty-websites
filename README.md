@@ -1,6 +1,6 @@
 # Incredibly Pretty Websites
 
-A [Claude Code](https://claude.com/claude-code) skill that makes AI build websites that look like a real product team shipped them, not like a language model guessed at "modern and clean."
+An agent skill ([skills](https://skills.sh) format — Claude Code, Codex, OpenCode, Cursor) that makes AI build websites that look like a real product team shipped them, not like a language model guessed at "modern and clean."
 
 Most AI-generated sites share the same tells: the same handful of default fonts everywhere, a purple gradient glow, three identical card columns, a pulsing green "online" dot, mono font on every label, an oversized H1 that fills the screen. This skill is a system for avoiding all of that on purpose: design dials tuned per segment, vibe and layout archetypes, a motion engine with real easing and duration rules, a curated font catalog, and a hard list of the AI tells to never ship.
 
@@ -32,7 +32,7 @@ Works with Claude Code and any agent supporting the [skills](https://skills.sh) 
 git clone https://github.com/badmuriss/incredibly-pretty-websites ~/.claude/skills/incredibly-pretty-websites
 ```
 
-Then just ask Claude to build a site. The skill triggers on frontend/design work, or invoke it explicitly. It works fully on its own — the premium integrations below are optional.
+Then just ask your agent to build a site. The skill triggers on frontend/design work, or invoke it explicitly. It works fully on its own — the premium integrations below are optional.
 
 ## The stack it recommends
 
