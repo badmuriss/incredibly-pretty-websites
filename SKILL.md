@@ -337,6 +337,8 @@ Full technical detail: [motion-design.md](reference/motion-design.md) (includes 
 
 **Never animate keyboard-initiated actions.**
 
+**Name the purpose or don't animate.** Every animation must answer "why?" with one of: **feedback** (interface heard the user — press scale), **spatial consistency** (toast exits the edge it entered; panel grows from its trigger), **state indication** (morphing button, expanding accordion), **preventing a jarring change** (content that would teleport), **delight** (ONLY at the rare/first-time tier). "It looks cool" is not on the list — reject the animation. Expect to reject most candidates; a page with 3 purposeful animations beats one with 12 decorative ones.
+
 ### Easing curves
 
 Built-in CSS easings lack punch. Use custom:
@@ -670,7 +672,7 @@ Where to get the free fonts: [Fontshare](https://fontshare.com) (Satoshi, Cabine
 - NO `border-left: Npx solid color` callout (side-stripe = AI dashboard cliché).
 - NO decorative floating pills (loose words in floating pills around the headline like "Google," "SMB," "AI," "+340%"). A single eyebrow above the headline is fine; ambient decorative pills = gratuitous noise.
 - NO faded circle/ring/blob behind the headline (a radial SVG, a "wireframe globe," a big concentric circle). Visual AI cliché.
-- NO diagonal stripe pattern bg, NO dense full-bleed grid pattern. Reads as slide wallpaper.
+- NO decorative background pattern, PERIOD — any variant is a hard AI tell: diagonal stripes (parallel hairlines), dot grid, full-bleed grid lines, topographic/contour lines, hexagons, SVG waves, circuit board. **Worst form: pattern ON TOP of a gradient** (dark gradient + diagonal hairlines = corporate slide wallpaper). Premium background = solid color, clean subtle gradient, photo, or noise ≤5%. If a section "needs texture" to not look empty, fix the section's content/layout, not the background.
 - NO 3+ CTAs in the hero. Valid combos: (a) one primary button + one underlined secondary link [default], (b) one button only, (c) two buttons of equal size, (d) two stacked buttons with the primary on top and larger. NEVER a primary on top that's smaller than the secondary below.
 - NO hero H1 with `font-size` > 4rem (64px). FORBIDDEN `clamp(2.35rem, 11vw, 5rem)` or similar — at a 1440px viewport, 11vw = 158px, an H1 that fills the screen. Use `clamp(2rem, 5vw, 4rem)` max.
 - NO hero copy container `max-w` < 42ch. FORBIDDEN `max-w-[10.5ch]` on the H1 (funnels into a "word tower").

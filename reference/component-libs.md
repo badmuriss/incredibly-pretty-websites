@@ -64,7 +64,7 @@ npx shadcn@latest add @react-bits/<Name>-TS-TW        # PascalCase + variant! e.
 **Animation:** `blur-fade` (the staggered-entrance workhorse)
 **Device mocks:** `safari` `iphone` `android` (for a product mockup)
 **Buttons:** `shimmer-button` `rainbow-button` `ripple-button` `pulsating-button` `interactive-hover-button` `shiny-button`
-**Backgrounds:** `flickering-grid` `animated-grid-pattern` `retro-grid` `ripple` `dot-pattern` `grid-pattern` `hexagon-pattern` `striped-pattern` `interactive-grid-pattern` `light-rays` `noise-texture`
+**Backgrounds:** `noise-texture` (≤5% opacity) and `light-rays` (dark hero only, subtle) are the ONLY allowed ones. ~~`flickering-grid` `animated-grid-pattern` `retro-grid` `ripple` `dot-pattern` `grid-pattern` `hexagon-pattern` `striped-pattern` `interactive-grid-pattern`~~ — **BANNED**: decorative bg patterns (grids, dots, stripes, hexagons) are the #1 AI tell, worst over a gradient (slide-wallpaper look). See SKILL.md §13. Premium background = solid color, clean subtle gradient, or photo.
 
 ## React Bits — picks worth more than Magic UI (PascalCase-TS-TW)
 
