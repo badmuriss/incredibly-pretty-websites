@@ -40,6 +40,7 @@ Reference files:
 - [scroll-motion.md](reference/scroll-motion.md) — **(Tier 3)** GSAP ScrollTrigger + Lenis smooth-scroll, with perf/a11y guardrails
 - [media-pipeline.md](reference/media-pipeline.md) — **(Tier 3, cost-gated)** stock photos and image→video via Magnific, self-hosted, with a `<video>` recipe
 - [redesign.md](reference/redesign.md) : **(redesign/audit mode)** Scan, Diagnose, Fix; mode detection (Greenfield / Preserve / Overhaul); what never changes silently (SEO-first)
+- [seo-foundations.md](reference/seo-foundations.md) — build-time SEO: head/meta/OG, semantic structure, schema.org, crawlability, slugs. Read for every page that should rank or be shared.
 
 ---
 
@@ -733,6 +734,8 @@ Concrete patterns that keep surfacing in generated pages. Each one alone marks a
 - shadcn/ui: allowed but NEVER the default look. Customize radii, colors, shadows.
 
 ## 14. REVIEW CHECKLIST
+
+Built and deployed? Run the [site-audit](https://github.com/badmuriss/site-audit) skill against the live URL — UX walkthrough, on-page SEO, and Core Web Vitals with hard gates. This checklist is the build-time self-audit; site-audit is the live verification.
 
 Before/after/why self-audit:
 
