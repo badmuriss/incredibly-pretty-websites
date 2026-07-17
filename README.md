@@ -22,13 +22,13 @@ Most AI-generated sites share the same tells: the same handful of default fonts 
 
 ## Install
 
-Drop the skill into any Claude Code project:
+```bash
+npx skills add badmuriss/incredibly-pretty-websites
+```
+
+Works with Claude Code and any agent supporting the [skills](https://skills.sh) format. Manual alternative:
 
 ```bash
-# project-level
-git clone https://github.com/badmuriss/incredibly-pretty-websites .claude/skills/incredibly-pretty-websites
-
-# or user-level (available in every project)
 git clone https://github.com/badmuriss/incredibly-pretty-websites ~/.claude/skills/incredibly-pretty-websites
 ```
 
