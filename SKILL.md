@@ -1,6 +1,14 @@
 ---
 name: incredibly-pretty-websites
-description: Make Claude build genuinely beautiful, non-AI-slop websites. React-first (Vue and vanilla CSS/JS also supported). Research-driven: study real shipped products before writing a line, then apply a system of design dials, vibe/layout archetypes, a motion engine, a curated font catalog, and a hard list of AI tells to avoid. Governs typography, color, layout, animation, spacing, icons, interactive states, responsiveness, and accessibility. Optional premium research (Refero) and media (Magnific) layers, with free fallbacks.
+description: |
+  Make Claude build genuinely beautiful, non-AI-slop websites. React-first (Vue
+  and vanilla CSS/JS also supported). Research-driven: study real shipped
+  products before writing a line, then apply a system of design dials,
+  vibe/layout archetypes, a motion engine, a curated font catalog, and a hard
+  list of AI tells to avoid. Governs typography, color, layout, animation,
+  spacing, icons, interactive states, responsiveness, and accessibility.
+  Optional premium research (Refero) and media (Magnific) layers, with free
+  fallbacks.
 version: 1.0.0
 author: Murilo Moura
 license: MIT
