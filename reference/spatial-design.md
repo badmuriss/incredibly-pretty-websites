@@ -16,6 +16,12 @@ Name spacing tokens after their role (`--space-sm`, `--space-lg`) rather than th
 
 `repeat(auto-fit, minmax(280px, 1fr))` gives you a responsive grid with zero breakpoints: each column is at least 280px wide, as many fit per row as space allows, and any remaining space is distributed among them. When a layout gets more elaborate, switch to named grid areas (`grid-template-areas`) and redefine them per breakpoint instead.
 
+### Side Gutters: Don't Fear the Edge
+
+Mobile side gutters are **16–24px** (`px-4` to `px-6`), hard cap 24px. Anything bigger reads as timid and wastes the scarcest resource on the page: on a 375px screen, 48px gutters burn 25% of the width and squeeze every headline into a word tower. Generous whitespace on mobile comes from **vertical** rhythm (section padding, gaps) — never from side margins.
+
+Desktop is the opposite: gutters scale up with the viewport (`clamp(1rem, 4vw, 4rem)` on the container is a good default) and the content column is capped by `max-width`, so the breathing room lives *outside* the container, not inside the padding.
+
 ## Visual Hierarchy
 
 ### The Squint Test
