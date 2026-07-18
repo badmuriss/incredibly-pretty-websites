@@ -69,6 +69,14 @@ Viewport queries belong to page-level layout. **Container queries belong to comp
 
 **Why it matters**: the same card component stays compact inside a narrow sidebar but expands when placed in a wide content area — automatically, with no viewport-based workarounds.
 
+**Container query units** — inside a container, `cqw`/`cqi` (1% of container width/inline-size) do what `vw` does for the viewport. Use them for text that should scale with its *component*, not the screen — bento card titles, stat numbers, anything reused at different widths:
+
+```css
+.card h3 { font-size: clamp(1.125rem, 4cqi, 1.75rem); }  /* scales with the card */
+```
+
+A stat card in a 300px bento cell and the same card promoted to a 600px hero slot each get the right size for free. Viewport `vw` can't do this — it sees only the screen.
+
 ## Optical Adjustments
 
 Text with `margin-left: 0` reads as visually indented because of the whitespace baked into letterforms — nudge it with a small negative margin (`-0.05em`) to correct for it. The same goes for icons: a geometrically centered icon often looks off; a play icon typically needs a slight shift right, and directional arrows should shift toward the direction they point.

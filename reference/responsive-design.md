@@ -8,6 +8,10 @@ Author your base styles for small screens first, then layer on complexity with `
 
 Don't design around specific devices — let the content itself show you where things break. Shrink the viewport from wide to narrow (or vice versa) and add a breakpoint the moment the layout stops working, rather than targeting fixed device widths. Most projects only need three breakpoints (640px, 768px, 1024px). For values that should scale continuously instead of jumping at fixed points, reach for `clamp()`.
 
+**Deriving a clamp() that hits exact targets** (when the main skill's curated presets don't fit): to go from `MIN`px at viewport `VMIN`px to `MAX`px at viewport `VMAX`px —
+`slope = (MAX − MIN) / (VMAX − VMIN)`, then `clamp(MINrem, {MIN − slope·VMIN}px + {slope·100}vw, MAXrem)`.
+Example, 36px @ 375 → 72px @ 1440: slope = 36/1065 ≈ 0.0338 → `clamp(2.25rem, 23.3px + 3.38vw, 4.5rem)`. Eyeballing the vw factor instead of deriving it is how an H1 ends up at 158px on desktop (the banned `11vw` case).
+
 ## Detect Input Method, Not Just Screen Size
 
 **Viewport width alone won't tell you how the user is interacting with the page.** Touchscreen laptops and keyboard-paired tablets both exist, so check pointer and hover capability directly instead of guessing from screen size:
