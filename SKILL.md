@@ -128,9 +128,11 @@ Defines which "expensive-looking" techniques fit each preset. Adding a technique
 | **0: Restraint** (local business, traditional professional) | clean typography, generous spacing, simple scroll fade-in, real photography, subtle hover | liquid-glass, infinite marquee, char-by-char reveal, magnetic hover, animated gradient blobs, loading screen with counter, sticky stacking cards, dashboard mock UI |
 | **1: Subtle** (solo professional, e-commerce, health) | tier 0 + staggered fade-rise entrances, a single eyebrow pill, noise overlay ≤5% opacity, a CSS client-logo marquee (once per page, 30s+ slow), same-family italic/heavier-weight emphasis on one headline word | liquid-glass except on a card over a photo, char-by-char reveal, magnetic hover, loading screen, sticky stacking, animated gradient blobs |
 | **2: Moderate** (course, restaurant, fitness) | prior tiers + word pull-up entrance on the H1, scroll char-reveal on one institutional paragraph (one section only), liquid-glass on a card over photo/gradient, sticky scroll-stack cards in a portfolio, static gradient mesh blobs | magnetic hover (a11y-suspect on touch), loading screen counter, video bg (unsourced), dashboard mock UI |
-| **3: Full premium** (Tech/SaaS, Creative, Luxury real estate, Architecture) | everything: full liquid-glass refraction, scroll-linked bidirectional marquee, magnetic hover on a CTA, animated gradient blobs with `@property`, coded dashboard mock UI (not a screenshot) for SaaS, sticky stacking project cards, optional loading-screen counter, asymmetric bento grid, **GSAP ScrollTrigger scroll-telling + Lenis smooth-scroll** ([scroll-motion.md](reference/scroll-motion.md)), **video backgrounds** (cost-gated, [media-pipeline.md](reference/media-pipeline.md)) | none |
+| **3: Full premium** (Tech/SaaS, Creative, Luxury real estate, Architecture) | everything: full liquid-glass refraction, scroll-linked bidirectional marquee, magnetic hover on a CTA, animated gradient blobs with `@property`, coded dashboard mock UI (not a screenshot) for SaaS, sticky stacking project cards, optional loading-screen counter, asymmetric bento grid, **GSAP ScrollTrigger scroll-telling + Lenis smooth-scroll** ([scroll-motion.md](reference/scroll-motion.md)), **video backgrounds** (cost-gated, [media-pipeline.md](reference/media-pipeline.md)), the 3 Canvas UI `*-Object` three.js components (gate as Heavy WebGL, [component-libs.md](reference/component-libs.md)) | Canvas UI's 22 html-in-canvas components — Tier 3 is necessary but **not sufficient**, see the experimental ceiling below |
 
 **Rule:** read the preset's `PREMIUM_TECH_TIER` before adding any technique from this list. A lower tier never inherits a higher tier's technique. The user can explicitly override.
+
+**Experimental ceiling (above Tier 3) — Canvas UI html-in-canvas:** the 22 shader-over-live-DOM components sit above the tier table because they need a **pre-release Chrome flag** (~0% reach in unflagged traffic). Two conditions, both required: `PREMIUM_TECH_TIER` 3 **AND** a declared portfolio / experimental / creative brief where spectacle is the point. **Never in serious B2B, SaaS, checkout, health, legal or government work** — not a taste call, a reach-and-liability one. Decorative, above the fold, one per page, plain-DOM fallback designed first. Their 3 `*-Object` components carry none of this (plain three.js, work everywhere) and follow the normal Heavy WebGL rule. Full gate: [component-libs.md](reference/component-libs.md).
 
 ## 2. ACTIVE BASELINE CONFIGURATION
 
@@ -555,6 +557,7 @@ For SaaS dashboards / feature sections, use "Bento 2.0":
 - **CSS > JS under load:** CSS animations run off the main thread. CSS for predetermined, JS for dynamic/interruptible.
 - **WAAPI:** the Web Animations API = JS control + CSS perf. Hardware-accelerated, interruptible, no library.
 - **`will-change`:** don't declare it preemptively. Only when the animation is imminent (`:hover`, `.animating`).
+- **DOM-as-texture (Canvas UI):** any DOM mutation inside the wrapper forces a full element paint + a full-viewport texture upload — never wrap content that animates, types, streams or re-renders per frame. One instance per page. [component-libs.md](reference/component-libs.md).
 
 ## 11. ACCESSIBILITY
 
@@ -579,6 +582,8 @@ Full detail: [interaction-design.md](reference/interaction-design.md), [responsi
 **Focus rings:** `:focus-visible` only — never `outline: none` without a replacement. 2–3px, 3:1 contrast, offset.
 
 **Skip links:** hide off-screen, show on focus (`sr-only` + `:focus-visible`). Never animate position (no `translateY`).
+
+**Shader-over-DOM (Canvas UI):** the a11y tree survives but the *sighted mouse* user doesn't — the shader moves pixels while layout and hit-testing stay put, so the button you see is not where the button is, legibility loss passes an axe run untouched, and 1x capture softens all wrapped text. Decorative only, never over a control or body copy. [component-libs.md](reference/component-libs.md).
 
 ## 12. TYPOGRAPHY CATALOG (curated & approved)
 
