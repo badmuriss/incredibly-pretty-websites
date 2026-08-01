@@ -1,4 +1,33 @@
-# Incredibly Pretty Websites
+<p align="center"><img src="docs/banner.png" width="720" alt="incredibly pretty websites wordmark in an elegant serif on a deep night blue background, the word pretty in coral italic, with the tagline: make AI build websites that look shipped by a real team"></p>
+
+<p align="center"><b>Make AI build websites that look like a real product team shipped them.</b></p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT license"></a>
+  <a href="https://skills.sh"><img src="https://img.shields.io/badge/agent-skill-black?style=flat-square" alt="agent skill"></a>
+  <a href="https://github.com/badmuriss/incredibly-pretty-websites/stargazers"><img src="https://img.shields.io/github/stars/badmuriss/incredibly-pretty-websites?style=flat-square" alt="GitHub stars"></a>
+  <a href="https://github.com/badmuriss/incredibly-pretty-websites/commits/main"><img src="https://img.shields.io/github/last-commit/badmuriss/incredibly-pretty-websites?style=flat-square" alt="last commit"></a>
+</p>
+
+<p align="center">
+  <a href="#whats-inside">What's inside</a> ·
+  <a href="#install">Install</a> ·
+  <a href="#the-stack-it-recommends">The stack it recommends</a>
+</p>
+
+## Install
+
+```bash
+npx skills add badmuriss/incredibly-pretty-websites
+```
+
+Works with Claude Code and any agent supporting the [skills](https://skills.sh) format. Manual alternative:
+
+```bash
+git clone https://github.com/badmuriss/incredibly-pretty-websites ~/.claude/skills/incredibly-pretty-websites
+```
+
+Then just ask your agent to build a site. The skill triggers on frontend/design work, or invoke it explicitly. It works fully on its own — the premium integrations below are optional.
 
 An agent skill ([skills](https://skills.sh) format — Claude Code, Codex, OpenCode, Cursor) that makes AI build websites that look like a real product team shipped them, not like a language model guessed at "modern and clean."
 
@@ -19,20 +48,6 @@ Most AI-generated sites share the same tells: the same handful of default fonts 
   - `scroll-motion.md` — GSAP ScrollTrigger + Lenis smooth-scroll, with perf/a11y guardrails
   - `media-pipeline.md` — stock photos and image→video via Magnific, self-hosted
   - `redesign.md` : redesign/audit mode (Scan, Diagnose, Fix) with what-never-changes-silently and SEO-safe migration
-
-## Install
-
-```bash
-npx skills add badmuriss/incredibly-pretty-websites
-```
-
-Works with Claude Code and any agent supporting the [skills](https://skills.sh) format. Manual alternative:
-
-```bash
-git clone https://github.com/badmuriss/incredibly-pretty-websites ~/.claude/skills/incredibly-pretty-websites
-```
-
-Then just ask your agent to build a site. The skill triggers on frontend/design work, or invoke it explicitly. It works fully on its own — the premium integrations below are optional.
 
 ## The stack it recommends
 
