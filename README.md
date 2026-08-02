@@ -10,23 +10,11 @@
 </p>
 
 <p align="center">
+  <a href="#install">Install</a> ·
   <a href="#built-with-it">Built with it</a> ·
   <a href="#whats-inside">What's inside</a> ·
-  <a href="#install">Install</a> ·
   <a href="#the-stack-it-recommends">The stack it recommends</a>
 </p>
-
-## Built with it
-
-Five sites, five canvases, five type systems, no shared template. That's the point.
-
-| Site | What it is | The design signature |
-|---|---|---|
-| [rayssaalves.com](https://rayssaalves.com) | Portfolio for a social media designer | Clash Display + Satoshi on a warm paper canvas (`#edebe7`), orange and magenta accents, scroll-telling with GSAP ScrollTrigger + Lenis. React + Vite + vite-react-ssg, prerendered. |
-| [muriloo.dev](https://muriloo.dev) | Personal link-in-bio, noir | Bricolage Grotesque + DM Sans on `#0a0a0b`, an SVG `feTurbulence` grain at 5.5% over a vignette, grayscale portrait with a masked fade, hairline-divided link rows. One static HTML file, inline CSS, zero JS. |
-| [useentrelinhas.com](https://useentrelinhas.com) | Landing for an AI that reads exported WhatsApp threads | Geist + Newsreader italic on a mint canvas (`#f3f9f8`), one teal accent ramp, serif reserved for the emotional lines. Motion is pure CSS — ten keyframes, no animation dependency. React 19 + vite-react-ssg. |
-| [ecosdeamor.com.br](https://ecosdeamor.com.br) | A personalized digital gift | Self-hosted Fraunces + Dancing Script + Plus Jakarta Sans, dark plum canvas with antique-gold and rose `oklch` ramps, 27 CSS keyframes. React + vite-react-ssg + shadcn, customized past the default look. |
-| [cv.muriloo.dev](https://cv.muriloo.dev) | One-page CV | The muriloo.dev type system in monochrome: every `oklch` token at chroma 0, JetBrains Mono for the data, dot-grid ground, Lenis smooth scroll. React + Vite. |
 
 ## Install
 
@@ -47,6 +35,37 @@ An agent skill ([skills](https://skills.sh) format — Claude Code, Codex, OpenC
 Most AI-generated sites share the same tells: the same handful of default fonts everywhere, a purple gradient glow, three identical card columns, a pulsing green "online" dot, mono font on every label, an oversized H1 that fills the screen. This skill is a system for avoiding all of that on purpose: design dials tuned per segment, vibe and layout archetypes, a motion engine with real easing and duration rules, a curated font catalog, and a hard list of the AI tells to never ship.
 
 **React-first.** Vue and vanilla CSS/JS are first-class too. If nothing is specified, it assumes React.
+
+## Built with it
+
+Four sites, four canvases, four type systems, no shared template. That's the point.
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<a href="https://rayssaalves.com"><img src="docs/shots/rayssaalves.jpg" alt="rayssaalves.com hero: the name Rayssa Alves set in heavy black display type with Alves in orange outline, on a warm paper canvas, beside a torn-paper collage in orange and magenta"></a>
+<p><b><a href="https://rayssaalves.com">rayssaalves.com</a></b> — portfolio for a social media designer<br>
+<sub>Clash Display + Satoshi on a warm paper canvas (<code>#edebe7</code>), orange and magenta accents, scroll-telling with GSAP ScrollTrigger + Lenis. React + Vite + vite-react-ssg, prerendered.</sub></p>
+</td>
+<td width="50%" valign="top">
+<a href="https://muriloo.dev"><img src="docs/shots/muriloo-dev.jpg" alt="muriloo.dev: a near-black page with a grayscale portrait fading at the bottom, the line hey, i'm murilo, and two hairline-divided lists of links on the right"></a>
+<p><b><a href="https://muriloo.dev">muriloo.dev</a></b> — personal link-in-bio, noir<br>
+<sub>Bricolage Grotesque + DM Sans on <code>#0a0a0b</code>, an SVG <code>feTurbulence</code> grain at 5.5% over a vignette, grayscale portrait with a masked fade, hairline-divided link rows. One static HTML file, inline CSS, zero JS.</sub></p>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="https://ecosdeamor.com.br"><img src="docs/shots/ecosdeamor.jpg" alt="ecosdeamor.com.br hero: a serif headline in Portuguese over a dark plum canvas scattered with faint polaroids and hearts, a gold script line, a gold CTA, and a phone-shaped video card of a couple on a beach"></a>
+<p><b><a href="https://ecosdeamor.com.br">ecosdeamor.com.br</a></b> — a personalized digital gift<br>
+<sub>Self-hosted Fraunces + Dancing Script + Plus Jakarta Sans, dark plum canvas with antique-gold and rose <code>oklch</code> ramps, 27 CSS keyframes. React + vite-react-ssg + shadcn, customized well past the default look.</sub></p>
+</td>
+<td width="50%" valign="top">
+<a href="https://cv.muriloo.dev"><img src="docs/shots/cv-muriloo.jpg" alt="cv.muriloo.dev hero: a centered portrait and the name Murilo Moura in heavy white type on near-black, over huge outlined background lettering, with a floating pill navigation bar"></a>
+<p><b><a href="https://cv.muriloo.dev">cv.muriloo.dev</a></b> — one-page CV<br>
+<sub>The muriloo.dev type system in monochrome: every <code>oklch</code> token at chroma 0, JetBrains Mono for the data, outlined type as ground, Lenis smooth scroll. React + Vite.</sub></p>
+</td>
+</tr>
+</table>
 
 ## What's inside
 
