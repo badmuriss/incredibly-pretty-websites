@@ -7,8 +7,9 @@ description: |
   vibe/layout archetypes, a motion engine, a curated font catalog, and a hard
   list of AI tells to avoid. Governs typography, color, layout, animation,
   spacing, icons, interactive states, responsiveness, and accessibility.
-  Optional premium research (Refero) and media (Magnific) layers, with free
-  fallbacks.
+  Ships a complete free research layer (live-site token extraction, DESIGN.md
+  packs, curated galleries, a segment reference bank) and a free stock-photo
+  layer; Refero and Magnific are optional accelerators, never requirements.
 version: 1.0.0
 author: Murilo Moura
 license: MIT
@@ -38,7 +39,8 @@ Reference files:
 - [framework-adapters.md](reference/framework-adapters.md) — React / Vue / vanilla equivalents for motion, state, hydration
 - [component-libs.md](reference/component-libs.md) — **(React-only)** copy-in animated components: Magic UI, React Bits, animated Lucide icons via the shadcn registry
 - [scroll-motion.md](reference/scroll-motion.md) — **(Tier 3)** GSAP ScrollTrigger + Lenis smooth-scroll, with perf/a11y guardrails
-- [media-pipeline.md](reference/media-pipeline.md) — **(Tier 3, cost-gated)** stock photos and image→video via Magnific, self-hosted, with a `<video>` recipe
+- [design-references.md](reference/design-references.md) — **(research, free)** the no-Refero research layer: reading a live site's real tokens, DESIGN.md packs, free galleries, public design systems, and a segment → references bank
+- [media-pipeline.md](reference/media-pipeline.md) — free stock photography (Pexels/Unsplash/Pixabay/public-domain, with the per-source hosting rules) + **(Tier 3, cost-gated)** image→video via Magnific, with a `<video>` recipe
 - [redesign.md](reference/redesign.md) : **(redesign/audit mode)** Scan, Diagnose, Fix; mode detection (Greenfield / Preserve / Overhaul); what never changes silently (SEO-first)
 - [seo-foundations.md](reference/seo-foundations.md) — build-time SEO: head/meta/OG, semantic structure, schema.org, crawlability, slugs. Read for every page that should rank or be shared.
 
@@ -70,7 +72,9 @@ Every visual decision starts from **evidence of what real products actually ship
 - **Flows** (multi-step journeys — onboarding/checkout): `refero_search_flows(...)` → `refero_get_flow(...)`.
 - Screens use UUIDs, flows use numeric IDs. Paginate with `page` only. `get_screen_image` costs a vision call — use it only when you need to inspect pixels.
 
-**Free fallback (no Refero).** Study real products directly: [Godly](https://godly.website), [Land-book](https://land-book.com), [Mobbin](https://mobbin.com) (free tier), [Dribbble](https://dribbble.com), or screenshots of the two or three best sites in the segment. Same goal, more manual: find real shipped work, name what makes it good, borrow the structure.
+**Free path (no Refero) — [design-references.md](reference/design-references.md).** Refero makes this step fast; it is not what makes it possible. The free path produces the same reference-lock from the same class of evidence, and the file carries the whole address book: how to read a live site's real tokens with `curl`/WebFetch (the strongest evidence there is, better than any screenshot), the open-source **DESIGN.md packs** (first-party at [VoltAgent/official-design-md](https://github.com/VoltAgent/official-design-md), 70+ reverse-engineered brands at [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)), the verified-free galleries ([siteinspire](https://www.siteinspire.com), [httpster](https://httpster.net), [minimal.gallery](https://minimal.gallery), [onepagelove](https://onepagelove.com) sections, [dark.design](https://dark.design), [navbar.gallery](https://navbar.gallery), [footer.design](https://footer.design)), the public design systems, and a **segment → real products to study** bank so you never start from a blank query.
+
+Short version if you read nothing else: pick two or three real products in the segment, open them, extract their type stack and CSS custom properties, name what makes each good, and log it. Never lock a trait you haven't actually looked at.
 
 ### The workflow
 
@@ -736,7 +740,7 @@ Concrete patterns that keep surfacing in generated pages. Each one alone marks a
 - Invert-on-hover (the row becomes a white block / black text via `::before scaleX`) is the premium noir move for link rows. `currentColor` icons invert along for free.
 
 ### External resources
-- Prefer real, sourced imagery (see §15) over `picsum.photos`/placeholders in production. Never hotlink Unsplash in production.
+- Prefer real, sourced imagery (see §15) over `picsum.photos`/placeholders in production. Follow the per-source hosting rule in [media-pipeline.md](reference/media-pipeline.md) — an uncredited, un-attributed image dropped in from a random CDN is both a legal problem and a tell.
 - shadcn/ui: allowed but NEVER the default look. Customize radii, colors, shadows.
 
 ## 14. REVIEW CHECKLIST
@@ -833,7 +837,7 @@ Pick the shape that best communicates the business:
 - **Validate on mobile before returning:** open at 390×844 (Playwright / chrome-devtools) or use `getComputedStyle` to confirm the nav CTA is hidden and there's zero horizontal scroll. Breakage is a P0 blocker.
 
 ### Images / avatars
-- **Stock photos:** source real, licensed imagery (Magnific stock — `mcp__magnific__stock_search` — if available, or any licensed stock source). Never hotlink Unsplash or `picsum.photos` in production. Save the real URL in the content.
+- **Stock photos:** source real, licensed imagery. The free lane is the default and covers most work — Pexels, Unsplash, Pixabay, or the public-domain archives; Magnific stock (`mcp__magnific__stock_search`) is the paid lane when it's available. **Each source has its own hosting rule and they contradict each other** (Unsplash *requires* hotlinking + a credit, Pixabay *forbids* it), so read the table in [media-pipeline.md](reference/media-pipeline.md) before shipping. `picsum.photos` never reaches production. Whatever you self-host gets resized, converted to AVIF/WebP and given `srcset` + explicit dimensions.
 - **Testimonial avatars:** NEVER a fake stock photo of a person (it reads as AI). Use a Google-style initial: a color-blocked circle (brand color) + the first letter of the first name, white, bold, ~14–16px. Vary the color between testimonials.
 
 ### Quotes / testimonials

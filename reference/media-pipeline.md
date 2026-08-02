@@ -1,17 +1,34 @@
-# Media Pipeline — stock photos + image→video via Magnific (Tier 3, cost-gated)
+# Media Pipeline — stock photos, generated images, image→video
 
-Two media needs beyond hand-drawn CSS: **real photography** and **premium looping video** (a hero background or a mid-page section accent). Both are covered by **Magnific** ([magnific.ai](https://magnific.ai)) via its MCP tools. Magnific handles generation and licensed stock; you self-host the result on your own CDN/storage.
+Two media needs beyond hand-drawn CSS: **real photography** and **premium looping video** (a hero background or a mid-page section accent).
 
-This is optional and gated. Without Magnific or an approved budget, everything degrades gracefully to free fallbacks (below).
+- **Photography has a free lane and it is the default.** It costs nothing, needs no MCP, and covers most real work. Section below.
+- **Video and image generation are the paid lane** ([Magnific](https://magnific.ai) via MCP), Tier 3 only and cost-gated. Without it, everything degrades to the fallbacks at the bottom.
 
-## Stock photography
+## Stock photography — free lane (default)
 
-When a piece needs a real photo (hero atmosphere, a segment shot, a background image):
-- `mcp__magnific__stock_search(query)` → browse licensed results.
-- `mcp__magnific__stock_get` / `stock_download` → pull the asset.
-- Save the real URL into your content. **Never hotlink Unsplash or `picsum.photos` in production.**
+Pick the source by what the photo has to do. Every source below is genuinely free and self-serve.
 
-For testimonial avatars, do NOT use a stock photo of a person (it reads as AI). Use a Google-style initial: a color-blocked circle + the first letter of the first name (SKILL.md §15).
+| Need | Source | Key | Attribution | Hosting rule |
+|---|---|---|---|---|
+| Everyday commercial photography — people, workspace, food, interiors, the ordinary hero or section shot | **Pexels** — `GET https://api.pexels.com/v1/search?query=` | instant self-serve; 200 req/h, 20k/month | not required | Terms say **nothing** either way about hotlink vs rehost. Download + self-host: it's the perf-correct default and nothing forbids it. |
+| Same brief, larger and better-curated catalog | **Unsplash** — `GET https://api.unsplash.com/search/photos?query=` | instant demo key 50 req/h; 5 000 req/h needs **manual approval**, not instant | **required** | **Hotlinking is mandatory, self-hosting breaks the terms.** See the rule below. |
+| Same brief, and you need the file on your own server | **Pixabay** — `GET https://pixabay.com/api/?q=` | key on signup; ~100 req/60s | not required | **Hotlinking forbidden** — download to your server first, and cache API responses 24h. |
+| Texture, archival, art, science, editorial, anything historical | **Openverse** `api.openverse.org/v1/images/` (meta-search over CC + public-domain works, key optional) · **Wikimedia Commons** `commons.wikimedia.org/w/api.php` (no key, descriptive `User-Agent` required) · **Met Open Access** `collectionapi.metmuseum.org` (no key, CC0) · **Smithsonian Open Access** (key via api.data.gov, CC0) · **NASA** `images-api.nasa.gov/search` (no key, mostly public domain) | none to instant | per work | Per the **original host** — Openverse and Europeana only index, they don't host the pixels. |
+
+Verified against each provider's own docs on 2026-08-02. Rate limits and terms drift; re-read the provider's page before betting a client project on a number. Pixabay's docs page blocks automated fetches, so treat its two rules as high-confidence but worth a manual glance.
+
+### Hard rules (both lanes)
+
+- **`picsum.photos` never ships to production.** It's a prototyping toy: random image, no license clarity, no control. Fine in a throwaway sketch, never in a page a client pays for.
+- **Unsplash is the one place "self-host it" is the wrong answer.** Their API guidelines require you to embed the returned CDN URL directly (hotlink) so views attribute back to the photographer, require a `GET` on `photo.links.download_location` whenever the user does something download-like, and require a visible credit to the photographer and to Unsplash with links back. Take all three or don't use the Unsplash API. If a project's rules forbid third-party image hosts, pick Pexels or Pixabay instead and self-host there.
+- **A "free license" from an aggregator is an assertion, not a warranty.** Openverse and Europeana index other people's servers and explicitly disclaim verifying the license. For a client site, follow the result back to the original host and confirm the license there. Exclude NC-licensed works from anything commercial.
+- **No people-photos as testimonial avatars.** A stock face on a testimonial reads as AI instantly. Use a Google-style initial: a color-blocked circle + the first letter of the first name (SKILL.md §15).
+- **A self-hosted photo gets processed, never dropped in raw.** Resize to the real rendered width (2x for retina, no more), convert to AVIF with a WebP fallback, ship `srcset`/`sizes`, set explicit `width`/`height` to reserve the box, `loading="lazy"` + `decoding="async"` for anything below the fold, and `fetchpriority="high"` on the LCP image only. A 4MB JPEG behind a beautiful layout is still a broken page.
+
+### Paid lane — Magnific stock (when available)
+
+`mcp__magnific__stock_search(query)` → `stock_get` / `stock_download`. Licensed catalog, no attribution bookkeeping, self-host the result. Use it when the free lane can't find the shot or when a client needs a cleaner licensing paper trail.
 
 ## Video — placement is case-by-case, decided by research (no fixed default)
 
@@ -112,4 +129,6 @@ The hero (above the fold) doesn't lazy-load — play it directly, but keep the `
 
 ## Fallback (no Magnific / no approved budget)
 
-Tier 3 without video uses: **animated gradient mesh blobs** (`@property`, SKILL.md §6) OR a **full-bleed photo + overlay**. Video is optional enrichment, never a layout dependency. For photos without Magnific stock, use any licensed stock source and save the real URL.
+Tier 3 without video uses: **animated gradient mesh blobs** (`@property`, SKILL.md §6) OR a **full-bleed photo + overlay**. Video is optional enrichment, never a layout dependency.
+
+Photos are not part of this gate at all — the free lane at the top of this file needs no budget and no MCP. "No Magnific" is never a reason to ship a placeholder.
