@@ -54,9 +54,9 @@ Four sites, four canvases, four type systems, no shared template.
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="https://ecosdeamor.com.br"><img src="docs/shots/ecosdeamor.jpg" alt="ecosdeamor.com.br hero: a serif headline in Portuguese over a dark plum canvas scattered with faint polaroids and hearts, a gold script line, a gold CTA, and a phone-shaped video card of a couple on a beach"></a>
-<p><b><a href="https://ecosdeamor.com.br">ecosdeamor.com.br</a></b>, a personalized digital gift<br>
-<sub>Self-hosted Fraunces + Dancing Script + Plus Jakarta Sans, dark plum canvas with antique-gold and rose <code>oklch</code> ramps, 27 CSS keyframes. React + vite-react-ssg + shadcn, customized well past the default look.</sub></p>
+<a href="https://outis.com.br"><img src="docs/shots/outis.jpg" alt="outis.com.br hero: a large Portuguese headline in a geometric sans on a white canvas washed with pale violet, one word set in a violet serif italic, a violet pill CTA, and glass cards floating around the edges showing a search result, a traffic chart and an SEO score"></a>
+<p><b><a href="https://outis.com.br">outis.com.br</a></b>, an AI and technology consultancy<br>
+<sub>Self-hosted Sora 600 over Plus Jakarta Sans on a white canvas with a pale violet wash, violet-700 accent, and glass cards mocking real product UI (a Google result, a +340% traffic chart, an SEO gauge) instead of gray placeholder blocks. React + Vite, prerendered, on Cloudflare.</sub></p>
 </td>
 <td width="50%" valign="top">
 <a href="https://cv.muriloo.dev"><img src="docs/shots/cv-muriloo.jpg" alt="cv.muriloo.dev hero: a centered portrait and the name Murilo Moura in heavy white type on near-black, over huge outlined background lettering, with a floating pill navigation bar"></a>
