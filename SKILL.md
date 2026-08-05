@@ -41,8 +41,9 @@ Reference files:
 - [scroll-motion.md](reference/scroll-motion.md) — **(Tier 3)** GSAP ScrollTrigger + Lenis smooth-scroll, with perf/a11y guardrails
 - [design-references.md](reference/design-references.md) — **(research, free)** the no-Refero research layer: reading a live site's real tokens, DESIGN.md packs, free galleries, public design systems, and a segment → references bank
 - [media-pipeline.md](reference/media-pipeline.md) — free stock photography (Pexels/Unsplash/Pixabay/public-domain, with the per-source hosting rules) + **(Tier 3, cost-gated)** image→video via Magnific, with a `<video>` recipe
-- [redesign.md](reference/redesign.md) : **(redesign/audit mode)** Scan, Diagnose, Fix; mode detection (Greenfield / Preserve / Overhaul); what never changes silently (SEO-first)
-- [seo-foundations.md](reference/seo-foundations.md) — build-time SEO: head/meta/OG, semantic structure, schema.org, crawlability, slugs. Read for every page that should rank or be shared.
+- [redesign.md](reference/redesign.md) : **(redesign mode)** Scan, Diagnose, Fix; mode detection (Greenfield / Preserve / Overhaul); what never changes silently
+
+**SEO, accessibility scores and Core Web Vitals are not audited here.** This skill builds; verification of a live URL belongs to the [site-audit](https://github.com/badmuriss/site-audit) skill, which owns the on-page SEO rules (title, meta, canonical, OG, schema, robots, sitemap), the AEO/GEO layer, the axe-core run and the CWV budget. Build to §14's pre-flight, then point site-audit at the deployed URL.
 
 ---
 
@@ -54,7 +55,7 @@ Reference files:
 
 Both modes do the research in Section 0. The only difference is where the brief comes from: autonomous infers it from context, interview asks.
 
-**Redesigning an existing site rather than building fresh?** See [redesign.md](reference/redesign.md) for audit mode (Scan, Diagnose, Fix) and the Preserve-vs-Overhaul rules. Both modes above still apply; a redesign just also protects the live site's URLs and SEO baseline.
+**Redesigning an existing site rather than building fresh?** See [redesign.md](reference/redesign.md) for redesign mode (Scan, Diagnose, Fix) and the Preserve-vs-Overhaul rules. Both modes above still apply; a redesign just also protects what the live site already earns.
 
 ---
 
@@ -745,7 +746,11 @@ Concrete patterns that keep surfacing in generated pages. Each one alone marks a
 
 ## 14. REVIEW CHECKLIST
 
-Built and deployed? Run the [site-audit](https://github.com/badmuriss/site-audit) skill against the live URL — UX walkthrough, on-page SEO, and Core Web Vitals with hard gates. This checklist is the build-time self-audit; site-audit is the live verification.
+This checklist is the build-time self-audit, and it is the whole of what this skill verifies. **Built and deployed? Run [site-audit](https://github.com/badmuriss/site-audit) against the live URL** for the UX walkthrough, on-page SEO + AEO/GEO, axe-core and Core Web Vitals, with hard gates that fail the build. The two are designed to hand off: this skill decides every pixel, site-audit proves the deployed page holds up.
+
+```bash
+npx skills add badmuriss/site-audit
+```
 
 Before/after/why self-audit:
 
@@ -777,6 +782,7 @@ Before/after/why self-audit:
 - [ ] Touch hover gated with a media query?
 - [ ] Focus visible only via `:focus-visible`?
 - [ ] All interactive elements ≥ 44px on a coarse pointer?
+- [ ] Head shipped per route: unique `<title>` + meta description, canonical, one `<h1>`, `alt` on every content image, semantic landmarks (`header`/`nav`/`main`/`footer`), and an OG image that is a real design deliverable (1200×630, brand colors, legible at thumbnail size)? The rules and the live verification belong to [site-audit](https://github.com/badmuriss/site-audit); this box only asks that the head is not empty when it ships.
 
 ### Countable pre-flight (turn tells into numbers)
 

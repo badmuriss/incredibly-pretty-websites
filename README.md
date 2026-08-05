@@ -13,6 +13,7 @@
   <a href="#install">Install</a> ·
   <a href="#built-with-it">Built with it</a> ·
   <a href="#whats-inside">What's inside</a> ·
+  <a href="#pairs-with-site-audit">Pairs with site-audit</a> ·
   <a href="#the-stack-it-recommends">The stack it recommends</a>
 </p>
 
@@ -78,7 +79,25 @@ Four sites, four canvases, four type systems, no shared template.
   - `scroll-motion.md`: GSAP ScrollTrigger + Lenis smooth-scroll, with perf/a11y guardrails
   - `design-references.md`: the free research layer, covering live-site token extraction, DESIGN.md packs, free galleries, public design systems and a segment-to-references bank
   - `media-pipeline.md`: free stock photography with the per-source hosting rules, plus image→video via Magnific
-  - `redesign.md`: redesign/audit mode (Scan, Diagnose, Fix) with what-never-changes-silently and SEO-safe migration
+  - `redesign.md`: redesign mode (Scan, Diagnose, Fix) with the what-never-changes-silently list
+
+## Pairs with site-audit
+
+This skill builds. [**site-audit**](https://github.com/badmuriss/site-audit) verifies what got built, against a live URL.
+
+```bash
+npx skills add badmuriss/site-audit
+```
+
+The split is deliberate, and it is why neither one carries the other's rules:
+
+| | incredibly-pretty-websites | site-audit |
+|---|---|---|
+| Runs on | a brief, a repo, a blank page | a reachable URL or a local dev server |
+| Owns | typography, color, layout, motion, components, copy tone, the AI-tells list | on-page SEO, AEO/GEO, axe-core, Core Web Vitals, the UX walkthrough |
+| Output | a built site | one severity-ranked report with hard gates |
+
+Build to the §14 pre-flight, deploy, then point site-audit at the URL. Redesigning instead of building fresh? Run site-audit **first** as well: its report is the baseline the redesign has to protect.
 
 ## The stack it recommends
 
