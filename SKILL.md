@@ -280,6 +280,33 @@ Pick ONE vibe + ONE layout before writing code.
 5. **Tactical / CRT Telemetry** (dev tools, security, trading, retro-tech): near-black `#0A0A0A` canvas, tabular data density, a faint scanline overlay, phosphor green `#4AF626` on **exactly one** element (a live value or a status glyph). Mono leads here by design (the global mono-restraint still governs other work, and even here body prose over ~2 lines uses a sans). Do: `tabular-nums`, tight 1px dividers, one green. Don't: a second neon, a blinking cursor in the hero (§13), green on more than one element.
 6. **Warm-Monochrome Editorial** (Notion-like docs, productivity, calm SaaS): `#F7F6F3` canvas, ink text, pastel accents each **paired with its own matching text color** (bg `#FDEBEC` with text `#9F2F2D`, bg `#EAF3EC` with text `#2F6F3E`, and so on), cards a hairline `1px solid #EAEAEA`. Do: soft pastel blocks with legible paired text, generous line-height, one accent family per block. Don't: saturate the pastels, float decorative pills, or invert a section's canvas (see Page Theme Lock, §13).
 
+7. **Liminal Light** (B2B SaaS, data/search products, anything whose pitch is "find the one among many"): the rule is **one saturated object, everything else bone and sand, grain everywhere, enormous negative space**. Canvas `#FFFCF2` (never `#FFFFFF`). Full-bleed graded photography of empty places (salt flats, vacant halls, sand-filled rooms, dunes) with a single saturated object in it, and that object's color **is** the product's accent token, same hex in the art and in the UI. Type: high-contrast serif display (**Instrument Serif**) over a neutral grotesk UI (**Satoshi**, or **DM Sans** if licensing bites).
+
+   Four specifics, each one learned from a failed attempt:
+
+   - **Do not crush saturation to remove a color cast.** It removes color, not the cast. A global saturation cut to 10% turned warm sand into flat grey and still passed a "no teal pixels" check, because greyscale has no teal either. Attack the blue axis instead: neutralize excess B, lift R, keep the warm chroma. Gate on **magnitude**, mean `R − B >= 8` (the `#FFFCF2` canvas sits at 13). A sign test (`R > B`) passes at delta 1.8 and proves nothing.
+   - **Never bake grain into the image file.** Grain defeats compression and the hero art is the LCP element. Export a smooth base and apply the grain as an SVG `feTurbulence` layer in CSS on top. Same look, roughly 5x smaller file.
+   - **Flatten as little as the budget allows.** Stripping baked grain with an aggressive median also strips the tactile texture the whole archetype rests on. Check the size budget first: with headroom, flatten less.
+   - **Text over the art: gate on the worst pixel, never the average.** One hero measured 12.96:1 on average and **2.48:1** at the worst pixel down in the ground region. Sample the exact band where the text will sit and gate on the minimum. Put the text in the light band. A solid card behind the text is the **fallback** for when text must cross a dark region, never the default, because the card is exactly what turns this look generic.
+
+   Failure mode: without the single saturated object it is just a beige page.
+
+8. **Grainy Occult** (culture, music, events, indie tools, anything that wants edge): heavy film grain plus dithered halftone over bold flat illustration, neon glow, solid saturated background, thick outlines, high-contrast retro-digital.
+
+   Image-generation prompt template, reusable:
+
+   ```
+   [subject], liminal emptiness optional, heavy film grain + dithered halftone texture,
+   bold flat illustration, vibrant neon fire/glow effects, solid [color] background,
+   high contrast retro digital art, web landing page hero --ar 16:9 --stylize 200
+   ```
+
+   Subjects that carry it: a flaming black cat over a chessboard, hands holding tarot cards, a glowing butterfly, an old computer on fire, a witch silhouette in stars. Append `pixelated edges, thick outlines, no text` for cleaner results.
+
+   `no text` is not optional: model-rendered lettering comes out with broken kerning every time. Set the wordmark in real type over the image. On the web side the canvas is a **solid** saturated color (not a gradient), the illustration is the only image in the section, type is heavy and tight, and the neon color appears **exactly once more** in the UI.
+
+**How these two square with §13.** §13 bans decorative background patterns and caps noise at 5%. That rule targets **repeating geometric motifs** used to stop a section looking empty: dot grids, diagonal hairlines, hexagons, waves. Film grain and halftone dither are **stochastic texture across the whole surface**, and in archetypes 7 and 8 the grain **is the medium**, not filler. The test: if the texture reads as a repeating motif, it is banned; if it is stochastic, full-surface, and the section would still stand up without it, it is the archetype. The 5% cap still governs noise used as a subtle finish over an otherwise clean background, which is a different job. DOM cost rule from §11 still applies without exception: grain lives on a `fixed inset-0` or hero-scoped `absolute inset-0` pseudo-element, **never** on a scrolling container.
+
 ### Layout archetypes
 
 1. **Asymmetrical Bento:** masonry CSS Grid, varying card sizes (`col-span-8 row-span-2` next to stacked `col-span-4`). Mobile: `grid-cols-1 gap-6`.
