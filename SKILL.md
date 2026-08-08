@@ -35,6 +35,8 @@ Reference files:
 - [spatial-design.md](reference/spatial-design.md) — 4pt scale, hierarchy, container queries
 - [motion-design.md](reference/motion-design.md) — easing, durations, reduced-motion, a transition pattern catalog
 - [interaction-design.md](reference/interaction-design.md) — the 8 states, focus-visible, popovers, modals
+- [laws-of-ux.md](reference/laws-of-ux.md) — composition heuristics with named research: Hick, Miller, Fitts, Von Restorff, Peak-End, Jakob, cognitive load
+- [form-validation.md](reference/form-validation.md) — validation timing, the input state machine, `:user-invalid`, error summaries, schema as the cross-stack contract
 - [responsive-design.md](reference/responsive-design.md) — mobile-first, pointer queries, safe-area, srcset
 - [framework-adapters.md](reference/framework-adapters.md) — React / Vue / vanilla equivalents for motion, state, hydration
 - [component-libs.md](reference/component-libs.md) — **(React-only)** copy-in animated components: Magic UI, React Bits, animated Lucide icons via the shadcn registry
