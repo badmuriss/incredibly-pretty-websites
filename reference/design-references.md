@@ -37,6 +37,19 @@ curl -sL "<css-url>" | grep -oE '\--[a-z0-9-]+:\s*[^;]+' | sort -u | head -80
 ```
 You're looking for: the canvas color, the ink color, how many accents there actually are (usually one), the radius scale, the shadow definitions, the easing curves, and the type scale. This is the single highest-value five minutes in the whole research step.
 
+**3b. When the CSS grep comes back empty — read the rendered page.** Custom properties only exist if the site ships them. A CSS-in-JS build (styled-components, Emotion, vanilla-extract at runtime) or a theme applied after load leaves nothing greppable in the served bytes, and step 3 returns a handful of resets. That is the signal to switch from the served CSS to the computed one.
+
+[brand-capture.js](brand-capture.js) does that in one pass: it reads every visible element's computed style, scores each colour by painted area (controls weighted up, so a CTA fill outranks a hero band), collapses the ranking into `background / surface / foreground / muted / border / accent`, and reports the type stack, the `@font-face` families, the real button/input/card/nav profiles, corner radius, elevation, and the transition durations and easings the page actually uses.
+
+```
+# Claude / Codex: paste the file body into the MCP tool, no install, no extension
+mcp__chrome-devtools__navigate_page  url=https://example.com
+mcp__chrome-devtools__evaluate_script  function=<contents of reference/brand-capture.js>
+```
+Under Playwright or Puppeteer it is the same function inside `page.evaluate()`. Verify it still works after editing it: `node reference/brand-capture.test.mjs` drives headless Chrome against a fixture that paints its brand only from JS, so the check fails the moment the capture starts reading served CSS instead of computed style.
+
+Read the output as **ranked evidence, not a verdict**. `accent` is the highest-scoring saturated colour, which on a busy page can be a status badge rather than the brand; look at `accentSecondary` and the full `palette` array before you lock it. Everything in `posture` and `components` is measured, so those are safe. The step-49 rule still holds: you are extracting decisions, never the stylesheet.
+
 **4. Look at it.** Screenshot at **1440×900** and **390×844**. Then answer, in writing:
 - What carries the hero: type, a product shot, a photo, or motion?
 - How many sections, and in what order? Where does proof sit relative to the CTA?
