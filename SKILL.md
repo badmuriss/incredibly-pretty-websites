@@ -1,15 +1,6 @@
 ---
 name: incredibly-pretty-websites
-description: |
-  Make your coding agent build genuinely beautiful, non-AI-slop websites. React-first (Vue
-  and vanilla CSS/JS also supported). Research-driven: study real shipped
-  products before writing a line, then apply a system of design dials,
-  vibe/layout archetypes, a motion engine, a curated font catalog, and a hard
-  list of AI tells to avoid. Governs typography, color, layout, animation,
-  spacing, icons, interactive states, responsiveness, and accessibility.
-  Ships a complete free research layer (live-site token extraction, DESIGN.md
-  packs, curated galleries, a segment reference bank) and a free stock-photo
-  layer; Refero and Magnific are optional accelerators, never requirements.
+description: "Build genuinely beautiful, non-AI-slop websites, React-first, research before code. use_when: designing or rebuilding a site or landing page, choosing type, color, layout or motion, fixing AI-looking UI. do_not_use_when: backend, data or copy work."
 version: 1.0.0
 author: Murilo Moura
 license: MIT
