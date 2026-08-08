@@ -11,6 +11,7 @@
 
 <p align="center">
   <a href="#install">Install</a> ·
+  <a href="#how-to-prompt-it">How to prompt it</a> ·
   <a href="#built-with-it">Built with it</a> ·
   <a href="#whats-inside">What's inside</a> ·
   <a href="#pairs-with-site-audit">Pairs with site-audit</a> ·
@@ -34,6 +35,24 @@ Then ask your agent to build a site. The skill triggers on frontend and design w
 Most AI-generated sites share the same tells: the same handful of default fonts everywhere, a purple gradient glow, three identical card columns, a pulsing green "online" dot, mono font on every label, an oversized H1 that fills the screen. This skill is a system for avoiding all of that on purpose: design dials tuned per segment, vibe and layout archetypes, a motion engine with real easing and duration rules, a font catalog with opinions, and a hard list of the AI tells to never ship.
 
 **React-first.** Vue and vanilla CSS/JS are first-class too. If nothing is specified, it assumes React.
+
+## How to prompt it
+
+The skill runs its own brief internally: what / for whom / goal / tone / constraints. The more of that you hand it up front, the less it has to guess. A prompt that covers everything looks like this:
+
+> Build a landing page for **[niche, e.g. an architecture studio]** whose goal is **[the conversion, e.g. booking a consultation]**. Audience: **[who]**. Tone: **[e.g. sober and editorial]**. Premium level: **[basic / moderate / full premium, with GSAP, smooth scroll and scroll-telling]**. Colors and identity: **[palette, fonts, logo, or "derive from the references"]**. References I like: **[2 or 3 real sites]**.
+
+Three things carry most of the weight:
+
+1. **The niche decides almost everything on its own.** The skill maps each segment to a preset row: a law firm gets restraint, a SaaS gets the full package (GSAP ScrollTrigger, Lenis smooth scroll, liquid glass, bento grids). Naming the niche alone already lands the right tier. Stating the premium level explicitly is how you force it above or below the segment's default.
+
+2. **References beat adjectives.** "Modern and clean" says nothing; "I like linear.app and vercel.com" says everything. The skill opens the sites, reads their actual font stacks and CSS custom properties, and locks the direction to that evidence before writing any code.
+
+3. **You don't need anything paid.** Refero and Magnific are accelerators only. Research runs for free by reading live sites, the curated galleries (siteinspire, httpster, minimal.gallery) and the open-source DESIGN.md packs; photos come from Pexels, Unsplash and Pixabay, and every font in the catalog is free (Fontshare, Google Fonts). The prompt is the same with or without the paid tools.
+
+A complete example:
+
+> Build a landing page for a specialty coffee shop in Curitiba, goal: drive store visits and sell beans online. Audience: 25 to 40, design-conscious. Tone: editorial, warm, artisanal. Level: moderate, with entrance animations and a premium touch without excess. Earthy palette, no pure white. Reference: I like the Blue Bottle Coffee site.
 
 ## Built with it
 
