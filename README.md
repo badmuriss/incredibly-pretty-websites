@@ -61,26 +61,26 @@ Four sites, four canvases, four type systems, no shared template.
 <table>
 <tr>
 <td width="50%" valign="top">
+<a href="https://lupaleads.com.br"><img src="docs/shots/lupaleads.jpg" alt="lupaleads.com.br hero: a split-screen layout with a Portuguese B2B prospecting headline on the left and a mobile app mockup on the right"></a>
+<p><b><a href="https://lupaleads.com.br">lupaleads.com.br</a></b>, active B2B prospecting software<br>
+<sub>Split-screen hero, natural-language lead search framed as a mobile product mockup, dual CTA with a no-card-required credit hook. React + Vite, on Cloudflare.</sub></p>
+</td>
+<td width="50%" valign="top">
 <a href="https://rayssaalves.com"><img src="docs/shots/rayssaalves.jpg" alt="rayssaalves.com hero: the name Rayssa Alves set in heavy black display type with Alves in orange outline, on a warm paper canvas, beside a torn-paper collage in orange and magenta"></a>
 <p><b><a href="https://rayssaalves.com">rayssaalves.com</a></b>, a portfolio for a social media designer<br>
 <sub>Clash Display + Satoshi on a warm paper canvas (<code>#edebe7</code>), orange and magenta accents, scroll-telling with GSAP ScrollTrigger + Lenis. React + Vite + vite-react-ssg, prerendered.</sub></p>
 </td>
+</tr>
+<tr>
 <td width="50%" valign="top">
 <a href="https://muriloo.dev"><img src="docs/shots/muriloo-dev.jpg" alt="muriloo.dev: a near-black page with a grayscale portrait fading at the bottom, the line hey, i'm murilo, and two hairline-divided lists of links on the right"></a>
 <p><b><a href="https://muriloo.dev">muriloo.dev</a></b>, a personal link-in-bio in noir<br>
 <sub>Bricolage Grotesque + DM Sans on <code>#0a0a0b</code>, an SVG <code>feTurbulence</code> grain at 5.5% over a vignette, grayscale portrait with a masked fade, hairline-divided link rows. One static HTML file, inline CSS, zero JS.</sub></p>
 </td>
-</tr>
-<tr>
 <td width="50%" valign="top">
 <a href="https://outis.com.br"><img src="docs/shots/outis.jpg" alt="outis.com.br hero: a large Portuguese headline in a geometric sans on a white canvas washed with pale violet, one word set in a violet serif italic, a violet pill CTA, and glass cards floating around the edges showing a search result, a traffic chart and an SEO score"></a>
 <p><b><a href="https://outis.com.br">outis.com.br</a></b>, an AI and technology consultancy<br>
 <sub>Self-hosted Sora 600 over Plus Jakarta Sans on a white canvas with a pale violet wash, violet-700 accent, and glass cards mocking real product UI (a Google result, a +340% traffic chart, an SEO gauge) instead of gray placeholder blocks. React + Vite, prerendered, on Cloudflare.</sub></p>
-</td>
-<td width="50%" valign="top">
-<a href="https://cv.muriloo.dev"><img src="docs/shots/cv-muriloo.jpg" alt="cv.muriloo.dev hero: a centered portrait and the name Murilo Moura in heavy white type on near-black, over huge outlined background lettering, with a floating pill navigation bar"></a>
-<p><b><a href="https://cv.muriloo.dev">cv.muriloo.dev</a></b>, a one-page CV<br>
-<sub>The muriloo.dev type system in monochrome: every <code>oklch</code> token at chroma 0, JetBrains Mono for the data, outlined type as ground, Lenis smooth scroll. React + Vite.</sub></p>
 </td>
 </tr>
 </table>
