@@ -89,6 +89,8 @@ Four sites, four canvases, four type systems, no shared template.
 
 - **`SKILL.md`** holds the core: research-first workflow, project-type presets, design dials, vibe/layout archetypes, the animation engine, a typography catalog, ~60 forbidden "AI tells," and a review checklist.
 - **`reference/`** holds the technical foundations:
+  - `direction-workflow.md`: incumbent context, change scope, surface mode, direction contract, visual-exploration gate and bounded finish
+  - `foundations.md`: one authority for hero type, viewport height, motion properties, eyebrows and existing-system priority
   - `spatial-design.md`: 4pt scale, hierarchy, container queries
   - `motion-design.md`: easing curves, durations, a transition pattern catalog
   - `interaction-design.md`: the 8 interactive states, focus-visible, popovers, modals
@@ -99,6 +101,7 @@ Four sites, four canvases, four type systems, no shared template.
   - `design-references.md`: the free research layer, covering live-site token extraction, DESIGN.md packs, free galleries, public design systems and a segment-to-references bank
   - `media-pipeline.md`: free stock photography with the per-source hosting rules, plus image→video via Magnific
   - `redesign.md`: redesign mode (Scan, Diagnose, Fix) with the what-never-changes-silently list
+- **`scripts/ipw-lint.mjs`** checks deterministic frontend tells on the changed targets before handoff, without installing dependencies.
 
 ## Pairs with site-audit
 
@@ -128,7 +131,7 @@ The skill is built around a specific set of tools. The free layer alone is enoug
 - [React Bits](https://reactbits.dev) / [Vue Bits](https://vue-bits.dev) for text effects, galleries and WebGL spectacle
 - [GSAP](https://gsap.com) + [Lenis](https://lenis.darkroom.engineering) for scroll-telling and smooth scroll
 - [Motion](https://motion.dev), the animation library that succeeded Framer Motion
-- [Phosphor Icons](https://phosphoricons.com), the icon set (static Lucide is banned on purpose)
+- [Phosphor Icons](https://phosphoricons.com), the greenfield default; established icon systems, including Lucide, stay intact during local and surface work
 - [Fontshare](https://fontshare.com) + [Google Fonts](https://fonts.google.com) + [Geist](https://vercel.com/font) behind the font catalog
 
 **Free research and media layer, no account and no budget ([`design-references.md`](reference/design-references.md) + [`media-pipeline.md`](reference/media-pipeline.md)):**

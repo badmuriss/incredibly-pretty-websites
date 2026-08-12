@@ -27,13 +27,13 @@ Default to **Preserve** when unsure. Escalating Preserve to Overhaul is the owne
 | Category | Common problem | Fix |
 |---|---|---|
 | **Typography** | Roboto/Arial/system default; one weight; no scale | catalog pair (§12); real type scale; weight for hierarchy |
-| **Color** | AI-purple, muddy grays, warm/cool drift, low contrast | one palette project-wide (Rule 2); WCAG AA (§15); one accent |
+| **Color** | generic AI-purple by reflex, muddy grays, warm/cool drift, low contrast | preserve established brand color; fix WCAG contrast (§15) and documented drift; one coherent palette |
 | **Layout** | every section is title-left / content-right; symmetric card rows | alternate layout families (§13); enforce the section-variety count (§14) |
 | **States** | only default + hover; no focus / empty / loading / error | design all 8 (Rule 5); skeletons matching layout; inline errors |
 | **Content** | lorem, generic names, fake numbers, AI copy clichés | real data or omit; humanizer pass (§15) |
-| **Components** | raw shadcn defaults; icon-in-a-box; static Lucide | customize tokens; flat icons; Phosphor (§3) |
+| **Components** | raw shadcn defaults; icon-in-a-box; mismatched icon families | customize tokens; flat icons; preserve the established icon family, or use Phosphor for greenfield (§3) |
 | **Icons** | mismatched sets / weights; decorative boxes | one set, one weight; Simple Icons for logos (§15) |
-| **Code** | `transition:all`; `h-screen`; animated layout props; raw `scroll` listeners | name properties; `100dvh`; transform/opacity only; IntersectionObserver (§7, §10) |
+| **Code** | `transition:all`; `h-screen`; animated layout props; raw `scroll` listeners | name properties; `min-height:100dvh` only for shells; compositor-first motion with measured exceptions; IntersectionObserver (§7, §10) |
 
 ## Fix Priority (risk-vs-effort order)
 

@@ -38,9 +38,9 @@ Timing has a bigger effect on feel than easing does. These duration ranges work 
 
 **Skip bounce and elastic curves.** They had their moment around 2015 but read as dated and gimmicky today. Physical objects decelerate smoothly instead of bouncing when they stop, and overshoot draws the eye to the animation instead of the content it's supporting.
 
-## The Only Two Properties You Should Animate
+## Motion property budget
 
-Stick to **transform** and **opacity** — anything else forces the browser to recalculate layout. When animating height (accordions, for example), animate `grid-template-rows` from `0fr` to `1fr` rather than touching `height` directly.
+Default to **transform** and **opacity**. Permit `filter`, `backdrop-filter`, `clip-path`, `mask`, and shadow when the direction requires them, performance is measured on supported platforms, and reduced motion simplifies them. Never animate ordinary layout through `top`, `left`, `width`, `height`, or margin. For disclosure, animate `grid-template-rows` from `0fr` to `1fr`. The authoritative policy lives in [foundations.md](foundations.md).
 
 ## Staggered Animations
 

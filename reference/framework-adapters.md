@@ -57,7 +57,7 @@ Default to local. Reach for global only to avoid deep prop-drilling.
 | Vue/Nuxt | `@phosphor-icons/vue` |
 | Vanilla | Phosphor SVG sprites or inline SVG |
 
-**Static Lucide is BANNED** (it reads as generic AI-SaaS, everyone uses it) — see SKILL.md §3. Exception: a hover-animated icon via **lucide-animated** ([component-libs.md](component-libs.md)). Pick ONE weight (`regular` clean / `bold` stronger) project-wide. SVG primitives are fine for one-offs. Never an icon inside a background box.
+Preserve the project's established icon family, including Lucide, and never introduce a second family during local or surface work. In greenfield work, default to Phosphor and avoid static Lucide as a generic AI-SaaS reflex. Hover-animated **lucide-animated** remains valid seasoning ([component-libs.md](component-libs.md)). Pick one weight project-wide. SVG primitives are fine for one-offs. Never put an icon inside a decorative background box.
 
 **No cross-framework imports:** don't install `@phosphor-icons/react` in a Vue project. Don't install `motion/react` (or `framer-motion`) in a Vue project. Don't use `'use client'` outside React.
 

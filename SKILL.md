@@ -1,8 +1,6 @@
 ---
 name: incredibly-pretty-websites
 description: "Build genuinely beautiful, non-AI-slop websites, React-first, research before code. use_when: designing or rebuilding a site or landing page, choosing type, color, layout or motion, fixing AI-looking UI. do_not_use_when: backend, data or copy work."
-version: 1.0.0
-author: Murilo Moura
 license: MIT
 ---
 
@@ -14,15 +12,17 @@ The default framework is **React** (Vite / Next / vite-react-ssg). **Vue** and *
 
 ## How to use
 
-0. **Research first (Section 0).** Study real shipped products for the segment before applying any preset. This is the step most AI output skips, and it is why most AI output looks generic.
-1. Pick a **project-type preset** (Section 1) to set your dials.
-2. Pick a **vibe + layout archetype** (Section 5).
-3. Pick **fonts** from the catalog (Section 12). Never Roboto/Arial for premium work.
-4. Build every section fresh. Pull from the Creative Arsenal (Section 8). No generic templates.
-5. Apply the technical foundations in `reference/*.md` for spacing, motion, states, responsiveness, and a11y.
-6. Self-audit against Section 14 and the AI Tells in Section 13.
+0. Read [direction-workflow.md](reference/direction-workflow.md). Resolve incumbent truth, then set `CHANGE_SCOPE` and `SURFACE_MODE`.
+1. Research in proportion to scope. Full research is mandatory for `world`; `local` inherits the surrounding surface.
+2. Use the **project-type preset** (Section 1) to calibrate domain restraint and technical cost, not to choose the aesthetic.
+3. Derive the direction from evidence. Use vibe and layout archetypes as vocabulary and challengers, never as a required menu.
+4. Record the direction contract before code, then build every section fresh.
+5. Apply the technical references for spacing, motion, states, responsiveness, and a11y.
+6. Self-audit against Section 14 and the AI Tells in Section 13, then complete the bounded visual passes.
 
 Reference files:
+- [direction-workflow.md](reference/direction-workflow.md) — target context, `CHANGE_SCOPE`, `SURFACE_MODE`, direction contract, comps gate, bounded finish
+- [foundations.md](reference/foundations.md) — authoritative limits for hero type, viewport height, motion properties, eyebrows, and incumbent-system priority
 - [spatial-design.md](reference/spatial-design.md) — 4pt scale, hierarchy, container queries
 - [motion-design.md](reference/motion-design.md) — easing, durations, reduced-motion, a transition pattern catalog
 - [interaction-design.md](reference/interaction-design.md) — the 8 states, focus-visible, popovers, modals
@@ -52,9 +52,9 @@ Both modes do the research in Section 0. The only difference is where the brief 
 
 ---
 
-## 0. RESEARCH FIRST — before anything else
+## 0. RESEARCH FIRST — proportional to change scope
 
-> **Non-negotiable.** A fully defined brand (colors, fonts, voice already locked) does **not** excuse skipping research. Brand defines the *tokens* (palette, type, voice). Research defines everything else: page structure, sections, hierarchy, real UI patterns, conversion logic, layout, inspiration. The only real exemption is when the user hands you a complete wireframe for the whole page.
+> **Non-negotiable for `CHANGE_SCOPE=world`.** A fully defined brand does not excuse skipping structural research for a new or replacement world. For `surface`, research comparable structures and flows while preserving the incumbent system. For `local`, the surrounding surface is primary evidence; research only what it cannot answer. See [direction-workflow.md](reference/direction-workflow.md).
 
 Every visual decision starts from **evidence of what real products actually shipped**, not from the model's memory of "good taste." Models are strong at code and logic and weak at product taste, so anchor taste to real references.
 
@@ -72,35 +72,37 @@ Short version if you read nothing else: pick two or three real products in the s
 
 ### The workflow
 
-1. **Short brief:** what / for whom / platform / goal / tone / objection / constraint. (Autonomous: infer. Interview: ask.)
+1. **Context + short brief:** resolve incumbent truth, `CHANGE_SCOPE`, `SURFACE_MODE`, what / for whom / platform / goal / tone / objection / constraint. (Autonomous: infer. Interview: ask.)
 2. **Styles first:** two or three searches from different angles — one aesthetic, one domain/segment, one strong reference brand. Open one to three strong directions.
 3. **Screens/flows** when you need concrete screen structure or journey logic.
 4. **Synthesize — do not average.** Pick **one dominant primary direction** and preserve its distinctive traits. Secondary references lend one detail each. Never the lukewarm mean of everything: if one reference is dark, one is serif, one is acid, the answer is *not* polite-cream + educated-serif.
-5. **Reference-lock + decision-ledger** before coding:
+5. **Reference-lock + decision-ledger + direction contract** before coding:
    - **Reference-lock:** the primary direction + three to five traits to preserve (canvas, type, accent, layout, density, media) + what to borrow from secondaries + role rules (CTA-only, code-only, decorative-only) + media strategy (real / generated / stock / placeholder).
-   - **Decision-ledger:** a `decision | source | role/rule | why` table. Every major visual choice traces back to a reference, a client constraint, or a craft rule in this skill. No source means it does not ship.
+   - **Decision-ledger:** a `decision | source | role/rule | why` table. Every major visual choice traces back to a reference, a client constraint, incumbent visual truth, or a craft rule in this skill. No source means it does not ship.
+   - **Direction contract:** the five short blocks in [direction-workflow.md](reference/direction-workflow.md). The finish pass checks the render against them.
 6. **Implement** using the presets (Section 1), tiers (PREMIUM_TECH_TIER), and anti-slop rules (Section 13).
 
 ### What overrides what (research vs this skill)
 
-**HARD — taste and brand safety always win (non-negotiable):**
-- Defined brand tokens (color/font/voice) beat the suggested style. Brand is the "outfit," research is the "anatomy."
-- The content/taste bans: em-dash overuse, decorative floating pills, the "AI purple" palette, banned fonts, WCAG AA contrast, fake AI people in testimonials, static Lucide icons (hover-animated via `lucide-animated` is the one exception), icons inside a background box.
+**HARD — product truth, accessibility, and the incumbent system win:**
+- In `local` and `surface` scope, established brand tokens and component conventions beat this skill's taste defaults. Do not replace an existing font, purple brand color, Lucide system, radius, or component language unless the user authorizes redesign or asks to remove that tell. See [foundations.md](reference/foundations.md).
+- Accessibility, semantic correctness, working behavior, real assets, and explicit user constraints always win. Fix a contrast failure without using it as permission to restyle the product.
+- In `world` scope, the content and taste tells apply to every new choice: em-dash overuse, decorative floating pills, AI-purple by reflex, default fonts without a reason, fake AI people in testimonials, and icons inside decorative boxes.
 - Don't clone one style outright; keep token roles intact (a CTA-only accent stays CTA-only).
 
 **SOFT — a real reference wins (structure and layout):**
 - Page structure, section order and count, footer shape, hero shape, layout variation, density: **led by research, not by a fixed template.** The structural rules in this skill are **sensible defaults, not law** — if the references show a different, good structure for the case, follow the references.
 - Structure is only "wrong" if it breaks usability, conversion, or responsiveness — not because it diverges from this skill's default.
 
-### 0.1 — Brand token file (optional lock)
+### 0.1 — Visual authority and brand-token lock
 
-Before deriving palette/type/radius/shadow/motion, check for a brand-tokens file at the project root (e.g. `DESIGN.md`, `tokens.json`, a Tailwind theme). If one exists, treat it as **authority for the tokens** — skip re-deriving brand taste, use its values. Research still drives *structure*; the token file only locks tokens. If a token would violate a hard ban (AI-purple, a banned font, sub-WCAG-AA contrast), fix the token and log it in the decision-ledger. No token file means the normal flow (presets + palette/type from the brief + anti-slop).
+Before deriving palette, type, radius, shadow, or motion, resolve the nearest visual authority as defined in [direction-workflow.md](reference/direction-workflow.md): target app first, then monorepo root. A coherent token or component system in code remains authority even without `DESIGN.md`. `local` and `surface` scopes preserve it. `world` may replace it only when the task authorizes a new identity. Fix inaccessible tokens and log the change; do not silently replace taste because it differs from this skill's defaults.
 
 ---
 
 ## 1. PROJECT-TYPE PRESETS
 
-Pick the row matching the segment. Defaults are smart, not rigid — override any value.
+Use the row matching the segment to calibrate domain expectations and the technique ceiling. It does not choose the visual direction. `SURFACE_MODE` can lower or reshape its expression: an `operate` surface favors task clarity even inside a creative brand, while `persuade` or `experience` can use the segment's full permitted range.
 
 | Project Type | DESIGN_VARIANCE | MOTION_INTENSITY | VISUAL_DENSITY | Vibe | Hero | PREMIUM_TECH_TIER |
 |---|---|---|---|---|---|---|
@@ -124,7 +126,7 @@ Defines which "expensive-looking" techniques fit each preset. Adding a technique
 | Tier | Allowed | Forbidden |
 |---|---|---|
 | **0: Restraint** (local business, traditional professional) | clean typography, generous spacing, simple scroll fade-in, real photography, subtle hover | liquid-glass, infinite marquee, char-by-char reveal, magnetic hover, animated gradient blobs, loading screen with counter, sticky stacking cards, dashboard mock UI |
-| **1: Subtle** (solo professional, e-commerce, health) | tier 0 + staggered fade-rise entrances, a single eyebrow pill, noise overlay ≤5% opacity, a CSS client-logo marquee (once per page, 30s+ slow), same-family italic/heavier-weight emphasis on one headline word | liquid-glass except on a card over a photo, char-by-char reveal, magnetic hover, loading screen, sticky stacking, animated gradient blobs |
+| **1: Subtle** (solo professional, e-commerce, health) | tier 0 + staggered fade-rise entrances, an evidence-backed eyebrow when the hierarchy needs it, noise overlay ≤5% opacity, a CSS client-logo marquee (once per page, 30s+ slow), same-family italic/heavier-weight emphasis on one headline word | liquid-glass except on a card over a photo, char-by-char reveal, magnetic hover, loading screen, sticky stacking, animated gradient blobs |
 | **2: Moderate** (course, restaurant, fitness) | prior tiers + word pull-up entrance on the H1, scroll char-reveal on one institutional paragraph (one section only), liquid-glass on a card over photo/gradient, sticky scroll-stack cards in a portfolio, static gradient mesh blobs | magnetic hover (a11y-suspect on touch), loading screen counter, video bg (unsourced), dashboard mock UI |
 | **3: Full premium** (Tech/SaaS, Creative, Luxury real estate, Architecture) | everything: full liquid-glass refraction, scroll-linked bidirectional marquee, magnetic hover on a CTA, animated gradient blobs with `@property`, coded dashboard mock UI (not a screenshot) for SaaS, sticky stacking project cards, optional loading-screen counter, asymmetric bento grid, **GSAP ScrollTrigger scroll-telling + Lenis smooth-scroll** ([scroll-motion.md](reference/scroll-motion.md)), **video backgrounds** (cost-gated, [media-pipeline.md](reference/media-pipeline.md)), the 3 Canvas UI `*-Object` three.js components (gate as Heavy WebGL, [component-libs.md](reference/component-libs.md)) | Canvas UI's 22 html-in-canvas components — Tier 3 is necessary but **not sufficient**, see the experimental ceiling below |
 
@@ -150,7 +152,7 @@ Use these as global vars to drive the decisions below.
 
 **MOTION_INTENSITY (1–10)**
 - **1–3 (Static):** No automatic animation. CSS `:hover`/`:active` only.
-- **4–6 (Fluid CSS):** `transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1)`. Animation-delay cascades. `transform`/`opacity` only.
+- **4–6 (Fluid CSS):** `transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1)`. Animation-delay cascades. Default to `transform`/`opacity`; use the measured exceptions in [foundations.md](reference/foundations.md) only when the direction requires them.
 - **7–10 (Advanced choreography):** Scroll-triggered reveals, parallax, spring physics, perpetual micro-interactions. Use the framework-native motion lib (see [framework-adapters.md](reference/framework-adapters.md)). NEVER raw `window.addEventListener('scroll')` — use IntersectionObserver or a framework primitive.
 
 **VISUAL_DENSITY (1–10)**
@@ -169,9 +171,9 @@ Use these as global vars to drive the decisions below.
 - **Responsiveness & spacing:**
   - Standard breakpoints (`sm`, `md`, `lg`, `xl`).
   - Container: `max-w-[1400px] mx-auto` or `max-w-7xl`. If a `<Container>` primitive exists, use it.
-  - **Viewport stability [CRITICAL]:** NEVER `h-screen`. ALWAYS `min-h-[100dvh]` (iOS Safari).
+  - **Viewport stability [CRITICAL]:** never `h-screen` or `height: 100vh`. Use `min-h-[100dvh]` only for full-page shells; marketing heroes use the range in [foundations.md](reference/foundations.md).
   - **Grid over flex-math:** NEVER `w-[calc(33%-1rem)]`. ALWAYS CSS Grid.
-- **Icons:** Use **Phosphor Icons** for the framework (`@phosphor-icons/react`, `@phosphor-icons/vue`). Static Lucide is BANNED (it reads as generic AI-SaaS, everyone uses it). **Exception:** a hover/focus-animated icon via **lucide-animated** ([component-libs.md](reference/component-libs.md)) as seasoning in one or two spots (CTA, active nav), never as the general static icon set. Pick one weight (`regular`/`bold`) project-wide. SVG primitives are fine for one-offs. NEVER an icon inside a background box (`bg-primary rounded-lg p-3 <Icon/>`) — use a flat colored icon (`text-primary`/`text-accent`) with no box (exception: a pictogram inside a numbered step-card). **WhatsApp:** always the official inline brand `<svg>` (chat bubble with phone), never a generic `MessageCircle`.
+- **Icons:** Preserve the project's established icon family, including Lucide. Never introduce a second family during `local` or `surface` work. In greenfield `world` scope, default to **Phosphor Icons** (`@phosphor-icons/react`, `@phosphor-icons/vue`) and avoid static Lucide as a training-data reflex. A hover/focus-animated icon via **lucide-animated** ([component-libs.md](reference/component-libs.md)) remains valid seasoning in one or two spots. Pick one weight project-wide. SVG primitives are fine for one-offs. Never put an icon inside a decorative background box (exception: a pictogram inside a numbered step-card). **WhatsApp:** use the official inline brand `<svg>`, never a generic chat icon.
 
 ### 3.1 Brief → official design system (enterprise / regulated / platform-consistent)
 
@@ -199,16 +201,14 @@ This complements the **PREMIUM_TECH_TIER** gating (§1): the tier decides how ex
 
 **Rule 1: Deterministic typography**
 - Display/headlines: `text-4xl md:text-6xl tracking-tighter leading-none`.
-  - **Fluid clamp() defaults** (preferred over discrete breakpoints for an impactful hero):
-    - H1 hero: `font-size: clamp(2.25rem, 5.5vw, 4.5rem)` (36–72px) — the sweet spot, presence without becoming a tower.
-    - H1 hero "editorial giant" (Tier ≥ 2): `font-size: clamp(3rem, 8vw, 6rem)` — max 96px.
+  - **Hero limits:** follow [foundations.md](reference/foundations.md). Standard work tops out at 72px. Editorial or `experience` work may reach 96px only when the direction contract approves it and the real copy survives every breakpoint.
     - H2 section: `font-size: clamp(1.75rem, 3.5vw, 2.75rem)`.
     - Body: `font-size: clamp(0.95rem, 1.5vw, 1.125rem)`.
   - **Letter-spacing per tier:** h1 `-0.04em`, h2 `-0.02em`, body `0`. An editorial giant hero can go to `-0.07em`.
   - **Line-height tight in hero:** `0.9` to `0.95` (`leading-none` = 1.0 is fine). Body is always `leading-relaxed` (1.625).
   - **Same-family emphasis in headlines (never mixed-family):** emphasis in a headline comes from the **italic or a heavier weight of the same grotesque/sans family**, never from injecting a different (serif) family. A serif italic word dropped into a sans headline (`<h1>Beyond silence, we build <span class="italic font-serif">the eternal</span>.</h1>`) now reads as amateur and overused: it was the go-to AI "expensive" move and is burned. Keep the whole headline in one family and lean on that family's own italic, a heavier weight, or a color/opacity shift (`text-foreground/60`) for the accent word. A genuine full-serif headline (whole line in a serif) is still fine; the ban is on the mixed serif-in-sans accent.
-  - **ANTI-SLOP:** Inter Display is fine for premium/creative; plain Inter is fine for neutral / Linear-style / utility UI. Only **Roboto, Arial, Open Sans, Helvetica** stay banned for premium/creative. Reach first for Geist, Outfit, Cabinet Grotesk, Satoshi, Clash Display, PP Editorial New.
-  - **SERIF RULE:** Serif is BANNED for dashboards/software UI. Use sans-only pairs (Geist+Geist Mono, Satoshi+JetBrains Mono). Serif is welcome for editorial/luxury landing pages.
+  - **ANTI-SLOP:** In greenfield premium/creative work, Inter Display is valid while plain Inter fits neutral / Linear-style / utility UI. Avoid choosing **Roboto, Arial, Open Sans, or Helvetica** for a new premium/creative identity without a reference-backed reason. Preserve an established type system in `local` or `surface` scope. Reach first for Geist, Outfit, Cabinet Grotesk, Satoshi, Clash Display, PP Editorial New when a fallback is needed.
+  - **SERIF RULE:** For a new dashboard/software UI, default to a sans-only pair (Geist+Geist Mono, Satoshi+JetBrains Mono); serif remains welcome for editorial/luxury landing pages. Preserve an established, legible serif UI unless redesign is authorized.
 - Body: `text-base text-gray-600 leading-relaxed max-w-[65ch]`.
 - **Text-rendering polish (universal — all tiers, zero cost, separates "ok" from "premium"):**
   - `text-wrap: balance` on **headings** (h1/h2/h3) to avoid a lonely orphan on the last line. `text-wrap: pretty` on **body/paragraphs** to avoid a one-word orphan.
@@ -218,7 +218,7 @@ This complements the **PREMIUM_TECH_TIER** gating (§1): the tier decides how ex
 
 **Rule 2: Color calibration**
 - Max one accent color. Saturation < 80%.
-- **THE PURPLE BAN:** the "AI purple/blue" aesthetic is BANNED. No purple glows, no neon gradients. Neutral bases (Zinc/Slate) + a single high-contrast accent (Emerald, Electric Blue, Deep Rose).
+- **Purple is a greenfield tell, not a forbidden brand:** in `world` scope, do not reach for the generic purple/blue AI glow by reflex. In `local` or `surface` scope, preserve an established purple brand palette and improve only accessibility or documented drift.
 - **Color consistency:** one palette project-wide. No warm/cool gray fluctuation.
 - **Palette rotation (avoid the recurring-AI-palette tell):** warm cream + brass/clay/oxblood/ochre + espresso is one of the most recurring AI-generated "premium" looks (§13). It remains a legitimate *option*, but do NOT default to it for every premium brief, and note Editorial Luxury (§5) no longer prescribes it. **Rotate palettes between projects; never ship the same palette on two consecutive projects.** Rotation menu (directions, not prescriptions): cold luxury (charcoal + platinum + ice blue), forest (deep green + bone + copper), black-and-tan, cobalt + cream, terracotta + slate, olive + brick, mono + one pop. Let research (§0) pick, not reflex.
 
@@ -248,7 +248,7 @@ This complements the **PREMIUM_TECH_TIER** gating (§1): the tier decides how ex
 
 ## 5. VIBE & LAYOUT ARCHETYPES
 
-Pick ONE vibe + ONE layout before writing code.
+Use these as descriptive vocabulary, counterexamples, or challengers after research. Do not force every brief into one named vibe. A reference-derived direction may combine traits when their roles are explicit and the result is not a lukewarm average. Commit one layout grammar in the direction contract before writing code.
 
 ### Vibe archetypes
 
@@ -310,7 +310,7 @@ Pick ONE vibe + ONE layout before writing code.
 
 For a **single-offer paid-traffic landing** (not a multi-page institutional site): one goal, one CTA repeated down the page. The sequence below is a **starting menu, not a rigid form** — research (§0) decides the real order and emphasis for the segment, and the counts are ranges, not law.
 
-1. **Above the fold** — eyebrow (1, optional) → headline (a concrete promise/result, not the product name) → subhead (one sentence: for whom / how) → video OR proof visual → proof (logos/numbers/badge) → **CTA**. Critical content (H1 + CTA) in HTML/CSS for LCP.
+1. **Above the fold** — optional evidence-backed eyebrow → headline (a concrete promise/result, not the product name) → subhead (one sentence: for whom / how) → video OR proof visual → proof (logos/numbers/badge) → **CTA**. Critical content (H1 + CTA) in HTML/CSS for LCP.
 2. **Problems** — a pain headline + three to six concrete "dig-ins" (real pains of the audience). Specific text, not vague.
 3. **Solution benefits** — a headline + three to six benefits (the *result* for the client, not a technical feature).
 4. **How it works** — three or four steps (reduces friction/fear, shows it's simple).
@@ -353,7 +353,7 @@ Never place premium containers flat. Nest them:
 Primary CTAs as rounded pills (`rounded-full px-6 py-3`). Arrow icons nested in a distinct circular wrapper (`w-8 h-8 rounded-full bg-black/5`) flush with the right padding.
 
 **Eyebrow tags:**
-Precede an H1/H2 with a micro pill: `rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-medium`. **Max one eyebrow per section** — don't stack pills. Never use an eyebrow pill as a decorative floating element beside/below the hero (see AI Tells).
+Do not add one by default. When a reference, established system, or real hierarchy justifies it, follow the page cap and narrow-screen behavior in [foundations.md](reference/foundations.md). Never use an eyebrow as a decorative floating pill.
 
 **Macro-whitespace:**
 VISUAL_DENSITY ≤ 4: double the standard padding. `py-24` to `py-40` for sections.
@@ -508,7 +508,7 @@ Press slow when deliberate (hold-to-delete: 2s linear). Release always snappy (2
 - **Tooltips skip the delay on subsequent hovers:** first one delays. Adjacent ones appear instantly.
 - **Use blur to mask imperfect transitions:** a subtle `filter: blur(2px)` during crossfades. Cap under 20px (Safari perf).
 - **CSS transitions over keyframes for dynamic UI:** transitions are interruptible mid-flight; keyframes restart.
-- **Hardware acceleration:** animate ONLY `transform` + `opacity`. NEVER `top`, `left`, `width`, `height`, `margin`. For height: `grid-template-rows: 0fr → 1fr`.
+- **Motion properties:** default to `transform` and `opacity`. Permit the measured visual materials and disclosure exception defined in [foundations.md](reference/foundations.md). Never animate `top`, `left`, `width`, `height`, or margin for ordinary UI.
 - **NEVER `transition: all`** — always name the exact property (`transition: transform 200ms, opacity 200ms`). `all` animates unintended props (layout, inherited color) and costs perf.
 - **`will-change` only for `transform`, `opacity`, or `filter`** — and only when the animation is imminent (`:hover`, `.is-animating`). Declaring it preemptively on many elements creates too many GPU layers and hurts perf.
 - **Icon swap / cross-fade with no motion lib:** swap an icon (menu↔close, play↔pause) keeping **both in the DOM** and cross-fading — don't swap `src`/conditional-mount (it flickers). Values: entering `scale 0.25→1, opacity 0→1, blur 4px→0`, leaving the inverse, `cubic-bezier(0.2,0,0,1)` ~300ms. With a motion lib: spring `{ type:"spring", duration:0.3, bounce:0 }`. Position both icons in the same grid cell (`grid-area: 1/1`) to overlap them.
@@ -575,7 +575,7 @@ For SaaS dashboards / feature sections, use "Bento 2.0":
 ## 10. PERFORMANCE GUARDRAILS
 
 - **DOM cost:** grain/noise filters ONLY on a `fixed inset-0 z-50 pointer-events-none` pseudo-element. NEVER on a scrolling container.
-- **Hardware accel:** ONLY `transform` + `opacity`. Never layout properties.
+- **Hardware acceleration:** follow [foundations.md](reference/foundations.md). Scroll effects stay compositor-first; expensive visual properties require measured performance and a reduced-motion fallback.
 - **Z-index restraint:** only systemic layers (nav, modals, overlays). Use a semantic scale: dropdown(100) → sticky(200) → modal-backdrop(300) → modal(400) → toast(500) → tooltip(600).
 - **Blur:** `backdrop-blur` only on fixed/sticky. Never on scrolling content.
 - **CSS variables caveat:** changing a CSS var on a parent recalcs ALL children. Update transform directly on the element.
@@ -610,7 +610,9 @@ Full detail: [interaction-design.md](reference/interaction-design.md), [responsi
 
 **Shader-over-DOM (Canvas UI):** the a11y tree survives but the *sighted mouse* user doesn't — the shader moves pixels while layout and hit-testing stay put, so the button you see is not where the button is, legibility loss passes an axe run untouched, and 1x capture softens all wrapped text. Decorative only, never over a control or body copy. [component-libs.md](reference/component-libs.md).
 
-## 12. TYPOGRAPHY CATALOG (curated & approved)
+## 12. TYPOGRAPHY FALLBACK CATALOG
+
+Research, incumbent visual authority, and the direction contract choose the typography. Use this catalog only when licensing, availability, or a blank-slate build needs a dependable fallback. A familiar font still needs a reason tied to the surface's function or material; “premium,” “modern,” and the product category are not reasons.
 
 ### Premium sans-serif (recommended)
 
@@ -684,6 +686,8 @@ Where to get the free fonts: [Fontshare](https://fontshare.com) (Satoshi, Cabine
 
 ## 13. AI TELLS (forbidden patterns)
 
+This section governs new choices in `world` scope. In `local` and `surface` scope, [foundations.md](reference/foundations.md) wins: preserve the incumbent system's fonts, brand colors, icon family, and component language unless redesign is authorized. Accessibility, semantics, broken behavior, missing assets, and platform correctness remain non-negotiable in every scope.
+
 ### Visual & CSS
 - NO neon/outer glows. Use inner borders or tinted shadows.
 - NO pure black. Use off-black, Zinc-950, charcoal.
@@ -696,10 +700,10 @@ Where to get the free fonts: [Fontshare](https://fontshare.com) (Satoshi, Cabine
 - NO skeleton/gray-block product mock (gray bars faking text, empty rectangles). A "coded dashboard/product mock" (Tier 3) = real UI: legible text, real micro-components (a button with a label, an input with a placeholder, a chat bubble with a real sentence, a preview with a real headline), brand colors. Gray blocks = an unfinished wireframe, not premium.
 
 ### Typography
-- NO Roboto, Arial, Open Sans, Helvetica for premium/creative. (Inter Display is acceptable for premium/creative; plain Inter for neutral/Linear-style/utility UI.)
+- NO choosing Roboto, Arial, Open Sans, or Helvetica as a new premium/creative identity without a reference-backed reason. Inter Display is acceptable for premium/creative; plain Inter for neutral/Linear-style/utility UI.
 - NO serif accent word injected into a sans headline (mixed-family emphasis). Use the same family's italic or a heavier weight.
 - NO oversized H1s. Hierarchy via weight + color, not just scale.
-- NO serif on dashboards.
+- NO adding serif to a new dashboard by reflex. Preserve an established, legible serif UI unless redesign is authorized.
 - NO mono as the default UI voice. Monospace only for real code/terminal/CLI. Mono in an eyebrow, label, note, decorative URL, stat number, price, footer header, caption = AI look. If it's not code, it's not mono. (Detail in §12.)
 
 ### Layout & spacing
@@ -709,12 +713,12 @@ Where to get the free fonts: [Fontshare](https://fontshare.com) (Satoshi, Cabine
 - NO inner nav links in a pill bg. Plain-text links; a pill only for the single primary nav CTA. Four or five links in colored pills reads as "5 glued buttons."
 - NO symmetrical Bootstrap-style grids without large whitespace gaps when DESIGN_VARIANCE ≥ 7.
 - NO `border-left: Npx solid color` callout (side-stripe = AI dashboard cliché).
-- NO decorative floating pills (loose words in floating pills around the headline like "Google," "SMB," "AI," "+340%"). A single eyebrow above the headline is fine; ambient decorative pills = gratuitous noise.
+- NO decorative floating pills (loose words in floating pills around the headline like "Google," "SMB," "AI," "+340%"). An evidence-backed eyebrow above the headline is fine; ambient decorative pills = gratuitous noise.
 - NO faded circle/ring/blob behind the headline (a radial SVG, a "wireframe globe," a big concentric circle). Visual AI cliché.
 - NO mobile side gutters > 24px (`px-4`–`px-6` only). 48px side margins on a 375px screen = 25% of the width wasted; the page looks scared of the edge. Whitespace on mobile is vertical, never lateral. (Detail: spatial-design.md.)
 - NO decorative background pattern, PERIOD — any variant is a hard AI tell: diagonal stripes (parallel hairlines), dot grid, full-bleed grid lines, topographic/contour lines, hexagons, SVG waves, circuit board. **Worst form: pattern ON TOP of a gradient** (dark gradient + diagonal hairlines = corporate slide wallpaper). Premium background = solid color, clean subtle gradient, photo, or noise ≤5%. If a section "needs texture" to not look empty, fix the section's content/layout, not the background.
 - NO 3+ CTAs in the hero. Valid combos: (a) one primary button + one underlined secondary link [default], (b) one button only, (c) two buttons of equal size, (d) two stacked buttons with the primary on top and larger. NEVER a primary on top that's smaller than the secondary below.
-- NO hero H1 with `font-size` > 4rem (64px). FORBIDDEN `clamp(2.35rem, 11vw, 5rem)` or similar — at a 1440px viewport, 11vw = 158px, an H1 that fills the screen. Use `clamp(2rem, 5vw, 4rem)` max.
+- NO hero H1 above the approved limit in [foundations.md](reference/foundations.md): 72px standard, or 96px only for an approved editorial/`experience` direction. Unbounded viewport multipliers and copy that overflows remain forbidden.
 - NO hero copy container `max-w` < 42ch. FORBIDDEN `max-w-[10.5ch]` on the H1 (funnels into a "word tower").
 - NO hero split with the image inside a framed card (`bg-primary` + `border` + separate `border-radius` from the hero bg). When the image fails it becomes an ugly solid rectangle; when it loads it looks like a pasted screenshot. Use a floating PNG cutout, a full-bleed bg image, OR a diagonal-cut split.
 - NO `<img>` pointing at a file that wasn't generated. Always verify the file exists before writing the `<img>`.
@@ -730,7 +734,7 @@ Where to get the free fonts: [Fontshare](https://fontshare.com) (Satoshi, Cabine
 - NO testimonial avatar with a tag/role inside the circle ("PF / clarity," "CE / trust"). The avatar = only the first letter of the name. The tag goes outside the circle, or is omitted.
 - NO testimonial author = "Individual client," "Business client," "Organic lead." Use a realistic fictional name + optionally one short line of context below the quote.
 - NAV SCROLL-AWARE (preferred for a photo/dark hero): the nav starts transparent over the hero, becomes opaque with `backdrop-blur` once scroll > 60px. `window.addEventListener('scroll', () => scrolled = window.scrollY > 60)`. CSS transition 240ms.
-- HERO HEIGHT: sweet spot `min-height: 75–90dvh` desktop / `70dvh` mobile. FORBIDDEN `100dvh` (locks the viewport) and FORBIDDEN `< 500px` mobile (looks like a cropped banner).
+- HERO HEIGHT: use `min-height: 75–90dvh` desktop and about `70dvh` mobile. Never use fixed `height: 100vh`; reserve `min-height: 100dvh` for full-page shells, not ordinary marketing heroes. See [foundations.md](reference/foundations.md).
 - CARD SPACING (icon + heading + paragraph): icon → heading gap SHORT (`mb-2` / `gap-2` = 8–12px, they belong to the same visual group). Heading → paragraph gap LONG (`mt-4 md:mt-5` = 16–20px). The opposite bug (icon far, heading glued to paragraph) breaks the hierarchy.
 
 ### Content & data
@@ -787,13 +791,26 @@ Before/after/why self-audit:
 | Elements all appear at once | Stagger 30–80ms | Cascading reveal |
 | Same enter/exit speed | Exit faster than enter | System responds fast |
 
+### Mandatory visual loop
+
+Frontend work does not ship from code inspection alone. Follow the platform and evidence requirements of the host's visual-validation workflow, then finish within two batched rounds:
+
+1. Declare supported platforms and meaningful states, then capture the complete matrix in one round.
+2. Inspect the rendered pixels yourself. Check above-the-fold fit, overlap, clipping, overflow, text wrapping, density, hierarchy, typography, state correctness, and interactive affordances.
+3. Record every material finding and fix them in one batch.
+4. Capture the same matrix once more. Mark each finding `resolved`, `partial`, or `open` in the visual-evidence manifest.
+
+A successful build, typecheck, DOM assertion, or accessibility tree is not visual verification. If screenshot capture is unavailable, mark the evidence `unobserved` and do not claim the frontend is visually complete. Stop after the confirmation round unless the user explicitly asks for another pass; report open findings honestly.
+
 ### Pre-flight check
 - [ ] Project-type preset selected, dials set?
-- [ ] Vibe + layout archetype match the segment?
+- [ ] `CHANGE_SCOPE` and `SURFACE_MODE` set, incumbent visual authority resolved?
+- [ ] Direction contract recorded and used in review?
+- [ ] Direction comes from evidence; any vibe or archetype serves only as vocabulary or a deliberate challenger?
 - [ ] Mobile collapse (`w-full`, `px-4`, `max-w-7xl mx-auto`) guaranteed?
-- [ ] Full-height sections use `min-h-[100dvh]`, not `h-screen`?
-- [ ] Icons: Phosphor (not static Lucide; hover-animated = lucide-animated), consistent weight, no bg box? WhatsApp = official brand SVG?
-- [ ] Fonts from the approved catalog (Section 12)?
+- [ ] Viewport height matches the role in `foundations.md`: full-page shell, marketing hero, or intrinsic section?
+- [ ] Existing icon system preserved, or one greenfield family selected with a consistent weight and no decorative boxes? WhatsApp = official brand SVG?
+- [ ] Typography follows incumbent authority or research; fallback catalog used only with a reason?
 - [ ] Animation cleanup on unmount?
 - [ ] Empty/loading/error states present?
 - [ ] No AI tells from Section 13?
@@ -802,13 +819,14 @@ Before/after/why self-audit:
 - [ ] Touch hover gated with a media query?
 - [ ] Focus visible only via `:focus-visible`?
 - [ ] All interactive elements ≥ 44px on a coarse pointer?
+- [ ] Run `node <skill-base-dir>/scripts/ipw-lint.mjs <changed-targets>` once on changed frontend files; review findings in context?
 - [ ] Head shipped per route: unique `<title>` + meta description, canonical, one `<h1>`, `alt` on every content image, semantic landmarks (`header`/`nav`/`main`/`footer`), and an OG image that is a real design deliverable (1200×630, brand colors, legible at thumbnail size)? The rules and the live verification belong to [site-audit](https://github.com/badmuriss/site-audit); this box only asks that the head is not empty when it ships.
 
 ### Countable pre-flight (turn tells into numbers)
 
 Qualitative tells are easy to rationalize away, so count them. If a count exceeds its cap, it is a fail: fix before returning.
 
-- **Eyebrows:** count eyebrow/kicker pills on the page. Cap = `ceil(sections / 3)` (and still max one per section). Above that = eyebrow spam.
+- **Eyebrows:** no default eyebrow. When evidence justifies one, cap = `ceil(sections / 3)` and max one per section. Above that = eyebrow spam.
 - **Zigzag cap:** count consecutive image+text split sections. Max 2 in a row; a 3rd consecutive split is a fail (break it with a different layout family).
 - **Section-layout variety:** each layout family (split-LR, split-RL, centered, bento, gallery, full-bleed, editorial-asymmetric) appears at most about once. An 8-section page uses ≥ 4 distinct families. Count the families; below half the section count is too repetitive.
 - **Bento cells:** cell count = number of real content items. Zero empty or filler cells.
@@ -856,9 +874,9 @@ Pick the shape that best communicates the business:
 
 ### Mobile hero (P0)
 - Mobile nav = logo + hamburger only. NO CTA pill in the header bar; the CTA lives inside the open menu.
-- Hero `font-size: clamp(2.25rem, 5.5vw, 4.5rem)` (36–72px). FORBIDDEN `11vw` / `>72px` desktop.
+- Hero starts near 36px on mobile and tops out at 72px standard. An approved editorial/`experience` direction may reach 96px. Derive the slope; never use an unbounded `11vw` reflex.
 - Hero copy `max-w` never < 42ch (`max-w-[10.5ch]` funnels into a "word tower").
-- Hero height 75–90dvh desktop / 70dvh mobile. FORBIDDEN `100dvh` and `<500px` mobile.
+- Hero height 75–90dvh desktop / about 70dvh mobile. Never fix it to `100vh`; keep `min-height: 100dvh` for full-page shells.
 - An eyebrow with high letter-spacing: on mobile, hide the flanking lines, reduce tracking, and add `text-wrap: balance`.
 - **Validate on mobile before returning:** open at 390×844 (Playwright / chrome-devtools) or use `getComputedStyle` to confirm the nav CTA is hidden and there's zero horizontal scroll. Breakage is a P0 blocker.
 

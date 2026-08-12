@@ -22,12 +22,12 @@ The axis is weight + slop risk, not the brand. **Both libraries have light and h
 
 | Weight | Examples | Rule |
 |---|---|---|
-| **Light** (CSS/Motion, no WebGL) | blur-fade, number-ticker, marquee, text-animate, split-text, count-up, shiny-text, border-beam, **lucide-animated icons** | Fine on a serious landing. Respect reduced-motion + only `transform`/`opacity`. |
+| **Light** (CSS/Motion, no WebGL) | blur-fade, number-ticker, marquee, text-animate, split-text, count-up, shiny-text, border-beam, **lucide-animated icons** | Fine on a serious landing. Respect reduced-motion and the motion-property budget in [foundations.md](foundations.md). |
 | **Medium** (2D canvas / many animated nodes) | particles, meteors, animated-grid, flickering-grid, dock, orbiting-circles | One per section. Lazy below the fold. |
 | **Heavy** (WebGL three/ogl, 3D) | Globe (Magic UI); aurora/galaxy/plasma/liquid-ether/hyperspeed, dome/circular-gallery, model-viewer (React Bits); **Canvas UI's 3 `*-Object` components** | Spectacle only. One per page. `poster`/static at LCP. Hard reduced-motion gate. Wrong segment = slop. |
 | **Experimental** (pre-release browser API) | Canvas UI's 22 html-in-canvas components — Liquid, Blaze, Shatter, VHS, Glass, Asciify… (**not** the 3 `*-Object` ones, those are Heavy above) | One per page, **decorative only, above the fold only**. NEVER over an interactive control or over text meant to be read (the shader moves pixels, not hit-targets). The plain-DOM fallback is designed and verified FIRST. Tier 3 **and** a declared portfolio/experimental brief — see "Canvas UI" below. |
 
-**Still applies (SKILL.md):** research decides *what* (§0); the preset's PREMIUM_TECH_TIER (§1) is the ceiling; reduced-motion is a gate, not decoration (§6); only `transform`/`opacity` animate (§7); no cross-framework imports — none of this in Vue (§3), use the native equivalent ([framework-adapters.md](framework-adapters.md)) (Canvas UI excepted: it ships a real build per framework, see Vue equivalents). Not a blind default: a trivial reveal uses native CSS/IntersectionObserver; a library earns its place when the specific effect justifies it.
+**Still applies (SKILL.md):** research decides *what* (§0); the preset's PREMIUM_TECH_TIER (§1) is the ceiling; reduced-motion is a gate, not decoration (§6); motion is compositor-first with measured exceptions ([foundations.md](foundations.md)); no cross-framework imports — none of this in Vue (§3), use the native equivalent ([framework-adapters.md](framework-adapters.md)) (Canvas UI excepted: it ships a real build per framework, see Vue equivalents). Not a blind default: a trivial reveal uses native CSS/IntersectionObserver; a library earns its place when the specific effect justifies it.
 
 ---
 
@@ -99,7 +99,7 @@ const ref = useRef<AnimatedIconHandle>(null);
 </button>
 ```
 
-**Guardrails:** reduced-motion — the source animates `transform` on hover; in a LazyMotion (`m`) project, swap `motion`→`m` in the copied icon (same gotcha as Magic UI's Motion-based components, below). Sparingly: an animated icon is seasoning, not a whole trembling interface — one or two accent spots (CTA, active nav), not every `<li>`. **Being Lucide-based makes it the declared exception to the static-Lucide ban (SKILL.md §3):** use it ONLY hover/focus-animated as seasoning, never as the general static icon set (that stays Phosphor).
+**Guardrails:** reduced-motion — the source animates `transform` on hover; in a LazyMotion (`m`) project, swap `motion`→`m` in the copied icon (same gotcha as Magic UI's Motion-based components, below). Sparingly: an animated icon is seasoning, not a whole trembling interface — one or two accent spots (CTA, active nav), not every `<li>`. Preserve the project's established icon family. In greenfield work, Phosphor is the static default and lucide-animated is valid hover/focus seasoning.
 
 ---
 
@@ -211,7 +211,7 @@ Free for personal and commercial use, including editing, on a client site. **NOT
 - **LCP:** WebGL/canvas above the fold delays LCP. Keep the critical H1/CTA in HTML/CSS; let canvas enrich afterward (same rule as video, [media-pipeline.md](media-pipeline.md)). 3D/gallery = lazy + play-in-view.
 - **Reduced-motion:** confirm the source respects it; otherwise wrap in `useReducedMotion()` (Motion) or a media query and fall back to static.
 - **SSR (vite-react-ssg / Next):** WebGL/canvas is client-only — isolate it (`'use client'` / dynamic `ssr:false` / a boundary, [framework-adapters.md](framework-adapters.md)). Running it in SSR breaks the build.
-- **Only `transform`/`opacity`** on what animates (SKILL.md §7). Audit the source — some demos animate expensive props.
+- **Motion-property budget:** default to `transform`/`opacity`; audit any expensive visual property against [foundations.md](foundations.md) and measure it on every supported platform.
 - **Bundle:** Magic UI is light (Motion). React Bits WebGL pulls `three`/`ogl`/`postprocessing` (~150kb+). Check `package.json` (SKILL.md §3) and the cost first. Max one WebGL background per page.
 - **LazyMotion vs eager `motion` (real gotcha):** if the project uses `LazyMotion`+`m` (optimized Motion, ~4.6kb vs ~34kb — better LCP), the Magic UI Motion-based components (`blur-fade`, `border-beam`, `text-animate`) import full `motion` and **clash** (LazyMotion strict bans `motion`; without strict you load both bundles = worse). Fix: (a) use Magic UI's **CSS-based** components (`marquee`, backgrounds, patterns, CSS `shine-border`) = zero Motion; (b) for Motion-based, swap `motion`→`m` before dropping in, OR implement natively with the project's `m`. **LazyMotion wins on perf — don't drop it for eager motion.** In a project *without* LazyMotion, Magic UI drops in directly.
 - **Edit, don't paste raw:** copy-in means adapting color/scale to your tokens — never leave the demo's default palette.

@@ -5,7 +5,7 @@ Recipes for premium scroll-telling — the kind of polish that makes a site feel
 **Ground rules before you write a single line:**
 - **Isolate GSAP inside a client-only boundary** (see [framework-adapters.md](framework-adapters.md)) — ScrollTrigger must never run during SSR.
 - **`prefers-reduced-motion` is a hard gate, not a nice-to-have.** Users who ask for reduced motion get no smooth-scroll and no scrub — render a static or simple-fade fallback instead.
-- **Only animate `transform`/`opacity`** (GSAP: `x/y/scale/rotation/opacity`/`autoAlpha`). Never animate layout properties.
+- **Default to `transform`/`opacity`** (GSAP: `x/y/scale/rotation/opacity`/`autoAlpha`). A direction may justify a measured visual-material exception from [foundations.md](foundations.md); never animate ordinary layout properties.
 - **Cleanup on unmount is mandatory** — a leaked ScrollTrigger instance can lock up scrolling for the whole page.
 - GSAP has been fully free since the Webflow acquisition (every plugin, no license token or paid club needed). Install the public `gsap` package as-is.
 
