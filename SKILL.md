@@ -669,7 +669,7 @@ Pixel-font rules:
 - Headlines: `tracking-tight` or `letter-spacing: -0.02em`.
 - ALL CAPS: `tracking-[0.05em]`.
 - Test at the target size — display fonts may not work at 14px body.
-- AVOID Space Grotesk — too square. Prefer Satoshi, DM Sans, Geist.
+- **FORBIDDEN: Space Grotesk.** Do not import, request, declare, or use it in new work. Preserve it only when `local` or `surface` scope requires an incumbent type system and the user has not authorized redesign. For `world` scope, choose a researched family whose structure supports the direction contract.
 
 ### Quick pairings
 
@@ -689,6 +689,7 @@ Where to get the free fonts: [Fontshare](https://fontshare.com) (Satoshi, Cabine
 This section governs new choices in `world` scope. In `local` and `surface` scope, [foundations.md](reference/foundations.md) wins: preserve the incumbent system's fonts, brand colors, icon family, and component language unless redesign is authorized. Accessibility, semantics, broken behavior, missing assets, and platform correctness remain non-negotiable in every scope.
 
 ### Visual & CSS
+- NO Space Grotesk in new `world`-scope work. The lint gate treats imports, font-family declarations, framework font loaders, and font tokens containing that family as failures.
 - NO neon/outer glows. Use inner borders or tinted shadows.
 - NO pure black. Use off-black, Zinc-950, charcoal.
 - NO oversaturated accents. Desaturate to blend with neutrals.

@@ -17,6 +17,7 @@ const RULES = Object.freeze({
   decorativeGrid: 'decorative-grid',
   gradientText: 'gradient-text',
   missingImage: 'missing-local-image',
+  spaceGrotesk: 'space-grotesk',
   transitionAll: 'transition-all',
   viewportHeight: 'fixed-viewport-height',
 });
@@ -43,6 +44,17 @@ function scanTransitionAll(filePath, source) {
     match.index,
     RULES.transitionAll,
     'Name the transitioned properties instead of using all.',
+  ));
+}
+
+function scanSpaceGrotesk(filePath, source) {
+  const pattern = /space[\s_-]*grotesk/gi;
+  return [...source.matchAll(pattern)].map((match) => finding(
+    filePath,
+    source,
+    match.index,
+    RULES.spaceGrotesk,
+    'Space Grotesk is forbidden for new work; choose typography from the researched direction.',
   ));
 }
 
@@ -147,6 +159,7 @@ async function scanMissingImages(filePath, source, projectRoot) {
 
 export async function scanSource(filePath, source, projectRoot) {
   const mechanicalFindings = [
+    ...scanSpaceGrotesk(filePath, source),
     ...scanTransitionAll(filePath, source),
     ...scanViewportHeight(filePath, source),
     ...scanGradientText(filePath, source),

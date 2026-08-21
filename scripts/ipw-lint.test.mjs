@@ -29,6 +29,17 @@ describe('mechanical design rules', () => {
     const findings = await scanSource('src/page.tsx', source, '/project');
     assert.deepEqual(findings, []);
   });
+
+  test('flags Space Grotesk font declarations and loaders', async () => {
+    const source = `
+      import { Space_Grotesk } from 'next/font/google';
+      const body = { fontFamily: 'Space Grotesk, sans-serif' };
+    `;
+
+    const findings = await scanSource('src/page.tsx', source, '/project');
+    assert.equal(findings.length, 2);
+    assert.ok(findings.every((result) => result.rule === 'space-grotesk'));
+  });
 });
 
 describe('local image validation', () => {
