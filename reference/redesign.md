@@ -2,7 +2,7 @@
 
 For reworking an existing site or app instead of a greenfield build. A redesign still does the research in SKILL.md §0 (study real references, lock a direction): it just **also preserves** what the live site already earns. An ugly site that ranks beats a prettier one that silently broke its URLs and its indexing.
 
-**Take a before-snapshot first.** Run the [site-audit](https://github.com/badmuriss/site-audit) skill against the live URL before touching anything (`npx skills add badmuriss/site-audit`). Its report is the baseline you are protecting: the head, canonical, sitemap, structured data and Core Web Vitals as they stand today. Run it again after the redesign and diff the two. This file owns the design side of a redesign; that skill owns the measurement on both ends.
+**Take a before-snapshot first.** Run the [site-audit](https://github.com/badmuriss/site-audit) skill against the live URL before touching anything (`npx skills add badmuriss/site-audit`). For a landing page, this starts with the real-user + rendered-Googlebot delivery gate and the ten-layer diagnosis in [conversion-diagnosis.md](conversion-diagnosis.md), before copy changes. The report is the baseline you are protecting: conversion path, delivered content, head, canonical, sitemap, structured data and Core Web Vitals as they stand today. Run it again after the redesign and diff the two. This file owns the design side of a redesign; that skill owns the measurement on both ends.
 
 ## Mode detection (pick one before touching anything)
 

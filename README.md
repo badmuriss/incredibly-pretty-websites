@@ -101,6 +101,7 @@ Four sites, four canvases, four type systems, no shared template.
   - `design-references.md`: the free research layer, covering live-site token extraction, DESIGN.md packs, free galleries, public design systems and a segment-to-references bank
   - `media-pipeline.md`: free stock photography with the per-source hosting rules, plus image→video via Magnific
   - `redesign.md`: redesign mode (Scan, Diagnose, Fix) with the what-never-changes-silently list
+  - `conversion-diagnosis.md`: the pre-copy user/Googlebot delivery gate and ten-layer landing-page diagnosis
 - **`scripts/ipw-lint.mjs`** checks deterministic frontend tells on the changed targets before handoff, without installing dependencies.
 
 ## Pairs with site-audit
@@ -116,10 +117,10 @@ The split is deliberate, and it is why neither one carries the other's rules:
 | | incredibly-pretty-websites | site-audit |
 |---|---|---|
 | Runs on | a brief, a repo, a blank page | a reachable URL or a local dev server |
-| Owns | typography, color, layout, motion, components, copy tone, the AI-tells list | on-page SEO, AEO/GEO, axe-core, Core Web Vitals, the UX walkthrough |
+| Owns | typography, color, layout, motion, components, copy tone, the AI-tells list | landing delivery/conversion diagnosis, on-page SEO, AEO/GEO, axe-core, Core Web Vitals, the UX walkthrough |
 | Output | a built site | one severity-ranked report with hard gates |
 
-Build to the §14 pre-flight, deploy, then point site-audit at the URL. Redesigning instead of building fresh? Run site-audit **first** as well: its report is the baseline the redesign has to protect.
+Build to the §14 pre-flight, deploy, then point site-audit at the URL. For a live landing page, run its real-user + rendered-Googlebot gate before changing copy. Redesigning instead of building fresh? Run site-audit **first** as well: its report is the baseline the redesign has to protect.
 
 ## The stack it recommends
 

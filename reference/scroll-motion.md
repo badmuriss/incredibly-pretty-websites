@@ -171,7 +171,7 @@ The "product rotates / scene advances as you scroll" effect (think airpods.apple
 **When to use it:** a dedicated scroll-telling section — a product showcase, manifesto, or cinematic "how it works" walkthrough. **Not for the hero** above the fold — it needs a tall section (scroll range) to drive it, so it sits frozen until the user scrolls; a hero wants ambient motion instead, which calls for a **seamless loop** ([media-pipeline.md](media-pipeline.md), `end=start` technique), not scrubbing.
 
 **Asset pipeline (Magnific → frames):**
-1. Generate or source the clip (looping doesn't matter here since it's scrubbed, not played back). See [media-pipeline.md](media-pipeline.md) — Magnific's `video_generate` and `stock_search` tools can produce or source the source clip.
+1. Generate or source the clip (looping doesn't matter here since it's scrubbed, not played back). See [media-pipeline.md](media-pipeline.md) — Magnific's `video_generate` produces the clip; the free stock lane or Magnific's `GET /v1/videos` sources one.
 2. Extract the frame sequence: `ffmpeg -i clip.mp4 -vf "scale=1280:-2,fps=15" frames/%03d.webp` (frame count = fps × clip duration; aim for roughly 60-90 frames — fewer stutters, more it weighs).
 3. Serve the frames from a static public folder (self-hosted, same as loop videos). Rough budget: ~25-45KB per webp × 80 frames ≈ 2-3MB total; preload every frame before enabling the scrub.
 

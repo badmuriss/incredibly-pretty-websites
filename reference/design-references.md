@@ -156,6 +156,7 @@ The bank answers "which real products should I study for *this* brief." Every br
 | Sport, retail, lifestyle brands | nike, starbucks | Editorial Luxury · Swiss Industrial Print |
 | Automotive, luxury, high-ticket physical | ferrari, lamborghini, bugatti, bmw-m, tesla, renault | Editorial Luxury — full-bleed imagery, restrained type, near-zero UI chrome |
 | Editorial, media, publishing | theverge, wired | Editorial Luxury · Swiss Industrial Print |
+| Consumer services, apps, delivery/concierge, education, fintech-lite | nubank, mercadopago, ifood, duolingo, monzo, waveofunboxing.com.br | Soft Clay 3D — cool light canvas, one saturated lead, generated matte 3D renders as the only illustration medium |
 | Gaming, playful, retro-tech | playstation, nintendo (2001 capture), dell (1996 capture) | Whatever the era dictates. The period captures are the honest reference for a retro brief; don't reconstruct the 90s from memory. |
 
 **How to use it:** pick the row, pick two or three brands, run Route A on each, then follow §0 step 4 — one dominant primary direction, secondaries lending one detail each, never the average of all three.

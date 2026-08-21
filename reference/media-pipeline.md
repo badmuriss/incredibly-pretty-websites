@@ -1,9 +1,10 @@
 # Media Pipeline — stock photos, generated images, image→video
 
-Two media needs beyond hand-drawn CSS: **real photography** and **premium looping video** (a hero background or a mid-page section accent).
+Three media needs beyond hand-drawn CSS: **real photography**, **generated stills** (a hero object, a clay render, a product shot that does not exist), and **premium looping video** (a hero background or a mid-page section accent).
 
 - **Photography has a free lane and it is the default.** It costs nothing, needs no MCP, and covers most real work. Section below.
-- **Video and image generation are the paid lane** ([Magnific](https://magnific.ai) via MCP), Tier 3 only and cost-gated. Without it, everything degrades to the fallbacks at the bottom.
+- **Generated stills have two peer lanes**, `$image-gen` (Codex CLI) and [Magnific](https://www.magnific.com) via MCP. Neither is the junior partner — pick by what the session already has open. Routing table below.
+- **Video is Magnific only**, Tier 3 and cost-gated. Codex generates stills, not clips. Without Magnific, video degrades to the fallbacks at the bottom.
 
 ## Stock photography — free lane (default)
 
@@ -18,7 +19,7 @@ Pick the source by what the photo has to do. Every source below is genuinely fre
 
 Verified against each provider's own docs on 2026-08-02. Rate limits and terms drift; re-read the provider's page before betting a client project on a number. Pixabay's docs page blocks automated fetches, so treat its two rules as high-confidence but worth a manual glance.
 
-### Hard rules (both lanes)
+### Hard rules (every photo source)
 
 - **`picsum.photos` never ships to production.** It's a prototyping toy: random image, no license clarity, no control. Fine in a throwaway sketch, never in a page a client pays for.
 - **Unsplash is the one place "self-host it" is the wrong answer.** Their API guidelines require you to embed the returned CDN URL directly (hotlink) so views attribute back to the photographer, require a `GET` on `photo.links.download_location` whenever the user does something download-like, and require a visible credit to the photographer and to Unsplash with links back. Take all three or don't use the Unsplash API. If a project's rules forbid third-party image hosts, pick Pexels or Pixabay instead and self-host there.
@@ -26,9 +27,48 @@ Verified against each provider's own docs on 2026-08-02. Rate limits and terms d
 - **No people-photos as testimonial avatars.** A stock face on a testimonial reads as AI instantly. Use a Google-style initial: a color-blocked circle + the first letter of the first name (SKILL.md §15).
 - **A self-hosted photo gets processed, never dropped in raw.** Resize to the real rendered width (2x for retina, no more), convert to AVIF with a WebP fallback, ship `srcset`/`sizes`, set explicit `width`/`height` to reserve the box, `loading="lazy"` + `decoding="async"` for anything below the fold, and `fetchpriority="high"` on the LCP image only. A 4MB JPEG behind a beautiful layout is still a broken page.
 
-### Paid lane — Magnific stock (when available)
+### Magnific stock — REST API, not MCP
 
-`mcp__magnific__stock_search(query)` → `stock_get` / `stock_download`. Licensed catalog, no attribution bookkeeping, self-host the result. Use it when the free lane can't find the shot or when a client needs a cleaner licensing paper trail.
+Magnific carries a large licensed catalog (it is Freepik), but **the stock endpoints live on the REST API and are absent from the MCP tool set** as of 2026-08-19. Asking the MCP to "search stock" gets you a generated image instead of a licensed one. Reach it with `curl` and an API key from [magnific.com/user/api-keys](https://www.magnific.com/user/api-keys), base `https://api.magnific.com`, header `x-magnific-api-key`:
+
+| Catalog | Endpoints |
+|---|---|
+| Photos, vectors, PSDs, templates | `GET /v1/resources` · `/v1/resources/{id}` · `/v1/resources/{id}/download` · `/v1/resources/{id}/download/{format}` |
+| Icons | `GET /v1/icons` · `/v1/icons/{id}` · `/v1/icons/{id}/download` |
+| Stock video footage | `GET /v1/videos` · `/v1/videos/{id}` · `/v1/videos/{id}/download` |
+
+All three support AI-powered keyword search and sorting, are rate-limited, and carry the [API license agreement](https://www.magnific.com/legal/terms-of-use#api-services) — read it for a client project, it is not the same as the CC0 sources above.
+
+**When to use it over the free lane:** the client needs one licensing paper trail instead of four providers' contradictory hosting rules, or the shot is a vector/PSD/template that Pexels and Pixabay simply do not carry. For an ordinary photo the free lane still wins on cost and covers it. The **Icons** endpoint does not override §3's icon policy — one family per project, and an established Lucide/Phosphor system is not replaced by a stock icon.
+
+**Stock video** is a real third option next to "generate a loop" and "no video at all": no render credits, no cost gate, and the same self-host rule applies.
+
+## Generated stills — two peer lanes
+
+When the shot does not exist and no stock photo will do, generate it. Both lanes produce comparable quality; the tie-breaker is what the session is already paying for, not a quality ranking.
+
+| | `$image-gen` (Codex CLI) | Magnific MCP |
+|---|---|---|
+| **Cost** | folded into a Codex session you are already running — effectively free at the margin | credits per generation, on top of a paid plan |
+| **Setup** | `codex` installed and authenticated once | OAuth connect to `https://mcp.magnific.com` |
+| **Reach for it when** | the session already has Codex open; you want to iterate on a prompt ten times without watching a meter; the asset is one object on a plain ground | you need a specific named model, a trained character/style reference (`custom_references_create`), upscaling, SVG output, or the render must land in a shared Magnific workspace |
+| **Model choice** | whatever Codex's image tool ships | explicit: `images_models_list` then name it in the prompt, or let auto-mode pick |
+| **Post-processing** | local ImageMagick + BiRefNet remove-bg, no credits | `images_upscale`, `images_crop`, `images_resize`, `images_remove_background`, each billed |
+
+**Alpha cutouts, both lanes.** A clay object, a product cutout or a person over a colored panel needs a real alpha channel, and prompting "transparent background" returns a fake checkerboard in either lane.
+
+- **Codex lane:** generate on a clean, evenly-lit flat background, then cut locally with the BiRefNet route in `$image-gen`. Free, offline, and good on hair and complex edges.
+- **Magnific lane:** `images_remove_background` returns the alpha cutout in one call. Worth the credits when the render is already in Magnific — round-tripping it out to cut it locally costs more time than the call costs money.
+
+Same processing discipline as a self-hosted photo applies to the result: real rendered width, AVIF/WebP, explicit `width`/`height`, `fetchpriority` on the LCP one only.
+
+### 3D clay renders — generated, not licensed
+
+The **Soft Clay 3D** archetype (`SKILL.md` §5.9) sources its objects from image generation, not from an asset pack. Its prompt template, the series-consistency rule and the palette rules live there. Three pipeline facts belong here:
+
+- **Route:** either still lane, per the table above. `$image-gen` if Codex is already open, `images_generate` if you want a named model or a trained style reference across the whole set.
+- **Alpha is a pipeline step, not a prompt.** Asking for a transparent background returns a fake checkerboard with no alpha channel. Cut it with BiRefNet locally (`$image-gen`) or `images_remove_background` in Magnific. A clay render shipped as an opaque rectangle over the page canvas defeats the archetype.
+- **Weight:** alpha PNG renders are heavy. Convert to WebP/AVIF, cap the hero near 1200px wide, explicit `width`/`height` + `fetchpriority="high"` on the hero one, `loading="lazy"` on the rest. A **Spline** scene is not an image — over 1MB of runtime, Tier 3 only, never the LCP element, static render as fallback.
 
 ## Video — placement is case-by-case, decided by research (no fixed default)
 
@@ -50,29 +90,42 @@ Hero background AND section accent are both valid. The choice comes from the **r
 
 **HARD GATES:**
 - **PREMIUM_TECH_TIER ≥ 3 only** (Tech/SaaS, Creative, Luxury real estate, Architecture). A video bg on a lawyer/local-shop site = slop + bad LCP.
-- **COST APPROVAL is mandatory before any paid render.** Use `mcp__magnific__simulate_cost` to quote the exact cost first, show the estimate, and wait for an explicit "go" from the human. Autonomous mode never triggers a paid render on its own.
+- **COST APPROVAL is mandatory before any paid render.** There is no cost-simulation tool in the current MCP set, so quote it yourself: `account_balance` (free) for the balance, `video_models_list` plus the [pricing page](https://docs.magnific.com/pricing) for the model's rate, show the estimate, and wait for an explicit "go" from the human. Autonomous mode never triggers a paid render on its own.
 - **Self-host is mandatory** — a generation service returns a remote URL with undocumented retention. NEVER hotlink it on a production site. Download the MP4 → upload to your own object storage / CDN (any provider: S3, R2, Bunny, a plain static host) → serve from there. The skill is CDN-agnostic; no cloud is assumed.
 
 ## Setup
 
-Register the Magnific MCP (once, user action; requires a Magnific account):
+**Codex lane:** `which codex && codex --version`, and the user must have run `codex` once to authenticate. Everything else is local.
+
+**Magnific lane:** register the MCP once (user action; requires a paid Magnific account — MCP calls always consume credits, even on plans with unlimited in-app generations):
 ```
-claude mcp add --transport http --scope user magnific https://mcp.magnific.ai/mcp
+claude mcp add --transport http magnific https://mcp.magnific.com
 ```
-Relevant tools: `stock_search` / `stock_download`, `images_generate`, `video_models_list` / `video_models_show`, `simulate_cost`, `video_generate`, `video_plan`, `creations_wait` / `creations_get`.
+OAuth in the browser on first call, no API key to manage. Documented tools as of 2026-08-19 ([docs.magnific.com/modelcontextprotocol](https://docs.magnific.com/modelcontextprotocol)):
+
+| Group | Tools |
+|---|---|
+| Account | `account_balance`, `project_report` — free, no credits |
+| Images | `images_generate`, `images_generate_svg`, `images_to_svg`, `images_upscale`, `images_crop`, `images_resize`, `images_remove_background`, `images_models_list` / `images_models_show` |
+| Video | `video_generate`, `video_models_list` / `video_models_show` |
+| Audio / 3D | `audio_tts`, `audio_voices_list`, `models3d_generate` |
+| Creations | `creations_search` / `_get` / `_show` / `_wait`, `creation_status`, `creations_move`, the upload trio |
+| References | `custom_references_create` (train a character or style), `custom_references_list` |
+
+Magnific was Freepik until 2026; a `magnific.ai` endpoint or a `stock_search` / `simulate_cost` tool name is the legacy surface. Stock is **not** in this list — it lives on the REST API, above. **The live `tools/list` is authoritative** — read it before building a flow on any name in this table.
 
 ## Flow: image → video (hero loop)
 
 1. `video_models_list` — see the available video models and the roles each accepts.
-2. **Cost-gate:** `simulate_cost` for the exact cost + wait for an explicit "go." Never skip this.
-3. Get the reference still: either `stock_search`/`stock_download` for a licensed photo, or `images_generate` for a generated frame (a hero frame, a product, an approved shot).
+2. **Cost-gate:** quote the cost from the model's rate + `account_balance`, then wait for an explicit "go." Never skip this.
+3. Get the reference still: a licensed photo from the free stock lane, or a generated frame from either still lane — `$image-gen` locally or `images_generate` in Magnific.
 4. `video_generate` referencing that still + a prompt (the 5-slot architecture below). Keep the clip ≤ ~15s.
 5. `creations_wait` → poll until complete; it returns the hosted asset URL (validate the codec — assume MP4/webm).
 6. **Self-host:** download the asset → upload to your CDN/storage → use that URL in the `<video>`.
 
 ### Real cost preflight (don't use a baked table)
 
-Always run `simulate_cost` for the real number before submitting a paid job — model pricing changes, and it costs nothing to quote. For an abstract background the model matters little (no faces/physics), so pick on cost × resolution: check `video_models_list` and choose the best value that hits your target resolution. Reserve the heavier, identity/character-capable models for product or character shots where their strength actually pays off.
+Quote the real number before submitting a paid job — model pricing changes, and `account_balance` plus the published rate costs nothing to check. For an abstract background the model matters little (no faces/physics), so pick on cost × resolution: check `video_models_list` and choose the best value that hits your target resolution. Reserve the heavier, identity/character-capable models for product or character shots where their strength actually pays off.
 
 ## 5-slot prompt architecture (< 80 words, front-loaded)
 
@@ -131,4 +184,4 @@ The hero (above the fold) doesn't lazy-load — play it directly, but keep the `
 
 Tier 3 without video uses: **animated gradient mesh blobs** (`@property`, SKILL.md §6) OR a **full-bleed photo + overlay**. Video is optional enrichment, never a layout dependency.
 
-Photos are not part of this gate at all — the free lane at the top of this file needs no budget and no MCP. "No Magnific" is never a reason to ship a placeholder.
+Photos and generated stills are not part of this gate at all — the free stock lane needs no budget and no MCP, and `$image-gen` runs on a Codex session with no per-render meter. "No Magnific" gates video, nothing else, and is never a reason to ship a placeholder.

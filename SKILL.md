@@ -1,6 +1,6 @@
 ---
 name: incredibly-pretty-websites
-description: "Build genuinely beautiful, non-AI-slop websites, React-first, research before code. use_when: designing or rebuilding a site or landing page, choosing type, color, layout or motion, fixing AI-looking UI. do_not_use_when: backend, data or copy work."
+description: "Build genuinely beautiful, non-AI-slop websites, React-first and research-first. Diagnose live landing-page delivery and conversion before redesign or copy changes. use_when: designing, rebuilding or auditing the visual/conversion direction of a site or landing page; choosing type, color, layout or motion; fixing AI-looking UI. do_not_use_when: backend, data or standalone copy work unrelated to a rendered site."
 license: MIT
 ---
 
@@ -8,7 +8,20 @@ license: MIT
 
 A single source of truth for the visual and technical decisions behind a website that looks like a real product team shipped it, not like a language model guessed at "modern and clean."
 
-The default framework is **React** (Vite / Next / vite-react-ssg). **Vue** and **vanilla CSS/JS** are first-class too; framework-specific idioms live in [framework-adapters.md](reference/framework-adapters.md). If nothing is specified, assume React.
+## Coordination with `$refero-design`
+
+When `$refero-design` is available, load it first and let it own visual research, Refero tool routing, synthesis, the reference lock, and the decision ledger. Use this skill after that lock to own implementation constraints: incumbent-system scope, surface mode, framework choices, spatial and interaction craft, responsive behavior, anti-slop checks, and rendered validation.
+
+The sequence is fixed:
+
+1. `$refero-design` researches styles, screens, and flows in proportion to the task.
+2. `$refero-design` chooses one primary direction and records bounded secondary influences.
+3. This skill translates the approved lock into a direction contract and production UI.
+4. This skill validates the rendered result against the lock and supported platforms.
+
+Do not run both skills as competing taste authorities. Refero supplies product and visual evidence. This skill supplies the frontend execution discipline. If Refero MCP is unavailable, `$refero-design` uses its bundled fallback, then this skill continues from the resulting lock.
+
+The default framework is **React** (Vite / Next / vite-react-ssg). **Astro**, **Vue**, and **vanilla CSS/JS** are first-class too; framework-specific idioms live in [framework-adapters.md](reference/framework-adapters.md). If nothing is specified, assume React. When the incumbent is Astro or the brief requires EmDash, preserve server rendering and use Astro components by default, adding framework islands only where interaction truly needs them.
 
 ## How to use
 
@@ -33,10 +46,14 @@ Reference files:
 - [component-libs.md](reference/component-libs.md) — **(React-only)** copy-in animated components: Magic UI, React Bits, animated Lucide icons via the shadcn registry
 - [scroll-motion.md](reference/scroll-motion.md) — **(Tier 3)** GSAP ScrollTrigger + Lenis smooth-scroll, with perf/a11y guardrails
 - [design-references.md](reference/design-references.md) — **(research, free)** the no-Refero research layer: reading a live site's real tokens, DESIGN.md packs, free galleries, public design systems, and a segment → references bank
-- [media-pipeline.md](reference/media-pipeline.md) — free stock photography (Pexels/Unsplash/Pixabay/public-domain, with the per-source hosting rules) + **(Tier 3, cost-gated)** image→video via Magnific, with a `<video>` recipe
+- [media-pipeline.md](reference/media-pipeline.md) — free stock photography (Pexels/Unsplash/Pixabay/public-domain, with the per-source hosting rules) + Magnific's licensed catalog over REST + **generated stills** via two peer lanes (`$image-gen` / Magnific MCP), alpha-cutout routes, + **(Tier 3, cost-gated)** image→video via Magnific, with a `<video>` recipe
+- [style-interview.md](reference/style-interview.md) — **(interview mode)** when to ask the user for the direction, the round script, how to build candidates from research instead of offering the archetype list as a menu
 - [redesign.md](reference/redesign.md) : **(redesign mode)** Scan, Diagnose, Fix; mode detection (Greenfield / Preserve / Overhaul); what never changes silently
+- [conversion-diagnosis.md](reference/conversion-diagnosis.md) — **(landing pages)** the pre-copy delivery gate plus the ten-layer acquisition and conversion diagnosis
 
 **SEO, accessibility scores and Core Web Vitals are not audited here.** This skill builds; verification of a live URL belongs to the [site-audit](https://github.com/badmuriss/site-audit) skill, which owns the on-page SEO rules (title, meta, canonical, OG, schema, robots, sitemap), the AEO/GEO layer, the axe-core run and the CWV budget. Build to §14's pre-flight, then point site-audit at the deployed URL.
+
+**A live landing page is diagnosed before its copy is rewritten.** Read [conversion-diagnosis.md](reference/conversion-diagnosis.md), open the deployed page in a real-user browser profile and a rendered Googlebot profile, and establish whether both receive a working page. A broken script, slow first screen, blocked crawler, dead CTA, or unusable form outranks copy polish. SEO earns the visit; the delivered experience has to turn it into a lead.
 
 ---
 
@@ -44,9 +61,9 @@ Reference files:
 
 **Autonomous (default):** work from the context you already have plus sensible assumptions from the preset. Ask the user nothing. Missing a detail? Assume the most likely value, note the assumption in one line, keep going. This is the only safe mode when there is no human in the loop.
 
-**Interview:** triggered when the invocation explicitly asks for it. Before researching or designing, gather the brief in one or two short rounds: segment/product, audience, primary goal, tone, the objection to overcome, references the client likes, constraints (brand, framework, deadline). Confirm, then proceed.
+**Interview:** triggered when the invocation explicitly asks for it (`--interview`, "modo entrevista", "ask me which style"), or when `CHANGE_SCOPE=world`, the session is attended, and the user has pinned no reference and no brand. It runs in two beats: gather the brief (segment/product, audience, goal, tone, objection, constraints, sites they already like), then **research first and come back with two or three concrete directions to choose from** — canvas, type, accent role, media strategy, signature move, and the real product each one comes from. The point is a site with the user's face on it instead of a competent default.
 
-Both modes do the research in Section 0. The only difference is where the brief comes from: autonomous infers it from context, interview asks.
+Both modes do the research in Section 0, and both end at the same reference-lock and direction contract. The only difference is who makes the taste call. Full protocol, question script, the anti-menu rule, and the round limits: [style-interview.md](reference/style-interview.md).
 
 **Redesigning an existing site rather than building fresh?** See [redesign.md](reference/redesign.md) for redesign mode (Scan, Diagnose, Fix) and the Preserve-vs-Overhaul rules. Both modes above still apply; a redesign just also protects what the live site already earns.
 
@@ -163,8 +180,8 @@ Use these as global vars to drive the decisions below.
 ## 3. ARCHITECTURE & CONVENTIONS (framework-agnostic)
 
 - **DEPENDENCY VERIFICATION [MANDATORY]:** Before importing any third-party library, check `package.json`. If it is missing, output the install command first.
-- **Hydration safety:** Browser-only APIs (`window`, `document`, `localStorage`) MUST sit behind your framework's client-only boundary (see [framework-adapters.md](reference/framework-adapters.md)).
-- **No cross-framework imports:** Don't import `motion`/`framer-motion` in Vue, don't import `@vueuse/motion` in React, don't import `@phosphor-icons/react` outside React. Use the native equivalent.
+- **Hydration safety:** Browser-only APIs (`window`, `document`, `localStorage`) MUST sit behind your framework's client-only boundary (see [framework-adapters.md](reference/framework-adapters.md)). Astro pages stay zero-JS by default; hydrate only the smallest interactive island.
+- **No cross-framework imports:** Don't import `motion`/`framer-motion` in Vue, don't import `@vueuse/motion` in React, don't import `@phosphor-icons/react` outside React. In Astro, framework packages belong only inside an island using that renderer. Use CSS, WAAPI, or View Transitions for page-native motion.
 - **State:** Local primitive (`useState`/`ref`) for isolated UI. Global only to avoid deep prop-drilling.
 - **Styling:** Tailwind at the project's installed version. **Check `package.json`** — v3 uses `tailwind.config.ts`/`theme.extend`; v4 is CSS-first with `@theme`. Never mix.
 - **ANTI-EMOJI POLICY [CRITICAL]:** Never put emojis in source files, hardcoded markup, or chrome. Only acceptable inside client-editable content (CMS YAML/JSON the client controls). Use icons or SVG primitives.
@@ -300,6 +317,44 @@ Use these as descriptive vocabulary, counterexamples, or challengers after resea
 
 **How these two square with §13.** §13 bans decorative background patterns and caps noise at 5%. That rule targets **repeating geometric motifs** used to stop a section looking empty: dot grids, diagonal hairlines, hexagons, waves. Film grain and halftone dither are **stochastic texture across the whole surface**, and in archetypes 7 and 8 the grain **is the medium**, not filler. The test: if the texture reads as a repeating motif, it is banned; if it is stochastic, full-surface, and the section would still stand up without it, it is the archetype. The 5% cap still governs noise used as a subtle finish over an otherwise clean background, which is a different job. DOM cost rule from §11 still applies without exception: grain lives on a `fixed inset-0` or hero-scoped `absolute inset-0` pseudo-element, **never** on a scrolling container.
 
+9. **Soft Clay 3D** (consumer SaaS, apps, fintech-lite, education, delivery/concierge services, anything whose job is "this is friendly and it is not scary"): the rule is **a cool light substrate, one saturated lead, and matte clay volume as the only illustration medium**. It is the opposite of archetypes 7 and 8: no grain, no edge, no photography. Warmth comes from soft geometry and a rendered object that has real weight and a real shadow.
+
+   - **Canvas:** an off-white with a visible cool cast, `#F1F4FB` to `#F3F5FB` as the measured example. Never pure `#FFFFFF` (the clay's ambient shadow disappears on it) and never the warm cream of §13. One inverted deep block per page maximum (`#100F2E` / `#1D1C54` class), under the Page Theme Lock exception.
+   - **Palette:** one lead hue across three stops — deep for text-on-accent, mid for the CTA, light for fills — plus a near-black of the same hue family as ink, plus **exactly one** candy pop that lives on the 3D props and at most one interface accent. Indigo lead + mint pop (`#453E95` / `#664FE8` / `#9097E9`, ink `#1D1C54`, pop `#19D3C5`) is one working set, not the only one; coral-on-cream-blue and amber-on-slate hold up the same way. Text is the ink, never the pop.
+   - **Type:** a geometric rounded sans carries the whole page — **Poppins**, **Outfit**, or **Plus Jakarta Sans** (§12). Contrast comes from weight and a display cut, not a second personality: the same family at 700–800, or one heavy condensed grotesque for the H1 over the rounded body. **MuseoModerno** is the rounded-display option when the logotype and the H1 should match. No serif anywhere in this archetype.
+   - **Material:** radius 16–28px on cards, 999px on buttons and the nav pill. The ambient shadow is **tinted with the canvas hue, never black**: `box-shadow: 0 24px 48px -24px rgba(69,62,149,0.35)`. Pick shadow *or* hairline border per element, never both. Diagonal-cut section dividers (a `clip-path` wedge) are in-style here; SVG waves are still banned.
+   - **The subject:** one clay render per section, two or three across the whole page. It floats, with a soft elliptical contact shadow in the accent hue. Props are matte primitives at small scale (cube, cone, sphere, arrow, chat bubble) orbiting the main object. When the render is hands, **use more than one skin tone** — a page of identical pale hands is the tell.
+
+   **The renders are generated, not licensed.** This archetype does not depend on a clay asset pack; it depends on a prompt you can re-run when the palette changes. Two peer lanes, neither senior to the other ([media-pipeline.md](reference/media-pipeline.md)):
+
+   - **`$image-gen`** (Codex CLI image model). Reach for it when the session already has Codex open: same class of output, no per-render meter, and iterating on the prompt twenty times costs nothing extra. Its native-only rule already forbids the ImageMagick-composited look that kills clay.
+   - **Magnific `images_generate`**. Reach for it when you want a specific named model, a trained style reference (`custom_references_create`) holding the material consistent across the whole set, or the renders in a shared workspace. Credits per generation, so the cost gate applies.
+   - A CC0 pack ([3dicons.co](https://3dicons.co)) or a Blender render is a fallback when generation is unavailable, not the plan.
+
+   Prompt template, reusable:
+
+   ```
+   [subject] in soft matte clay 3D render, rounded chunky geometry, no sharp edges,
+   [palette: lead hue + one pop] pastel clay materials, soft diffused studio light from
+   upper left, gentle ambient occlusion, subtle contact shadow, clean [canvas hex]
+   background, centered product shot, high detail, no text --ar 1:1
+   ```
+
+   Four specifics, each one a real failure mode of generated clay:
+
+   - **Generate the alpha, don't prompt for it.** "Transparent background" returns a fake checkerboard with no real alpha channel. Render the subject on a clean, evenly-lit flat background, then cut it — BiRefNet locally via `$image-gen`, or `images_remove_background` if the render is already sitting in Magnific. A clay object that ships as an opaque rectangle over the canvas is the whole archetype dead on arrival.
+   - **The series has to look like one studio.** Independently generated renders arrive with different light directions, different material roughness and different color temperature, and the page reads as clip-art. Fix it at generation time: one identical lighting-and-material sentence across the batch, then either produce the rest as native 2-step edits from the first approved object (Codex lane) or train it once as a style reference and reuse it (Magnific lane).
+   - **`no text` is not optional** (same as archetype 8). Model lettering comes out with broken kerning. All type is real type in the DOM.
+   - **The canvas hex goes in the prompt.** Ask for the exact background color you ship, so the render's ambient bounce matches the page instead of fighting it. Generating on white and pasting onto a lavender canvas leaves a cold halo on every edge.
+
+   **Weight rule.** These renders are large alpha PNGs. Convert to WebP or AVIF before shipping, cap the hero asset near 1200px wide, give it explicit `width`/`height` plus `fetchpriority="high"`, and lazy-load the rest. An authored **Spline** scene is a different thing entirely: over 1MB of runtime, Tier 3 only, never the LCP element, always with a static render as fallback. Below Tier 3 this archetype is raster-only, which is also why it reaches down to Tier 1.
+
+   **The two §13 carve-outs, both narrow:**
+   - The **dotted concentric orbit ring** behind the object is permitted *only* centered on the 3D subject, as a dashed hairline in the accent at ≤20% alpha, once per page. Behind the headline it is still the banned faded-ring cliché, and a dot **grid** is still banned everywhere.
+   - The candy pop may be more saturated than §13's "desaturate accents" rule allows, but only on the clay props and one CTA. On text, a background fill, or a second interface element it is back to slop.
+
+   **Don't:** glossy plastic with a neon rim-light (that is the 2021 Memoji deck, not this); a black `drop-shadow` under the object; flat vector illustration and clay renders on the same page; a clay figure standing in for a person's testimonial photo; a render in every section. Failure mode: the archetype dies from overuse — two or three objects on a quiet typographic page reads premium, eight reads like a template.
+
 ### Layout archetypes
 
 1. **Asymmetrical Bento:** masonry CSS Grid, varying card sizes (`col-span-8 row-span-2` next to stacked `col-span-4`). Mobile: `grid-cols-1 gap-6`.
@@ -309,6 +364,8 @@ Use these as descriptive vocabulary, counterexamples, or challengers after resea
 ### Paid-traffic landing skeleton (conversion)
 
 For a **single-offer paid-traffic landing** (not a multi-page institutional site): one goal, one CTA repeated down the page. The sequence below is a **starting menu, not a rigid form** — research (§0) decides the real order and emphasis for the segment, and the counts are ranges, not law.
+
+Before choosing or rewriting this sequence on an existing live page, complete the delivery gate and ten-layer diagnosis in [conversion-diagnosis.md](reference/conversion-diagnosis.md). Do not diagnose a traffic, ICP, awareness, offer, proof, or form problem as a headline problem.
 
 1. **Above the fold** — optional evidence-backed eyebrow → headline (a concrete promise/result, not the product name) → subhead (one sentence: for whom / how) → video OR proof visual → proof (logos/numbers/badge) → **CTA**. Critical content (H1 + CTA) in HTML/CSS for LCP.
 2. **Problems** — a pain headline + three to six concrete "dig-ins" (real pains of the audience). Specific text, not vague.
@@ -692,7 +749,7 @@ This section governs new choices in `world` scope. In `local` and `surface` scop
 - NO Space Grotesk in new `world`-scope work. The lint gate treats imports, font-family declarations, framework font loaders, and font tokens containing that family as failures.
 - NO neon/outer glows. Use inner borders or tinted shadows.
 - NO pure black. Use off-black, Zinc-950, charcoal.
-- NO oversaturated accents. Desaturate to blend with neutrals.
+- NO oversaturated accents. Desaturate to blend with neutrals. (Narrow exception: Soft Clay 3D, §5.9, where one candy pop is allowed on the clay props and one CTA — never on text or a background fill.)
 - NO excessive gradient text on large headers.
 - NO custom mouse cursors. Outdated, kills a11y.
 - NO pulsing/breathing status dot (a green "online" dot with a pulsing `box-shadow`, an eyebrow with a blinking dot). A pulsing green dot is the absolute AI/SaaS-template cliché. A "published/live/online" state = a static checkmark, a flat icon, or text — never a breathing dot.
@@ -715,7 +772,7 @@ This section governs new choices in `world` scope. In `local` and `surface` scop
 - NO symmetrical Bootstrap-style grids without large whitespace gaps when DESIGN_VARIANCE ≥ 7.
 - NO `border-left: Npx solid color` callout (side-stripe = AI dashboard cliché).
 - NO decorative floating pills (loose words in floating pills around the headline like "Google," "SMB," "AI," "+340%"). An evidence-backed eyebrow above the headline is fine; ambient decorative pills = gratuitous noise.
-- NO faded circle/ring/blob behind the headline (a radial SVG, a "wireframe globe," a big concentric circle). Visual AI cliché.
+- NO faded circle/ring/blob behind the headline (a radial SVG, a "wireframe globe," a big concentric circle). Visual AI cliché. (Narrow exception: Soft Clay 3D, §5.9 — a dashed hairline orbit ring centered on the 3D object, once per page, never behind the H1.)
 - NO mobile side gutters > 24px (`px-4`–`px-6` only). 48px side margins on a 375px screen = 25% of the width wasted; the page looks scared of the edge. Whitespace on mobile is vertical, never lateral. (Detail: spatial-design.md.)
 - NO decorative background pattern, PERIOD — any variant is a hard AI tell: diagonal stripes (parallel hairlines), dot grid, full-bleed grid lines, topographic/contour lines, hexagons, SVG waves, circuit board. **Worst form: pattern ON TOP of a gradient** (dark gradient + diagonal hairlines = corporate slide wallpaper). Premium background = solid color, clean subtle gradient, photo, or noise ≤5%. If a section "needs texture" to not look empty, fix the section's content/layout, not the background.
 - NO 3+ CTAs in the hero. Valid combos: (a) one primary button + one underlined secondary link [default], (b) one button only, (c) two buttons of equal size, (d) two stacked buttons with the primary on top and larger. NEVER a primary on top that's smaller than the secondary below.
@@ -807,6 +864,7 @@ A successful build, typecheck, DOM assertion, or accessibility tree is not visua
 ### Pre-flight check
 - [ ] Project-type preset selected, dials set?
 - [ ] `CHANGE_SCOPE` and `SURFACE_MODE` set, incumbent visual authority resolved?
+- [ ] Existing live LP: user-browser + rendered-Googlebot delivery gate captured before copy changes, and the ten-layer conversion diagnosis recorded?
 - [ ] Direction contract recorded and used in review?
 - [ ] Direction comes from evidence; any vibe or archetype serves only as vocabulary or a deliberate challenger?
 - [ ] Mobile collapse (`w-full`, `px-4`, `max-w-7xl mx-auto`) guaranteed?
@@ -883,7 +941,7 @@ Pick the shape that best communicates the business:
 - **Validate on mobile before returning:** open at 390×844 (Playwright / chrome-devtools) or use `getComputedStyle` to confirm the nav CTA is hidden and there's zero horizontal scroll. Breakage is a P0 blocker.
 
 ### Images / avatars
-- **Stock photos:** source real, licensed imagery. The free lane is the default and covers most work — Pexels, Unsplash, Pixabay, or the public-domain archives; Magnific stock (`mcp__magnific__stock_search`) is the paid lane when it's available. **Each source has its own hosting rule and they contradict each other** (Unsplash *requires* hotlinking + a credit, Pixabay *forbids* it), so read the table in [media-pipeline.md](reference/media-pipeline.md) before shipping. `picsum.photos` never reaches production. Whatever you self-host gets resized, converted to AVIF/WebP and given `srcset` + explicit dimensions.
+- **Stock photos:** source real, licensed imagery. The free lane is the default and covers most work — Pexels, Unsplash, Pixabay, or the public-domain archives; Magnific's licensed catalog (photos, vectors, PSDs, icons, stock video) is reachable over its **REST API**, not its MCP, when a client needs a single licensing paper trail. When the shot does not exist at all, generate it: `$image-gen` (Codex) and Magnific `images_generate` are peer lanes, picked by what the session already has open, not by a quality ranking. **Each source has its own hosting rule and they contradict each other** (Unsplash *requires* hotlinking + a credit, Pixabay *forbids* it), so read the table in [media-pipeline.md](reference/media-pipeline.md) before shipping. `picsum.photos` never reaches production. Whatever you self-host gets resized, converted to AVIF/WebP and given `srcset` + explicit dimensions.
 - **Testimonial avatars:** NEVER a fake stock photo of a person (it reads as AI). Use a Google-style initial: a color-blocked circle (brand color) + the first letter of the first name, white, bold, ~14–16px. Vary the color between testimonials.
 
 ### Quotes / testimonials
