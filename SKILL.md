@@ -91,7 +91,7 @@ Short version if you read nothing else: pick two or three real products in the s
 
 1. **Context + short brief:** resolve incumbent truth, `CHANGE_SCOPE`, `SURFACE_MODE`, what / for whom / platform / goal / tone / objection / constraint. (Autonomous: infer. Interview: ask.)
 2. **Styles first:** two or three searches from different angles — one aesthetic, one domain/segment, one strong reference brand. Open one to three strong directions.
-3. **Screens/flows** when you need concrete screen structure or journey logic.
+3. **Screens/flows** when you need concrete screen structure or journey logic. For `SURFACE_MODE=persuade`, the pixel target must itself be a persuasive marketing surface with a visible focal medium. Legal/terms pages, documentation, directories, changelogs, archival indexes, dashboards, and text-only editorial pages are counterexamples, never the primary screen lock. Name the target's focal medium and one supporting visual moment before coding. If the inspected screen works because of photography, illustration, product imagery, or motion, preserve that media role. Replacing it with typography, rules, metadata, or empty cards is reference drift.
 4. **Synthesize — do not average.** Pick **one dominant primary direction** and preserve its distinctive traits. Secondary references lend one detail each. Never the lukewarm mean of everything: if one reference is dark, one is serif, one is acid, the answer is *not* polite-cream + educated-serif.
 5. **Reference-lock + decision-ledger + direction contract** before coding:
    - **Reference-lock:** the primary direction + three to five traits to preserve (canvas, type, accent, layout, density, media) + what to borrow from secondaries + role rules (CTA-only, code-only, decorative-only) + media strategy (real / generated / stock / placeholder).
@@ -756,6 +756,8 @@ This section governs new choices in `world` scope. In `local` and `surface` scop
 - NO terminal/CLI styling in marketing UI: a blinking cursor (`▌`), a prompt caret (`›`/`$`/`>`) before text, a terminal "typing" effect in the hero = generic AI dev-tool look. A product input = a real field with a placeholder, not a terminal line.
 - NO defaulting to the warm cream + brass/clay/oxblood/ochre + espresso palette (cream `#FDFBF7`, brass/clay/oxblood/ochre mids, espresso text): it is one of the most recurring AI-generated "premium" looks. It is a valid *option*, never the reflex answer; rotate to an alternative (Rule 2).
 - NO skeleton/gray-block product mock (gray bars faking text, empty rectangles). A "coded dashboard/product mock" (Tier 3) = real UI: legible text, real micro-components (a button with a label, an input with a placeholder, a chat bubble with a real sentence, a preview with a real headline), brand colors. Gray blocks = an unfinished wireframe, not premium.
+- NO research-report, clinical-dossier, specimen-catalog, or terms-page aesthetic for a persuasive landing. A white canvas dominated by hairline rules, tiny metadata, mono labels, tables, and dense prose is information architecture without art direction. It remains a failure even when the grid is disciplined and responsive.
+- NO text-only persuasion by substitution. A `persuade` page needs at least two substantial visual moments in different sections; at least one must be non-textual media such as sourced photography, a real product view, a substantive illustration, or a meaningful map/diagram. Typography can be the primary anchor only when another large non-textual moment carries the page later.
 
 ### Typography
 - NO choosing Roboto, Arial, Open Sans, or Helvetica as a new premium/creative identity without a reference-backed reason. Inter Display is acceptable for premium/creative; plain Inter for neutral/Linear-style/utility UI.
@@ -763,6 +765,7 @@ This section governs new choices in `world` scope. In `local` and `surface` scop
 - NO oversized H1s. Hierarchy via weight + color, not just scale.
 - NO adding serif to a new dashboard by reflex. Preserve an established, legible serif UI unless redesign is authorized.
 - NO mono as the default UI voice. Monospace only for real code/terminal/CLI. Mono in an eyebrow, label, note, decorative URL, stat number, price, footer header, caption = AI look. If it's not code, it's not mono. (Detail in §12.)
+- NO microtype as atmosphere. On persuasive pages, body copy remains at least 16px with comfortable leading on mobile; supporting labels remain at least 12px and cannot carry essential meaning. Shrinking copy to make a long screenshot look orderly is a visual failure.
 
 ### Layout & spacing
 - NO sloppy spacing. Paddings/margins mathematically perfect (4pt scale, see [spatial-design.md](reference/spatial-design.md)).
@@ -867,6 +870,8 @@ A successful build, typecheck, DOM assertion, or accessibility tree is not visua
 - [ ] Existing live LP: user-browser + rendered-Googlebot delivery gate captured before copy changes, and the ten-layer conversion diagnosis recorded?
 - [ ] Direction contract recorded and used in review?
 - [ ] Direction comes from evidence; any vibe or archetype serves only as vocabulary or a deliberate challenger?
+- [ ] For `persuade`, primary screen reference is a marketing surface rather than legal/docs/directory UI, and its focal media role survives the implementation?
+- [ ] Two substantial visual moments appear in different sections, with at least one sourced image, real product view, substantive illustration, or meaningful map/diagram?
 - [ ] Mobile collapse (`w-full`, `px-4`, `max-w-7xl mx-auto`) guaranteed?
 - [ ] Viewport height matches the role in `foundations.md`: full-page shell, marketing hero, or intrinsic section?
 - [ ] Existing icon system preserved, or one greenfield family selected with a consistent weight and no decorative boxes? WhatsApp = official brand SVG?
@@ -895,6 +900,8 @@ Qualitative tells are easy to rationalize away, so count them. If a count exceed
 - **CTA label:** ≤ 3 words, fits one line, never wraps. Count the words.
 - **Hero stack:** max 4 text elements (eyebrow, headline, subtext, CTA row). Subtext ≤ 20 words / ≤ 4 lines. Headline ≤ 2 lines. Hero top padding cap about `pt-24`.
 - **Nav:** one line on desktop, height ≤ 80px (default 64–72px). Measure it.
+- **Mono:** 0 uses unless the page presents real code/CLI. A non-code label, eyebrow, address, price, caption, or footer heading in mono is a fail.
+- **Visual moments:** at least 2 substantial moments in different sections for `persuade`; at least 1 is non-textual. A divider, background tint, icon, button, badge, table, or type treatment does not count.
 
 ### Count-lock completion gate
 
