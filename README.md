@@ -48,7 +48,7 @@ Three things carry most of the weight:
 
 2. **References beat adjectives.** "Modern and clean" says nothing; "I like linear.app and vercel.com" says everything. The skill opens the sites, reads their actual font stacks and CSS custom properties, and locks the direction to that evidence before writing any code.
 
-3. **You don't need anything paid.** Refero and Magnific are accelerators only. Research runs for free by reading live sites, the curated galleries (siteinspire, httpster, minimal.gallery) and the open-source DESIGN.md packs; photos come from Pexels, Unsplash and Pixabay, and every font in the catalog is free (Fontshare, Google Fonts). The prompt is the same with or without the paid tools.
+3. **You don't need anything paid.** Research runs for free by reading live sites, the curated galleries (siteinspire, httpster, minimal.gallery) and the open-source DESIGN.md packs; photos come from Pexels, Unsplash and Pixabay, and every font in the catalog is free (Fontshare, Google Fonts). Magnific is an optional accelerator for media.
 
 A complete example:
 
@@ -87,8 +87,10 @@ Four sites, four canvases, four type systems, no shared template.
 
 ## What's inside
 
-- **`SKILL.md`** holds the core: research-first workflow, project-type presets, design dials, vibe/layout archetypes, the animation engine, a typography catalog, ~60 forbidden "AI tells," and a review checklist.
-- **`reference/`** holds the technical foundations:
+- **`SKILL.md`** routes the requested design work to the relevant references and available session capabilities. It preserves the incumbent framework and uses rendered evidence for affected states.
+- **`reference/`** holds the technical foundations, loaded only for the selected task:
+  - `implementation-guide.md`: the retained presets, design dials, archetypes, typography, animation and implementation patterns
+  - `design-engineering.md`: consolidated motion, component and interaction guidance
   - `direction-workflow.md`: incumbent context, change scope, surface mode, direction contract, visual-exploration gate and bounded finish
   - `foundations.md`: one authority for hero type, viewport height, motion properties, eyebrows and existing-system priority
   - `spatial-design.md`: 4pt scale, hierarchy, container queries
@@ -99,7 +101,7 @@ Four sites, four canvases, four type systems, no shared template.
   - `component-libs.md`: copy-in animated components (Magic UI, React Bits, animated Lucide icons)
   - `scroll-motion.md`: GSAP ScrollTrigger + Lenis smooth-scroll, with perf/a11y guardrails
   - `design-references.md`: the free research layer, covering live-site token extraction, DESIGN.md packs, free galleries, public design systems and a segment-to-references bank
-  - `media-pipeline.md`: free stock photography with the per-source hosting rules, plus image→video via Magnific
+  - `media-pipeline.md`: licensed photography, session image tools, Playwright for authored videos and conditional generative footage
   - `redesign.md`: redesign mode (Scan, Diagnose, Fix) with the what-never-changes-silently list
   - `conversion-diagnosis.md`: the pre-copy user/Googlebot delivery gate and ten-layer landing-page diagnosis
 - **`scripts/ipw-lint.mjs`** checks deterministic frontend tells on the changed targets before handoff, without installing dependencies.
@@ -142,7 +144,6 @@ The skill is built around a specific set of tools. The free layer alone is enoug
 - [Pexels](https://www.pexels.com/api/documentation/), [Unsplash](https://unsplash.com/documentation), [Pixabay](https://pixabay.com/api/docs/) and the public-domain archives (Openverse, Wikimedia, Met, Smithsonian, NASA), with each source's contradictory hosting rules spelled out, because Unsplash *requires* hotlinking and Pixabay *forbids* it
 
 **Premium, optional (the accelerators):**
-- [Refero](https://refero.design), real shipped-product references searchable by style, screen and flow. It speeds route A up without removing the step.
 - [Magnific](https://magnific.ai), licensed stock plus image→video generation for Tier 3 hero loops, self-hosted and cost-gated. Video generation is the one capability here with no free equivalent.
 
 ## The philosophy in one line

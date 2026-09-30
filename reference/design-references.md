@@ -1,6 +1,6 @@
-# Design References — the free research layer (no Refero)
+# Design References — the free research layer
 
-Section 0 of SKILL.md is non-negotiable: every visual decision starts from evidence of what real products shipped. Refero makes that step fast; it is not what makes it possible. This file is the full free path, and it produces the same artifact — a **reference-lock + decision-ledger** — with the same rule: no source, no ship.
+Section 0 of SKILL.md is non-negotiable: every visual decision starts from evidence of what real products shipped. This file provides free research routes that produce a **reference-lock + decision-ledger**, with the same rule: no source, no ship.
 
 Four routes, ranked by evidence quality. Use A whenever you can; B and C exist to tell you *which* sites are worth running A against.
 
@@ -111,7 +111,7 @@ Breadth, to decide *what* to study. A gallery is a starting point, never the ref
 | [craftwork.design/curated/websites](https://craftwork.design/curated/websites/) | The former `curated.design`, now folded into Craftwork. Browsing is free. |
 | [recent.design](https://recent.design) | The former `godly.website`. Same curated-gallery concept under a new brand. |
 
-**Not free, don't send people there as a fallback:** [refero.design](https://refero.design) (3-day trial only — it's the premium lane), [pageflows.com](https://pageflows.com) (paid; `screenlane.com` was merged into it and no longer exists).
+**Not free, don't send people there as a fallback:** [refero.design](https://refero.design), [pageflows.com](https://pageflows.com) (paid; `screenlane.com` was merged into it and no longer exists).
 
 Verified 2026-08-02.
 
@@ -163,11 +163,11 @@ The bank answers "which real products should I study for *this* brief." Every br
 
 ---
 
-## The output contract (identical to the Refero path)
+## The output contract
 
 Whichever route you took, §0 still demands both artifacts before a line of code:
 
 1. **Reference-lock** — the primary direction, three to five traits to preserve (canvas, type, accent, layout, density, media), what each secondary lends, role rules (CTA-only, code-only, decorative-only), and the media strategy.
 2. **Decision-ledger** — a `decision | source | role/rule | why` table where `source` is a **real URL you actually opened**, a client constraint, or a named rule in this skill.
 
-"A DESIGN.md said so" is a valid source only when it's the first-party repo or you verified it live. "The model thought it looked good" has never been a valid source, with Refero or without it.
+"A DESIGN.md said so" is a valid source only when it's the first-party repo or you verified it live. "The model thought it looked good" is not a valid source.

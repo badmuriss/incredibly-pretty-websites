@@ -3,8 +3,8 @@
 Three media needs beyond hand-drawn CSS: **real photography**, **generated stills** (a hero object, a clay render, a product shot that does not exist), and **premium looping video** (a hero background or a mid-page section accent).
 
 - **Photography has a free lane and it is the default.** It costs nothing, needs no MCP, and covers most real work. Section below.
-- **Generated stills have two peer lanes**, `$image-gen` (Codex CLI) and [Magnific](https://www.magnific.com) via MCP. Neither is the junior partner — pick by what the session already has open. Routing table below.
-- **Video is Magnific only**, Tier 3 and cost-gated. Codex generates stills, not clips. Without Magnific, video degrades to the fallbacks at the bottom.
+- **Generated stills use the configured session capability.** Magnific is an optional service when already available and authorized. Costs and limits follow the actual provider.
+- **HTML motion and authored videos use the existing Playwright workflow.** Generative footage is a separate, optional service choice. Do not install HyperFrames or Remotion or launch another coding agent to obtain media tools.
 
 ## Stock photography — free lane (default)
 
@@ -24,7 +24,7 @@ Verified against each provider's own docs on 2026-08-02. Rate limits and terms d
 - **`picsum.photos` never ships to production.** It's a prototyping toy: random image, no license clarity, no control. Fine in a throwaway sketch, never in a page a client pays for.
 - **Unsplash is the one place "self-host it" is the wrong answer.** Their API guidelines require you to embed the returned CDN URL directly (hotlink) so views attribute back to the photographer, require a `GET` on `photo.links.download_location` whenever the user does something download-like, and require a visible credit to the photographer and to Unsplash with links back. Take all three or don't use the Unsplash API. If a project's rules forbid third-party image hosts, pick Pexels or Pixabay instead and self-host there.
 - **A "free license" from an aggregator is an assertion, not a warranty.** Openverse and Europeana index other people's servers and explicitly disclaim verifying the license. For a client site, follow the result back to the original host and confirm the license there. Exclude NC-licensed works from anything commercial.
-- **No people-photos as testimonial avatars.** A stock face on a testimonial reads as AI instantly. Use a Google-style initial: a color-blocked circle + the first letter of the first name (SKILL.md §15).
+- **No people-photos as testimonial avatars.** A stock face on a testimonial reads as AI instantly. Use a Google-style initial: a color-blocked circle + the first letter of the first name (implementation-guide.md §15).
 - **A self-hosted photo gets processed, never dropped in raw.** Resize to the real rendered width (2x for retina, no more), convert to AVIF with a WebP fallback, ship `srcset`/`sizes`, set explicit `width`/`height` to reserve the box, `loading="lazy"` + `decoding="async"` for anything below the fold, and `fetchpriority="high"` on the LCP image only. A 4MB JPEG behind a beautiful layout is still a broken page.
 
 ### Magnific stock — REST API, not MCP
@@ -43,32 +43,35 @@ All three support AI-powered keyword search and sorting, are rate-limited, and c
 
 **Stock video** is a real third option next to "generate a loop" and "no video at all": no render credits, no cost gate, and the same self-host rule applies.
 
-## Generated stills — two peer lanes
+## Generated stills
 
-When the shot does not exist and no stock photo will do, generate it. Both lanes produce comparable quality; the tie-breaker is what the session is already paying for, not a quality ranking.
+Use the image capability configured in the active session when it meets the brief.
+Do not assume another harness's image tool or a command-line coding agent is available.
+Use a specialized provider only for a required capability and within existing
+cost authorization. Verify current model names and limits in that provider.
 
-| | `$image-gen` (Codex CLI) | Magnific MCP |
+| Need | Available session capability | Optional Magnific integration |
 |---|---|---|
-| **Cost** | folded into a Codex session you are already running — effectively free at the margin | credits per generation, on top of a paid plan |
-| **Setup** | `codex` installed and authenticated once | OAuth connect to `https://mcp.magnific.com` |
-| **Reach for it when** | the session already has Codex open; you want to iterate on a prompt ten times without watching a meter; the asset is one object on a plain ground | you need a specific named model, a trained character/style reference (`custom_references_create`), upscaling, SVG output, or the render must land in a shared Magnific workspace |
-| **Model choice** | whatever Codex's image tool ships | explicit: `images_models_list` then name it in the prompt, or let auto-mode pick |
-| **Post-processing** | local ImageMagick + BiRefNet remove-bg, no credits | `images_upscale`, `images_crop`, `images_resize`, `images_remove_background`, each billed |
+| Generation | Use its documented generation/edit interface | Confirm `images_generate` in the live tool list |
+| Cost | Follow the configured service's actual limits; do not assume free extra generations | Check the active plan and generation credits |
+| Series consistency | Reuse approved references, lighting and material prompts; native edits when supported | Style/character references when available and authorized |
+| Cutouts | Request transparent output when supported and inspect the real alpha channel | Background removal when supported and authorized |
 
-**Alpha cutouts, both lanes.** A clay object, a product cutout or a person over a colored panel needs a real alpha channel, and prompting "transparent background" returns a fake checkerboard in either lane.
+An alpha cutout requires real transparency, not a visible checkerboard baked into
+an opaque image. Inspect the file. If native generation does not supply alpha,
+use an available, authorized background-removal tool. The retired image-gen
+wrapper and its local BiRefNet installation are not prerequisites.
 
-- **Codex lane:** generate on a clean, evenly-lit flat background, then cut locally with the BiRefNet route in `$image-gen`. Free, offline, and good on hair and complex edges.
-- **Magnific lane:** `images_remove_background` returns the alpha cutout in one call. Worth the credits when the render is already in Magnific — round-tripping it out to cut it locally costs more time than the call costs money.
+Apply the same processing discipline as a self-hosted photo: real rendered width,
+AVIF/WebP, explicit dimensions and priority only on the LCP image.
 
-Same processing discipline as a self-hosted photo applies to the result: real rendered width, AVIF/WebP, explicit `width`/`height`, `fetchpriority` on the LCP one only.
+### 3D clay renders
 
-### 3D clay renders — generated, not licensed
-
-The **Soft Clay 3D** archetype (`SKILL.md` §5.9) sources its objects from image generation, not from an asset pack. Its prompt template, the series-consistency rule and the palette rules live there. Three pipeline facts belong here:
-
-- **Route:** either still lane, per the table above. `$image-gen` if Codex is already open, `images_generate` if you want a named model or a trained style reference across the whole set.
-- **Alpha is a pipeline step, not a prompt.** Asking for a transparent background returns a fake checkerboard with no alpha channel. Cut it with BiRefNet locally (`$image-gen`) or `images_remove_background` in Magnific. A clay render shipped as an opaque rectangle over the page canvas defeats the archetype.
-- **Weight:** alpha PNG renders are heavy. Convert to WebP/AVIF, cap the hero near 1200px wide, explicit `width`/`height` + `fetchpriority="high"` on the hero one, `loading="lazy"` on the rest. A **Spline** scene is not an image — over 1MB of runtime, Tier 3 only, never the LCP element, static render as fallback.
+The Soft Clay 3D archetype and its prompt templates remain in
+[implementation-guide.md](implementation-guide.md). Use a consistent lighting,
+material and palette description across the series and reuse approved reference
+images when the configured tool supports it. Inspect transparency and compression
+before shipping. Preserve a static image fallback for any interactive scene.
 
 ## Video — placement is case-by-case, decided by research (no fixed default)
 
@@ -90,17 +93,14 @@ Hero background AND section accent are both valid. The choice comes from the **r
 
 **HARD GATES:**
 - **PREMIUM_TECH_TIER ≥ 3 only** (Tech/SaaS, Creative, Luxury real estate, Architecture). A video bg on a lawyer/local-shop site = slop + bad LCP.
-- **COST APPROVAL is mandatory before any paid render.** There is no cost-simulation tool in the current MCP set, so quote it yourself: `account_balance` (free) for the balance, `video_models_list` plus the [pricing page](https://docs.magnific.com/pricing) for the model's rate, show the estimate, and wait for an explicit "go" from the human. Autonomous mode never triggers a paid render on its own.
+- **Paid renders require authorization for that service.** Honor existing authorization; if it is absent, verify the current pricing and present the concrete operation and estimate before requesting approval. A configured credential is not authorization. See the provider's [pricing documentation](https://docs.magnific.com/pricing) when Magnific is the selected service.
 - **Self-host is mandatory** — a generation service returns a remote URL with undocumented retention. NEVER hotlink it on a production site. Download the MP4 → upload to your own object storage / CDN (any provider: S3, R2, Bunny, a plain static host) → serve from there. The skill is CDN-agnostic; no cloud is assumed.
 
 ## Setup
 
-**Codex lane:** `which codex && codex --version`, and the user must have run `codex` once to authenticate. Everything else is local.
+**Session capability:** use the active harness's configured image tools and native configuration. Do not launch Codex, Claude or OMP merely to obtain a missing tool.
 
-**Magnific lane:** register the MCP once (user action; requires a paid Magnific account — MCP calls always consume credits, even on plans with unlimited in-app generations):
-```
-claude mcp add --transport http magnific https://mcp.magnific.com
-```
+**Optional Magnific integration:** configure `https://mcp.magnific.com` through the chosen harness's native MCP interface when the user requests this service. The following tool table is a documentation snapshot, not proof of current availability or costs.
 OAuth in the browser on first call, no API key to manage. Documented tools as of 2026-08-19 ([docs.magnific.com/modelcontextprotocol](https://docs.magnific.com/modelcontextprotocol)):
 
 | Group | Tools |
@@ -118,7 +118,7 @@ Magnific was Freepik until 2026; a `magnific.ai` endpoint or a `stock_search` / 
 
 1. `video_models_list` — see the available video models and the roles each accepts.
 2. **Cost-gate:** quote the cost from the model's rate + `account_balance`, then wait for an explicit "go." Never skip this.
-3. Get the reference still: a licensed photo from the free stock lane, or a generated frame from either still lane — `$image-gen` locally or `images_generate` in Magnific.
+3. Get the reference still: a licensed photo from the free stock lane, or a generated frame from either still lane — the active host’s configured image generator locally or `images_generate` in Magnific.
 4. `video_generate` referencing that still + a prompt (the 5-slot architecture below). Keep the clip ≤ ~15s.
 5. `creations_wait` → poll until complete; it returns the hosted asset URL (validate the codec — assume MP4/webm).
 6. **Self-host:** download the asset → upload to your CDN/storage → use that URL in the `<video>`.
@@ -182,6 +182,6 @@ The hero (above the fold) doesn't lazy-load — play it directly, but keep the `
 
 ## Fallback (no Magnific / no approved budget)
 
-Tier 3 without video uses: **animated gradient mesh blobs** (`@property`, SKILL.md §6) OR a **full-bleed photo + overlay**. Video is optional enrichment, never a layout dependency.
+Tier 3 without video uses: **animated gradient mesh blobs** (`@property`, implementation-guide.md §6) OR a **full-bleed photo + overlay**. Video is optional enrichment, never a layout dependency.
 
-Photos and generated stills are not part of this gate at all — the free stock lane needs no budget and no MCP, and `$image-gen` runs on a Codex session with no per-render meter. "No Magnific" gates video, nothing else, and is never a reason to ship a placeholder.
+Photos and generated stills are not part of this gate at all — the free stock lane needs no budget and no MCP, and the active host’s configured image generator uses the configured host capability and its actual costs and limits. Without Magnific, its generative-video recipe is unavailable; authored Playwright motion and existing footage can still meet the brief.
